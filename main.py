@@ -21,6 +21,7 @@ from tqdm import tqdm as log_progress
 
 TERRA = 'terra'
 DANETQA = 'danetqa'
+PARUS = 'parus'
 
 OPENAI_TOKEN = os.getenv('OPENAI_TOKEN')
 
@@ -107,7 +108,7 @@ def parse_dotenv(lines):
 #  'idx': 104}
 
 
-TERRA_PROMPT_V1 = '''
+TERRA_PROMPT = '''
 Does Premise entail Hypothesis? Choose Yes or No.
 
 Premise: Трижды он был привлечён судебным приставом к административной ответственности по ст. 17.15 КоАП РФ за неисполнение содержащихся в исполнительном документе требований неимущественного характера. Так как срок для добровольного исполнения истёк, пристрой снесли принудительно.
@@ -124,7 +125,7 @@ Entail:
 '''
 
 
-def terra_prompt(item, template=TERRA_PROMPT_V1):
+def terra_prompt(item, template=TERRA_PROMPT):
     return template.format(
         premise=item['premise'],
         hypothesis=item['hypothesis']
@@ -150,7 +151,7 @@ def norm_terra_response(response):
 #  'label': True,
 
 
-DANETQA_PROMPT_V1 = '''
+DANETQA_PROMPT = '''
 Given Passage answer the Question. Choose Yes or No.
 
 Passage: Пётр Моисеевич Миронов  — красноармеец Рабоче-крестьянской Красной Армии, участник Великой Отечественной войны, Герой Советского Союза . Пётр Миронов родился в 1904 году в деревне Утринка . После окончания шести классов школы проживал в Москве, работал в сфере общепита. В июне 1941 года Миронов был призван на службу в Рабоче-крестьянскую Красную Армию. С июля 1942 года — на фронтах Великой Отечественной войны.
@@ -167,7 +168,7 @@ Answer:
 '''
 
 
-def danetqa_prompt(item, template=DANETQA_PROMPT_V1):
+def danetqa_prompt(item, template=DANETQA_PROMPT):
     return template.format(
         passage=item['passage'],
         question=item['question']
@@ -183,6 +184,64 @@ def norm_danetqa_response(response):
 
 #####
 #
+#   PARUS
+#
+#####
+
+
+# {'premise': 'Я прибралась дома.',
+#  'choice1': 'Я была завалена работой.',
+#  'choice2': 'Я ждала друзей.',
+#  'question': 'cause',
+#  'label': 1,
+#  'id': 96}
+
+
+PARUS_PROMPT_QUESTIONS = {
+    'effect': 'Что случилось в результате?',
+    'cause': 'Что было причиной?',
+}
+
+PARUS_PROMPT = '''
+Given Premise answer the Question. Choose A or B.
+
+Premise: Я прибралась дома.
+Question: Что было причиной?
+A: Я была завалена работой.
+B: Я ждала друзей.
+Answer: B
+
+Premise: Политик был признан виновным в мошенничестве.
+Question: Что случилось в результате?
+A: Он был отстранён от должности.
+B: Он начал кампанию за переизбрание.
+Answer: A
+
+Premise: {premise}
+Question: {question}
+A: {choice1}
+B: {choice2}
+Answer: 
+'''
+
+def parus_prompt(item, template=PARUS_PROMPT):
+    return template.format(
+        premise=item['premise'],
+        question=PARUS_PROMPT_QUESTIONS[item['question']],
+        choice1=item['choice1'],
+        choice2=item['choice2'],
+    )
+
+
+def norm_parus_response(response):
+    if 'A' in response:
+        return 0
+    elif 'B' in response:
+        return 1
+
+
+#####
+#
 #   NORM RESP
 #
 ###
@@ -190,7 +249,8 @@ def norm_danetqa_response(response):
 
 NORM_RESPONSE = {
     TERRA: norm_terra_response,
-    DANETQA: norm_danetqa_response
+    DANETQA: norm_danetqa_response,
+    PARUS: norm_parus_response,
 }
 
 
@@ -204,7 +264,7 @@ NORM_RESPONSE = {
 def acc_score(id_targets, id_preds):
     total = 0
     acc = 0
-    for id in id_targets.keys() | id_preds.keys():
+    for id in id_targets.keys() & id_preds.keys():
         total += 1
         acc += id_targets.get(id) == id_preds.get(id)
     return acc / total

@@ -32,6 +32,7 @@ wget https://github.com/RussianNLP/RuCoLA/raw/main/data/out_of_domain_dev.csv -P
 Evals
 
 ```
-01_openai_terra TERRA_PROMPT_V1 TEXT_DAVINCHI_003
-02_openai_danetqa DANETQA_PROMPT_V1 TEXT_DAVINCHI_003
+01_openai_terra TEXT_DAVINCHI_003
+02_openai_danetqa TEXT_DAVINCHI_003
+03_openai_parus TEXT_DAVINCHI_003
 ```
