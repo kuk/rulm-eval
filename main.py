@@ -19,16 +19,22 @@ from tqdm import tqdm as log_progress
 #
 #####
 
+
 TERRA = 'terra'
 DANETQA = 'danetqa'
 PARUS = 'parus'
+RWSD = 'rwsd'
+RUSSE = 'russe'
 
 OPENAI_TOKEN = os.getenv('OPENAI_TOKEN')
+COHERE_TOKEN = os.getenv('COHERE_TOKEN')
 
 TEXT_DAVINCHI_003 = 'text-davinci-003'
 CODE_DAVINCHI_002 = 'code-davinci-002'
 CODE_CUSHMAN_001 = 'code-cushman-001'
 GPT_35_TURBO_0301 = 'gpt-3.5-turbo-0301'
+
+COHERE_XLARGE = 'xlarge'
 
 
 #######
@@ -109,17 +115,17 @@ def parse_dotenv(lines):
 #  'idx': 104}
 
 
-TERRA_PROMPT = '''Does Premise entail Hypothesis? Choose Yes or No.
-Keep it short, choose most probable.
-
+TERRA_PROMPT = '''Does Premise entail Hypothesis?
+Choose most probable. Keep it short, respond Yes or No.
+---
 Premise: Трижды он был привлечён судебным приставом к административной ответственности по ст. 17.15 КоАП РФ за неисполнение содержащихся в исполнительном документе требований неимущественного характера. Так как срок для добровольного исполнения истёк, пристрой снесли принудительно.
 Hypothesis: Пристрой был снесен.
 Entail: Yes
-
+---
 Premise: Для молодого организма это не прошло бесследно. Резкое токсическое воздействие этанола привело к смерти парня. Его тело обнаружила бабушка, которая вернулась на следующий день.
 Hypothesis: Молодой организм стал сильнее от этанола.
 Entail: No
-
+---
 Premise: {premise}
 Hypothesis: {hypothesis}
 Entail: '''
@@ -162,16 +168,16 @@ def norm_terra_response(response):
 
 
 DANETQA_PROMPT = '''Given Passage answer the Question.
-Keep answer short, choose Yes or No. Choose most probable.
-
+Keep answer short, respond Yes or No. Choose most probable.
+---
 Passage: Пётр Моисеевич Миронов  — красноармеец Рабоче-крестьянской Красной Армии, участник Великой Отечественной войны, Герой Советского Союза . Пётр Миронов родился в 1904 году в деревне Утринка . После окончания шести классов школы проживал в Москве, работал в сфере общепита. В июне 1941 года Миронов был призван на службу в Рабоче-крестьянскую Красную Армию. С июля 1942 года — на фронтах Великой Отечественной войны.
 Question: Был ли миронов в армии?
 Answer: Yes
-
+---
 Passage: Брюс Ли  — гонконгский и американский киноактёр, режиссёр, сценарист, продюсер, популяризатор и реформатор в области китайских боевых искусств, мастер боевых искусств, постановщик боевых сцен и философ, основоположник стиля Джит Кун-До. Брюс Ли начал сниматься в кино с детства. Его детское имя — Ли Сяолун , взрослое имя — Ли Чжэньфань .
 Question: Правда ли что брюс ли не был бойцом?
 Answer: No
-
+---
 Passage: {passage}
 Question: {question}
 Answer: '''
@@ -213,19 +219,19 @@ PARUS_PROMPT_QUESTIONS = {
 
 PARUS_PROMPT = '''Given Premise answer the Question. Choose A or B.
 In case not enough information choose most probable.
-
+---
 Premise: Я прибралась дома.
 Question: Что было причиной?
 A: Я была завалена работой.
 B: Я ждала друзей.
 Answer: B
-
+---
 Premise: Политик был признан виновным в мошенничестве.
 Question: Что случилось в результате?
 A: Он был отстранён от должности.
 B: Он начал кампанию за переизбрание.
 Answer: A
-
+---
 Premise: {premise}
 Question: {question}
 A: {choice1}
@@ -250,6 +256,110 @@ def norm_parus_response(response):
 
 #####
 #
+#   RWSD
+#
+#####
+
+
+# {'text': 'Матери Артура и Селесты пришли в город, чтобы забрать их. Они очень рады, что их вернули, но они также ругают их, потому что они убежали.',
+#  'target': {'span2_index': 8,
+#   'span1_index': 0,
+#   'span1_text': 'Матери',
+#   'span2_text': 'забрать их'},
+#  'idx': 190,
+#  'label': False}
+
+
+RWSD_PROMPT = '''Does Phrase B refere to Phrase A in Text?
+Keep it short, respond Yes or No.
+---
+Text: Уэйнрайты обращались с мистером Кроули, как с принцем, пока он не изменил свое завещание в их пользу; тогда они стали обращаться с ним, как с грязью. Люди говорили, что он умер, только чтобы избавиться от их вечного нытья.
+Phrase A: Уэйнрайты
+Phrase B: их вечного нытья
+Answer: Yes
+---
+Text: Кубок не помещается в коричневый чемодан, потому что он слишком большой.
+Phrase A: чемодан
+Phrase B: он слишком большой
+Answer: No
+---
+Text: {text}
+Phrase A: {a}
+Phrase B: {b}
+Answer: '''
+
+
+def rwsd_prompt(item, template=RWSD_PROMPT):
+    return template.format(
+        text=item['text'],
+        a=item['target']['span1_text'],
+        b=item['target']['span2_text'],
+    )
+
+
+def norm_rwsd_response(response):
+    return norm_response_mapping(response, {
+        'Yes': True,
+        'No': False
+    })
+
+
+######
+#
+#   RUSSE
+#
+#####
+
+
+# {'idx': 4107,
+#  'word': 'защита',
+#  'sentence1': 'Как изменится защита Динамо в новом сезоне?',
+#  'sentence2': 'Обе партии протекали на удивление одинаково: в обеих была разыграна..
+#  'start1': 14,
+#  'end1': 21,
+#  'start2': 80,
+#  'end2': 87,
+#  'label': True,
+#  'gold_sense1': 2,
+#  'gold_sense2': 2}
+
+
+RUSSE_PROMPT = '''Does Word have the same meaning in Sentence A and Sentence B?
+Keep it short, respond Yes or No.
+---
+Word: дорожка
+Sentence A: Бурые ковровые дорожки заглушали шаги
+Sentence B: Приятели решили выпить на дорожку в местном баре
+Answer: No
+---
+Word: защита
+Sentence A: Как изменится защита Динамо в новом сезоне?
+Sentence B: Обе партии протекали одинаково: в обеих была разыграна французская защита
+Answer: Yes
+---
+Word: {word}
+Sentence A: {a}
+Sentence B: {b}
+Answer: '''
+
+
+def russe_prompt(item, template=RUSSE_PROMPT):
+    return template.format(
+        word=item['word'],
+        a=item['sentence1'],
+        b=item['sentence2'],
+    )
+
+
+def norm_russe_response(response):
+    return norm_response_mapping(response, {
+        'Yes': True,
+        'No': False
+    })
+
+
+#####
+#
 #   PROMPTS, NORM RESP
 #
 ###
@@ -259,12 +369,16 @@ TASK_PROMPTS = {
     TERRA: terra_prompt,
     DANETQA: danetqa_prompt,
     PARUS: parus_prompt,
+    RWSD: rwsd_prompt,
+    RUSSE: russe_prompt,
 }
 
 NORM_RESPONSES = {
     TERRA: norm_terra_response,
     DANETQA: norm_danetqa_response,
     PARUS: norm_parus_response,
+    RWSD: norm_rwsd_response,
+    RUSSE: norm_russe_response,
 }
 
 
@@ -333,6 +447,27 @@ def openai_completions(
         token
     )
     return data['choices'][0]['text']
+
+
+def openai_chat_completions(
+        prompt,
+        model=GPT_35_TURBO_0301, max_tokens=128,
+        temperature=0, top_p=1, stop=None,
+        token=OPENAI_TOKEN
+):
+    data = post_openai(
+        'https://api.openai.com/v1/chat/completions',
+        {
+            'messages': [{'role': 'user', 'content': prompt}],
+            'model': model,
+            'max_tokens': max_tokens,
+            'temperature': temperature,
+            'top_p': top_p,
+            'stop': stop,
+        },
+        token
+    )
+    return data['choices'][0]['message']['content']
 
 
 #######
@@ -424,4 +559,59 @@ def join_print_tokens(tokens):
     return ''.join(buffer)    
   
 
+########
+#
+#   COHERE
+#
+######
 
+
+# https://docs.cohere.ai/reference/tokenize
+
+
+def post_cohere(url, payload, token):
+    headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': f'Bearer {token}'
+    }
+    response = requests.post(
+        url,
+        json=payload,
+        headers=headers,
+    )
+    response.raise_for_status()
+    return response.json()
+
+
+def cohere_tokenize(text, token=COHERE_TOKEN):
+    data = post_cohere(
+        'https://api.cohere.ai/v1/tokenize',
+        {
+            'text': text,
+        },
+        token
+    )
+    return data['token_strings']
+
+
+def cohere_generate(
+        prompt,
+        model=COHERE_XLARGE, max_tokens=128,
+        temperature=0, top_p=1,
+        end_sequences=None,
+        token=COHERE_TOKEN
+):
+    data = post_cohere(
+        'https://api.cohere.ai/v1/generate',
+        {
+            'prompt': prompt,
+            'model': model,
+            'max_tokens': max_tokens,
+            'temperature': temperature,
+            'top_p': top_p,
+            'end_sequences': end_sequences,
+        },
+        token
+    )
+    return data['generations'][0]['text']
