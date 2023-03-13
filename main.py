@@ -153,6 +153,7 @@ def norm_terra_response(response):
 
 DANETQA_PROMPT = '''
 Given Passage answer the Question. Choose Yes or No.
+Given Passage answer the Question. Keep answer short, choose Yes or No. Choose most probable.
 
 Passage: Пётр Моисеевич Миронов  — красноармеец Рабоче-крестьянской Красной Армии, участник Великой Отечественной войны, Герой Советского Союза . Пётр Миронов родился в 1904 году в деревне Утринка . После окончания шести классов школы проживал в Москве, работал в сфере общепита. В июне 1941 года Миронов был призван на службу в Рабоче-крестьянскую Красную Армию. С июля 1942 года — на фронтах Великой Отечественной войны.
 Question: Был ли миронов в армии?
@@ -204,6 +205,7 @@ PARUS_PROMPT_QUESTIONS = {
 
 PARUS_PROMPT = '''
 Given Premise answer the Question. Choose A or B.
+In case not enough information choose most probable.
 
 Premise: Я прибралась дома.
 Question: Что было причиной?
@@ -234,7 +236,9 @@ def parus_prompt(item, template=PARUS_PROMPT):
 
 
 def norm_parus_response(response):
-    if 'A' in response:
+    if 'A' in response and 'B' in response:
+        return
+    elif 'A' in response:
         return 0
     elif 'B' in response:
         return 1
@@ -265,8 +269,10 @@ def acc_score(id_targets, id_preds):
     total = 0
     acc = 0
     for id in id_targets.keys() & id_preds.keys():
-        total += 1
-        acc += id_targets.get(id) == id_preds.get(id)
+        pred = id_preds.get(id)
+        if pred is not None:
+            total += 1
+            acc += id_targets.get(id) == pred
     return acc / total
 
 
@@ -275,6 +281,10 @@ def acc_score(id_targets, id_preds):
 #   OPENAI
 #
 ######
+
+
+# https://platform.openai.com/docs/api-reference/completions/create
+# https://platform.openai.com/docs/api-reference/chat/create
 
 
 def parse_openai_stream(lines):
@@ -303,7 +313,7 @@ def post_openai_stream(url, payload, token):
         yield from parse_openai_stream(lines)
 
 
-def openai_generate_stream(
+def openai_completions_stream(
         prompt,
         model=TEXT_DAVINCHI_003, max_tokens=128,
         temperature=0, top_p=1,
@@ -323,6 +333,30 @@ def openai_generate_stream(
     )
     for item in items:
         yield item['choices'][0]['text']
+
+
+def openai_chat_completions_stream(
+        prompt,
+        model=GPT_35_TURBO_0301, max_tokens=128,
+        temperature=0, top_p=1,
+        token=OPENAI_TOKEN
+):
+    items = post_openai_stream(
+        'https://api.openai.com/v1/chat/completions',
+        {
+            'messages': [{'role': 'user', 'content': prompt}],
+            'model': model,
+            'max_tokens': max_tokens,
+            'temperature': temperature,
+            'top_p': top_p,
+            'stream': True
+        },
+        token
+    )
+    for item in items:
+        content = item['choices'][0]['delta'].get('content')
+        if content:
+            yield content
 
 
 def join_print_tokens(tokens):
