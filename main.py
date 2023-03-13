@@ -300,6 +300,46 @@ def acc_score(id_targets, id_preds):
 # https://platform.openai.com/docs/api-reference/chat/create
 
 
+def post_openai(url, payload, token):
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': f'Bearer {token}'
+    }
+    response = requests.post(
+        url,
+        json=payload,
+        headers=headers,
+    )
+    response.raise_for_status()
+    return response.json()
+
+
+def openai_completions(
+        prompt,
+        model=TEXT_DAVINCHI_003, max_tokens=128,
+        temperature=0, top_p=1, stop=None,
+        token=OPENAI_TOKEN        
+):
+    data = post_openai(
+        'https://api.openai.com/v1/completions',
+        {
+            'prompt': prompt,
+            'model': model,
+            'max_tokens': max_tokens,
+            'temperature': temperature,
+            'top_p': top_p,
+            'stop': stop,
+        },
+        token
+    )
+    return data['choices'][0]['text']
+
+
+#######
+#  STREAM
+#####
+
+
 def parse_openai_stream(lines):
     for line in lines:
         if line.startswith(b'data: '):
@@ -314,7 +354,6 @@ def post_openai_stream(url, payload, token):
         'Content-Type': 'application/json',
         'Authorization': f'Bearer {token}'
     }
-
     with requests.post(
         url,
         json=payload,
@@ -382,8 +421,7 @@ def join_print_tokens(tokens):
         sys.stdout.write(token)
 
     sys.stdout.flush()
-    return ''.join(buffer)
+    return ''.join(buffer)    
+  
 
 
-def join_tokens(tokens):
-    return ''.join(tokens)
