@@ -27,6 +27,7 @@ OPENAI_TOKEN = os.getenv('OPENAI_TOKEN')
 
 TEXT_DAVINCHI_003 = 'text-davinci-003'
 CODE_DAVINCHI_002 = 'code-davinci-002'
+CODE_CUSHMAN_001 = 'code-cushman-001'
 GPT_35_TURBO_0301 = 'gpt-3.5-turbo-0301'
 
 
@@ -108,8 +109,8 @@ def parse_dotenv(lines):
 #  'idx': 104}
 
 
-TERRA_PROMPT = '''
-Does Premise entail Hypothesis? Choose Yes or No.
+TERRA_PROMPT = '''Does Premise entail Hypothesis? Choose Yes or No.
+Keep it short, choose most probable.
 
 Premise: Трижды он был привлечён судебным приставом к административной ответственности по ст. 17.15 КоАП РФ за неисполнение содержащихся в исполнительном документе требований неимущественного характера. Так как срок для добровольного исполнения истёк, пристрой снесли принудительно.
 Hypothesis: Пристрой был снесен.
@@ -121,8 +122,7 @@ Entail: No
 
 Premise: {premise}
 Hypothesis: {hypothesis}
-Entail: 
-'''
+Entail: '''
 
 
 def terra_prompt(item, template=TERRA_PROMPT):
@@ -161,8 +161,8 @@ def norm_terra_response(response):
 #  'label': True,
 
 
-DANETQA_PROMPT = '''
-Given Passage answer the Question. Keep answer short, choose Yes or No. Choose most probable.
+DANETQA_PROMPT = '''Given Passage answer the Question.
+Keep answer short, choose Yes or No. Choose most probable.
 
 Passage: Пётр Моисеевич Миронов  — красноармеец Рабоче-крестьянской Красной Армии, участник Великой Отечественной войны, Герой Советского Союза . Пётр Миронов родился в 1904 году в деревне Утринка . После окончания шести классов школы проживал в Москве, работал в сфере общепита. В июне 1941 года Миронов был призван на службу в Рабоче-крестьянскую Красную Армию. С июля 1942 года — на фронтах Великой Отечественной войны.
 Question: Был ли миронов в армии?
@@ -174,8 +174,7 @@ Answer: No
 
 Passage: {passage}
 Question: {question}
-Answer: 
-'''
+Answer: '''
 
 
 def danetqa_prompt(item, template=DANETQA_PROMPT):
@@ -212,8 +211,7 @@ PARUS_PROMPT_QUESTIONS = {
     'cause': 'Что было причиной?',
 }
 
-PARUS_PROMPT = '''
-Given Premise answer the Question. Choose A or B.
+PARUS_PROMPT = '''Given Premise answer the Question. Choose A or B.
 In case not enough information choose most probable.
 
 Premise: Я прибралась дома.
@@ -232,8 +230,7 @@ Premise: {premise}
 Question: {question}
 A: {choice1}
 B: {choice2}
-Answer: 
-'''
+Answer: '''
 
 def parus_prompt(item, template=PARUS_PROMPT):
     return template.format(
@@ -253,12 +250,18 @@ def norm_parus_response(response):
 
 #####
 #
-#   NORM RESP
+#   PROMPTS, NORM RESP
 #
 ###
 
 
-NORM_RESPONSE = {
+TASK_PROMPTS = {
+    TERRA: terra_prompt,
+    DANETQA: danetqa_prompt,
+    PARUS: parus_prompt,
+}
+
+NORM_RESPONSES = {
     TERRA: norm_terra_response,
     DANETQA: norm_danetqa_response,
     PARUS: norm_parus_response,
@@ -326,7 +329,7 @@ def post_openai_stream(url, payload, token):
 def openai_completions_stream(
         prompt,
         model=TEXT_DAVINCHI_003, max_tokens=128,
-        temperature=0, top_p=1,
+        temperature=0, top_p=1, stop=None,
         token=OPENAI_TOKEN
 ):
     items = post_openai_stream(
@@ -337,6 +340,7 @@ def openai_completions_stream(
             'max_tokens': max_tokens,
             'temperature': temperature,
             'top_p': top_p,
+            'stop': stop,
             'stream': True
         },
         token
@@ -348,7 +352,7 @@ def openai_completions_stream(
 def openai_chat_completions_stream(
         prompt,
         model=GPT_35_TURBO_0301, max_tokens=128,
-        temperature=0, top_p=1,
+        temperature=0, top_p=1, stop=None,
         token=OPENAI_TOKEN
 ):
     items = post_openai_stream(
@@ -359,6 +363,7 @@ def openai_chat_completions_stream(
             'max_tokens': max_tokens,
             'temperature': temperature,
             'top_p': top_p,
+            'stop': stop,
             'stream': True
         },
         token
