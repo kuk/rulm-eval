@@ -132,11 +132,21 @@ def terra_prompt(item, template=TERRA_PROMPT):
     )
 
 
+def norm_response_mapping(response, pattern_labels):
+    labels = []
+    for pattern, label in pattern_labels.items():
+        if pattern in response:
+            labels.append(label)
+
+    if len(labels) == 1:
+        return labels[0]
+
+
 def norm_terra_response(response):
-    if 'Yes' in response:
-        return 'entailment'
-    elif 'No' in response:
-        return 'not_entailment'
+    return norm_response_mapping(response, {
+        'Yes': 'entailment',
+        'No': 'not_entailment'
+    })
 
 
 ######
@@ -152,7 +162,6 @@ def norm_terra_response(response):
 
 
 DANETQA_PROMPT = '''
-Given Passage answer the Question. Choose Yes or No.
 Given Passage answer the Question. Keep answer short, choose Yes or No. Choose most probable.
 
 Passage: Пётр Моисеевич Миронов  — красноармеец Рабоче-крестьянской Красной Армии, участник Великой Отечественной войны, Герой Советского Союза . Пётр Миронов родился в 1904 году в деревне Утринка . После окончания шести классов школы проживал в Москве, работал в сфере общепита. В июне 1941 года Миронов был призван на службу в Рабоче-крестьянскую Красную Армию. С июля 1942 года — на фронтах Великой Отечественной войны.
@@ -177,10 +186,10 @@ def danetqa_prompt(item, template=DANETQA_PROMPT):
 
 
 def norm_danetqa_response(response):
-    if 'Yes' in response:
-        return True
-    elif 'No' in response:
-        return False
+    return norm_response_mapping(response, {
+        'Yes': True,
+        'No': False
+    })
 
 
 #####
@@ -236,12 +245,10 @@ def parus_prompt(item, template=PARUS_PROMPT):
 
 
 def norm_parus_response(response):
-    if 'A' in response and 'B' in response:
-        return
-    elif 'A' in response:
-        return 0
-    elif 'B' in response:
-        return 1
+    return norm_response_mapping(response, {
+        'A': 0,
+        'B': 1
+    })
 
 
 #####
@@ -266,14 +273,17 @@ NORM_RESPONSE = {
 
 
 def acc_score(id_targets, id_preds):
-    total = 0
-    acc = 0
+    total, accurate, skip = 0, 0, 0
     for id in id_targets.keys() & id_preds.keys():
         pred = id_preds.get(id)
-        if pred is not None:
-            total += 1
-            acc += id_targets.get(id) == pred
-    return acc / total
+        if pred is None:
+            skip += 1
+            continue
+
+        total += 1
+        accurate += id_targets.get(id) == pred
+            
+    return accurate / total, skip
 
 
 ########
