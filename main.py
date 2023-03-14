@@ -1,4 +1,5 @@
 
+import re
 import os
 import sys
 import csv
@@ -9,6 +10,9 @@ from pathlib import Path
 from collections import Counter
 
 import requests
+
+import pandas as pd
+from matplotlib import pyplot as plt
 
 from tqdm import tqdm as log_progress
 

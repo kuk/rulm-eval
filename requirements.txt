@@ -1,2 +1,4 @@
 tqdm
 requests
+pandas
+matplotlib
