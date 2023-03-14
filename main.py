@@ -274,22 +274,18 @@ def norm_parus_response(response):
 #  'label': False}
 
 
-RWSD_PROMPT = '''Does Phrase B refere to Phrase A in Text?
-Keep it short, respond Yes or No.
+RWSD_PROMPT = '''Keep it short, respond Yes or No
 ---
 Text: Уэйнрайты обращались с мистером Кроули, как с принцем, пока он не изменил свое завещание в их пользу; тогда они стали обращаться с ним, как с грязью. Люди говорили, что он умер, только чтобы избавиться от их вечного нытья.
-Phrase A: Уэйнрайты
-Phrase B: их вечного нытья
+Question: Does "их вечного нытья" refere to "Уэйнрайты"?
 Answer: Yes
 ---
 Text: Кубок не помещается в коричневый чемодан, потому что он слишком большой.
-Phrase A: чемодан
-Phrase B: он слишком большой
+Question: Does "он слишком большой" refere to "чемодан"?
 Answer: No
 ---
 Text: {text}
-Phrase A: {a}
-Phrase B: {b}
+Question: Does "{b}" refere to "{a}"?
 Answer: '''
 
 
@@ -328,22 +324,21 @@ def norm_rwsd_response(response):
 #  'gold_sense2': 2}
 
 
-RUSSE_PROMPT = '''Does Word have the same meaning in Sentence A and Sentence B?
-Keep it short, respond Yes or No.
+RUSSE_PROMPT = '''Keep it short, respond Yes or No.
 ---
-Word: дорожка
 Sentence A: Бурые ковровые дорожки заглушали шаги
 Sentence B: Приятели решили выпить на дорожку в местном баре
+Question: Does "дорожка" mean the same in sentences A and B?
 Answer: No
 ---
-Word: защита
 Sentence A: Как изменится защита Динамо в новом сезоне?
 Sentence B: Обе партии протекали одинаково: в обеих была разыграна французская защита
+Question: Does "защита" mean the same in sentences A and B?
 Answer: Yes
 ---
-Word: {word}
 Sentence A: {a}
 Sentence B: {b}
+Question: Does "{word}" mean the same in sentences A and B?
 Answer: '''
 
 
