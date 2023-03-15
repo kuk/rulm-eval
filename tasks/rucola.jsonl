@@ -1,0 +1,100 @@
+{"id": "921", "sentence": "Во время быстрой фазы сна нейроны мозга, отвечающего за зрительное восприятие, ведут себя так, как будто мы видим что-то незнакомое.", "error_type": "Syntax", "detailed_source": "USE8", "label": "0"}
+{"id": "129", "sentence": "Он обиделся на мою шутку.", "error_type": "0", "detailed_source": "Paducheva2004", "label": "1"}
+{"id": "871", "sentence": "В результате этого он получил оспу.", "error_type": "Semantics", "detailed_source": "Seliverstova", "label": "0"}
+{"id": "654", "sentence": "Скрою, он мне понравился.", "error_type": "Semantics", "detailed_source": "Paducheva2010", "label": "0"}
+{"id": "36", "sentence": "Все, кто учились в математическом классе, сдали тест на отлично.", "error_type": "Syntax", "detailed_source": "USE8", "label": "0"}
+{"id": "716", "sentence": "Видите, я все средства пускаю, чтобы не быть одинокому.", "error_type": "0", "detailed_source": "Lutikova", "label": "1"}
+{"id": "942", "sentence": "Итак, я прихожу к вам завтра в семь.", "error_type": "0", "detailed_source": "Paducheva2013", "label": "1"}
+{"id": "530", "sentence": "Обнаруживается, что преступник на свободе.", "error_type": "0", "detailed_source": "Paducheva2010", "label": "1"}
+{"id": "85", "sentence": "Она любила Анну, но ей приятно было видеть, что и у нее есть слабости.", "error_type": "0", "detailed_source": "Seliverstova", "label": "1"}
+{"id": "404", "sentence": "Новые наночастицы позволяют быстро и проще очистить среду от загрязняющих веществ.", "error_type": "Syntax", "detailed_source": "USE8", "label": "0"}
+{"id": "376", "sentence": "Что мне делать с шестистами спортсменами, я не могу их всех отправить?", "error_type": "Morphology", "detailed_source": "USE7", "label": "0"}
+{"id": "345", "sentence": "Гора у вершины была безлесной.", "error_type": "Semantics", "detailed_source": "Seliverstova", "label": "0"}
+{"id": "84", "sentence": "Ее изнеженные пальцы не знали игл.", "error_type": "0", "detailed_source": "Paducheva2004", "label": "1"}
+{"id": "224", "sentence": "Есть блины с вареньем вкусное.", "error_type": "Syntax", "detailed_source": "Testelets", "label": "0"}
+{"id": "338", "sentence": "Села розовая птица на песчаный берег и так неторопливо сложила свои волнистые крылья, что как будто кружевной подол платья подобрала.", "error_type": "Syntax", "detailed_source": "USE8", "label": "0"}
+{"id": "446", "sentence": "Нет, я бы не рискнул своим процессором.", "error_type": "0", "detailed_source": "Paducheva2004", "label": "1"}
+{"id": "776", "sentence": "Так думают почти все люди, может, даже и не почти, а все без исключения люди.", "error_type": "0", "detailed_source": "Paducheva2013", "label": "1"}
+{"id": "299", "sentence": "Как широкая река, этот поток заполняет собою книгу от корки до корки, и не всякая птица долетит до середины могучего потока.", "error_type": "0", "detailed_source": "Testelets", "label": "1"}
+{"id": "907", "sentence": "Вопреки распространённого мнения, лучшие рестораны Франции находятся вовсе не в Париже.", "error_type": "Syntax", "detailed_source": "USE8", "label": "0"}
+{"id": "962", "sentence": "Второй роты не приходило.", "error_type": "Semantics", "detailed_source": "Paducheva2013", "label": "0"}
+{"id": "633", "sentence": "Она медленно становится бледной.", "error_type": "Semantics", "detailed_source": "Seliverstova", "label": "0"}
+{"id": "106", "sentence": "Она красива, но я так не считаю.", "error_type": "Semantics", "detailed_source": "Paducheva2013", "label": "0"}
+{"id": "160", "sentence": "Я показал этот текст студентам, обоим специалистам в эскимосском языке.", "error_type": "Syntax", "detailed_source": "Testelets", "label": "0"}
+{"id": "722", "sentence": "Для меня лично, и ты это знаешь, родственные узы не играют никакой роли.", "error_type": "0", "detailed_source": "Rusgram", "label": "1"}
+{"id": "671", "sentence": "Иван, к сожалению, в отпуске.", "error_type": "0", "detailed_source": "Paducheva2010", "label": "1"}
+{"id": "327", "sentence": "В результате раскопок учёные установили то, что ещё в глубокой древности янтарь использовали как украшение.", "error_type": "Syntax", "detailed_source": "USE8", "label": "0"}
+{"id": "443", "sentence": "На дороге показался я.", "error_type": "Semantics", "detailed_source": "Paducheva2013", "label": "0"}
+{"id": "125", "sentence": "Я однажды решал эту задачу.", "error_type": "0", "detailed_source": "Paducheva2010", "label": "1"}
+{"id": "655", "sentence": "Сын выбрал себе жену, какую ему вздумалось ― раз!", "error_type": "0", "detailed_source": "Paducheva2004", "label": "1"}
+{"id": "380", "sentence": "У нас вчера было заседание сектора.", "error_type": "0", "detailed_source": "Seliverstova", "label": "1"}
+{"id": "398", "sentence": "Макар Игнатьевич, будучи человеком добрым, желающим всем помочь, не только помогал нуждающимся хлебом, но и одеждой, лекарствами.", "error_type": "Syntax", "detailed_source": "USE8", "label": "0"}
+{"id": "544", "sentence": "Рука человека в пространстве написала книгу, душа человека выразила долю своей сокровенной жизни.", "error_type": "Semantics", "detailed_source": "Seliverstova", "label": "0"}
+{"id": "788", "sentence": "Я говорю с адвокатом.", "error_type": "0", "detailed_source": "Seliverstova", "label": "1"}
+{"id": "687", "sentence": "Дорога пролегала через лес.", "error_type": "0", "detailed_source": "Paducheva2010", "label": "1"}
+{"id": "269", "sentence": "Согласно приказа директора, победители школьной олимпиады получат дипломы и подарки.", "error_type": "Syntax", "detailed_source": "USE8", "label": "0"}
+{"id": "946", "sentence": "Ты сидишь слишком далеко.", "error_type": "0", "detailed_source": "Seliverstova", "label": "1"}
+{"id": "972", "sentence": "Пришлось кого-нибудь попросить помочь.", "error_type": "Semantics", "detailed_source": "Rusgram", "label": "0"}
+{"id": "798", "sentence": "Возьми со стола свои книги.", "error_type": "0", "detailed_source": "Seliverstova", "label": "1"}
+{"id": "168", "sentence": "Смотрел во всех углах, но ничего не нашел.", "error_type": "0", "detailed_source": "Paducheva2004", "label": "1"}
+{"id": "573", "sentence": "Уже дома измерил 37 градусов в качестве температуры.", "error_type": "Syntax", "detailed_source": "Testelets", "label": "0"}
+{"id": "690", "sentence": "Он промахнулся по зайцу пулей.", "error_type": "Syntax", "detailed_source": "Testelets", "label": "0"}
+{"id": "593", "sentence": "Мало того, что заставили человека 4 часа торчать под проливным дождем, так еще и разрешили работать больной!", "error_type": "Syntax", "detailed_source": "Lutikova", "label": "0"}
+{"id": "318", "sentence": "Я не взяла ключи.", "error_type": "0", "detailed_source": "Paducheva2013", "label": "1"}
+{"id": "832", "sentence": "Стаканы есть в шкафу.", "error_type": "0", "detailed_source": "Testelets", "label": "1"}
+{"id": "416", "sentence": "Много горя ее матери пришлось пережить.", "error_type": "0", "detailed_source": "Testelets", "label": "1"}
+{"id": "923", "sentence": "Он мне сказал, что приходи.", "error_type": "Syntax", "detailed_source": "Rusgram", "label": "0"}
+{"id": "258", "sentence": "Всю жизнь я была толстой.", "error_type": "0", "detailed_source": "Seliverstova", "label": "1"}
+{"id": "322", "sentence": "Я обращаюсь за советом именно к вам.", "error_type": "0", "detailed_source": "Paducheva2010", "label": "1"}
+{"id": "839", "sentence": "Те, кто внимательно прочитает заглавие статьи, может определить и тему, и основную мысль текста.", "error_type": "Syntax", "detailed_source": "USE8", "label": "0"}
+{"id": "399", "sentence": "Я ждал его с двух до трех.", "error_type": "0", "detailed_source": "Paducheva2010", "label": "1"}
+{"id": "231", "sentence": "Доклад написан уже час.", "error_type": "Semantics", "detailed_source": "Seliverstova", "label": "0"}
+{"id": "535", "sentence": "Отец пообещал, что по прибытию из командировки непременно расскажет во всех подробностях, что видел за границей.", "error_type": "Syntax", "detailed_source": "USE8", "label": "0"}
+{"id": "2", "sentence": "Лесные запахи набегали волнами; в них смешалось дыхание можжевельника, вереска, брусники.", "error_type": "0", "detailed_source": "USE5", "label": "1"}
+{"id": "796", "sentence": "Иван не понимает мое желание идти на вечер один.", "error_type": "Syntax", "detailed_source": "Lutikova", "label": "0"}
+{"id": "782", "sentence": "Унас редко есть занятия по истории.", "error_type": "Semantics", "detailed_source": "Seliverstova", "label": "0"}
+{"id": "893", "sentence": "С каждого дерева упала груша.", "error_type": "0", "detailed_source": "Testelets", "label": "1"}
+{"id": "751", "sentence": "Оттуда привезли в последний момент взвод солдат и военный оркестр.", "error_type": "0", "detailed_source": "USE7", "label": "1"}
+{"id": "589", "sentence": "Болотный ил является превосходным удобрением.", "error_type": "0", "detailed_source": "USE5", "label": "1"}
+{"id": "466", "sentence": "Я не принимаю то, как они живут.", "error_type": "Semantics", "detailed_source": "Seliverstova", "label": "0"}
+{"id": "587", "sentence": "Он принял свое решение посвятить покеру все свое время и переехал в Лас Вегас, играя в игры с высокими ставками.", "error_type": "0", "detailed_source": "Lutikova", "label": "1"}
+{"id": "728", "sentence": "По словам его жены, Ростоцкий целый день жалуется на сердце, однако машину повел сам.", "error_type": "Syntax", "detailed_source": "USE8", "label": "0"}
+{"id": "190", "sentence": "Батьку Минная играет очень интересный актер Ю. Горобец (кажется, это пока его лучшая работа в кино).", "error_type": "0", "detailed_source": "Testelets", "label": "1"}
+{"id": "426", "sentence": "Сравнивая ископаемых животных с современными, биологам открылось, почему доисторические существа были такими большими.", "error_type": "Syntax", "detailed_source": "USE8", "label": "0"}
+{"id": "273", "sentence": "В данный момент он ест два яйца.", "error_type": "Semantics", "detailed_source": "Paducheva2010", "label": "0"}
+{"id": "951", "sentence": "От антисемитизма страдать не могла.", "error_type": "0", "detailed_source": "Testelets", "label": "1"}
+{"id": "713", "sentence": "Всем дано за обедом, как и в прошлом году, по пять апельсинов.", "error_type": "0", "detailed_source": "USE7", "label": "1"}
+{"id": "815", "sentence": "Не мешай, у нас есть важный разговор.", "error_type": "Semantics", "detailed_source": "Seliverstova", "label": "0"}
+{"id": "575", "sentence": "Она взяла кувшин на голову.", "error_type": "Semantics", "detailed_source": "Seliverstova", "label": "0"}
+{"id": "72", "sentence": "Зина считает, что очень нужно ему в очереди стоять.", "error_type": "Semantics", "detailed_source": "Paducheva2010", "label": "0"}
+{"id": "112", "sentence": "У вас есть боли?", "error_type": "0", "detailed_source": "Seliverstova", "label": "1"}
+{"id": "888", "sentence": "Ибрагим не будет не улыбаться.", "error_type": "Syntax", "detailed_source": "Rusgram", "label": "0"}
+{"id": "960", "sentence": "Мусин без причины не отказался приходить в суд на обжалование ареста.", "error_type": "Semantics", "detailed_source": "Paducheva2013", "label": "0"}
+{"id": "968", "sentence": "Павел Алексеевич уже перестал ждать всякого ответа.", "error_type": "Semantics", "detailed_source": "Paducheva2013", "label": "0"}
+{"id": "153", "sentence": "Иван войдя, он поздоровался.", "error_type": "Syntax", "detailed_source": "Testelets", "label": "0"}
+{"id": "300", "sentence": "Меня отвели и крышку к гробу стали прибивать молотком гвоздями, но когда услыхал, что земля уже застучала о крышку гроба, ― я вздрогнул.", "error_type": "Syntax", "detailed_source": "Testelets", "label": "0"}
+{"id": "513", "sentence": "С полки упал чайник.", "error_type": "0", "detailed_source": "Testelets", "label": "1"}
+{"id": "619", "sentence": "Детей на полу не прыгало.", "error_type": "Semantics", "detailed_source": "Rusgram", "label": "0"}
+{"id": "99", "sentence": "Этот будь был очень тяжелым.", "error_type": "Syntax", "detailed_source": "Testelets", "label": "0"}
+{"id": "723", "sentence": "Озеро у берегов заросло водорослями.", "error_type": "0", "detailed_source": "Seliverstova", "label": "1"}
+{"id": "699", "sentence": "Потому что его убило, другой головы не поднимает.", "error_type": "Syntax", "detailed_source": "Rusgram", "label": "0"}
+{"id": "347", "sentence": "Весь день Маша была с ним.", "error_type": "0", "detailed_source": "Seliverstova", "label": "1"}
+{"id": "649", "sentence": "Я не считаю уместным давать какие-либо указания.", "error_type": "0", "detailed_source": "Paducheva2013", "label": "1"}
+{"id": "326", "sentence": "Однако та стеснительность, которая разве что молодым к лицу, не разъединяла их, а рождала ощущение слитности, в былые годы неведомой.", "error_type": "0", "detailed_source": "Paducheva2010", "label": "1"}
+{"id": "146", "sentence": "Поселок расположен далеко от реки.", "error_type": "0", "detailed_source": "Seliverstova", "label": "1"}
+{"id": "19", "sentence": "Удивительно милый, честный, добрый человек, всегда готовый откликнуться на чужое горе, на слово которого можно положиться.", "error_type": "0", "detailed_source": "Testelets", "label": "1"}
+{"id": "277", "sentence": "Так он тебе и скажет!", "error_type": "0", "detailed_source": "Paducheva2013", "label": "1"}
+{"id": "384", "sentence": "Я смотрю на детей, бросающих друг другу мяч.", "error_type": "0", "detailed_source": "Testelets", "label": "1"}
+{"id": "454", "sentence": "Благодаря различных стилевых вкраплений в художественной речи создаётся иронический или юмористический характер повествования.", "error_type": "Syntax", "detailed_source": "USE8", "label": "0"}
+{"id": "706", "sentence": "На сгибе ручки ковша Большой Медведицы есть вторая звёздочка под названием Алькор, которую разглядят лишь те, кто не имеют проблем со зрением.", "error_type": "Syntax", "detailed_source": "USE8", "label": "0"}
+{"id": "810", "sentence": "Том и Гек разговаривают.", "error_type": "0", "detailed_source": "Testelets", "label": "1"}
+{"id": "876", "sentence": "Сейчас как раз есть одно из занятий по английскому языку.", "error_type": "Semantics", "detailed_source": "Seliverstova", "label": "0"}
+{"id": "425", "sentence": "На меже, около дороги, стоял трактор.", "error_type": "0", "detailed_source": "Seliverstova", "label": "1"}
+{"id": "432", "sentence": "Следов высокоорганизованной материи не обнаружено.", "error_type": "0", "detailed_source": "Paducheva2013", "label": "1"}
+{"id": "595", "sentence": "Министр обороны заявил, что французские подразделения будут выведены из Берлина.", "error_type": "0", "detailed_source": "Paducheva2010", "label": "1"}
+{"id": "727", "sentence": "Формы единственного числа не существует.", "error_type": "0", "detailed_source": "Paducheva2004", "label": "1"}
+{"id": "762", "sentence": "Сами себе осложняем жизнь.", "error_type": "0", "detailed_source": "Paducheva2010", "label": "1"}
+{"id": "445", "sentence": "Наша дивизия была довольно глухая, стоявшая вдали и от Петербурга и от Москвы.", "error_type": "0", "detailed_source": "Seliverstova", "label": "1"}
+{"id": "841", "sentence": "Я показал гостям автограф писателя, который мне очень дорог.", "error_type": "Syntax", "detailed_source": "USE8", "label": "0"}
+{"id": "518", "sentence": "Обнаружив неполадки в работе прибора, он должен быть немедленно отключён от электросети.", "error_type": "Syntax", "detailed_source": "USE8", "label": "0"}
+{"id": "961", "sentence": "Рыбы не пахло.", "error_type": "Semantics", "detailed_source": "Rusgram", "label": "0"}

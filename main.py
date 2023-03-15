@@ -29,6 +29,7 @@ DANETQA = 'danetqa'
 PARUS = 'parus'
 RWSD = 'rwsd'
 RUSSE = 'russe'
+RUCOLA = 'rucola'
 
 OPENAI_TOKEN = os.getenv('OPENAI_TOKEN')
 COHERE_TOKEN = os.getenv('COHERE_TOKEN')
@@ -328,17 +329,17 @@ RUSSE_PROMPT = '''Keep it short, respond Yes or No.
 ---
 Sentence A: Бурые ковровые дорожки заглушали шаги
 Sentence B: Приятели решили выпить на дорожку в местном баре
-Question: Does "дорожка" mean the same in sentences A and B?
+Question: Is word "дорожка" used in the same meaning in sentences A and B?
 Answer: No
 ---
 Sentence A: Как изменится защита Динамо в новом сезоне?
 Sentence B: Обе партии протекали одинаково: в обеих была разыграна французская защита
-Question: Does "защита" mean the same in sentences A and B?
+Question: Is word "защита" used in the same meaning in sentences A and B?
 Answer: Yes
 ---
 Sentence A: {a}
 Sentence B: {b}
-Question: Does "{word}" mean the same in sentences A and B?
+Question: Is word "{word}" used in the same meaning in sentences A and B?
 Answer: '''
 
 
@@ -357,6 +358,52 @@ def norm_russe_response(response):
     })
 
 
+######
+#
+#  RUCOLA
+#
+#####
+
+
+# {'id': '49',
+#  'sentence': 'Мне бы хотелось открыться кому-нибудь, но разве здесь есть такие люди, которые бы могли меня понять.',
+#  'acceptable': '1',
+#  'error_type': '0',
+#  'detailed_source': 'Seliverstova'}
+
+
+RUCOLA_PROMPT = '''Is Sentence correct? Check syntax, semantics and morphology.
+Keep it short, respond Yes or No.
+---
+Sentence: Ты сидела слишком близко от него.
+Correct: Yes
+---
+Sentence: Я слышал вой и лай собак и радовался, воображая, что ехать неподалеку.
+Correct: No
+---
+Sentence: Он мне сказал, что приходи.
+Correct: No
+---
+Sentence: А ты ехай прямо к директору театров, князю Гагарину.
+Correct: No
+---
+Sentence: {sentence}
+Correct: '''
+
+
+def rucola_prompt(item, template=RUCOLA_PROMPT):
+    return template.format(
+        sentence=item['sentence']
+    )
+
+
+def norm_rucola_response(response):
+    return norm_response_mapping(response, {
+        'Yes': '1',
+        'No': '0'
+    })
+
+
 #####
 #
 #   PROMPTS, NORM RESP
@@ -370,6 +417,7 @@ TASK_PROMPTS = {
     PARUS: parus_prompt,
     RWSD: rwsd_prompt,
     RUSSE: russe_prompt,
+    RUCOLA: rucola_prompt,
 }
 
 NORM_RESPONSES = {
@@ -378,6 +426,7 @@ NORM_RESPONSES = {
     PARUS: norm_parus_response,
     RWSD: norm_rwsd_response,
     RUSSE: norm_russe_response,
+    RUCOLA: norm_rucola_response,
 }
 
 
@@ -389,7 +438,7 @@ NORM_RESPONSES = {
 
 
 def acc_score(id_targets, id_preds):
-    total, accurate, skip = 0, 0, 0
+    total, correct, skip = 0, 0, 0
     for id in id_targets.keys() & id_preds.keys():
         pred = id_preds.get(id)
         if pred is None:
@@ -397,9 +446,9 @@ def acc_score(id_targets, id_preds):
             continue
 
         total += 1
-        accurate += id_targets.get(id) == pred
+        correct += id_targets.get(id) == pred
             
-    return accurate / total, skip
+    return correct / total, skip
 
 
 ########
