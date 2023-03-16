@@ -180,20 +180,20 @@ def parse_dotenv(lines):
 #  'idx': 104}
 
 
-TERRA_PROMPT = '''Does Premise entail Hypothesis?
-Choose most probable. Keep it short, respond Yes or No.
+TERRA_PROMPT = '''Прочитай текст, проверь верно ли утверждение.
+Ответь коротко: да или нет. Если не уверен, выбери наиболее вероятный.
 ---
-Premise: Трижды он был привлечён судебным приставом к административной ответственности по ст. 17.15 КоАП РФ за неисполнение содержащихся в исполнительном документе требований неимущественного характера. Так как срок для добровольного исполнения истёк, пристрой снесли принудительно.
-Hypothesis: Пристрой был снесен.
-Entail: Yes
+Текст: Трижды он был привлечён судебным приставом к административной ответственности по ст. 17.15 КоАП РФ за неисполнение содержащихся в исполнительном документе требований неимущественного характера. Так как срок для добровольного исполнения истёк, пристрой снесли принудительно.
+Утверждение: Пристрой был снесен.
+Верно: Да
 ---
-Premise: Для молодого организма это не прошло бесследно. Резкое токсическое воздействие этанола привело к смерти парня. Его тело обнаружила бабушка, которая вернулась на следующий день.
-Hypothesis: Молодой организм стал сильнее от этанола.
-Entail: No
+Текст: Для молодого организма это не прошло бесследно. Резкое токсическое воздействие этанола привело к смерти парня. Его тело обнаружила бабушка, которая вернулась на следующий день.
+Утверждение: Молодой организм стал сильнее от этанола.
+Верно: Нет
 ---
-Premise: {premise}
-Hypothesis: {hypothesis}
-Entail: '''
+Текст: {premise}
+Утверждение: {hypothesis}
+Верно: '''
 
 
 def terra_prompt(item, template=TERRA_PROMPT):
@@ -203,10 +203,14 @@ def terra_prompt(item, template=TERRA_PROMPT):
     )
 
 
-def norm_response_mapping(response, pattern_labels):
+def norm_response_mapping(response, pattern_labels, stop_sequence=r'---'):
+    match = stop_sequence and re.search(stop_sequence, response)
+    if match:
+        response = response[:match.start()]
+
     labels = []
     for pattern, label in pattern_labels.items():
-        if pattern in response:
+        if re.search(pattern, response, re.I):
             labels.append(label)
 
     if len(labels) == 1:
@@ -215,8 +219,8 @@ def norm_response_mapping(response, pattern_labels):
 
 def norm_terra_response(response):
     return norm_response_mapping(response, {
-        'Yes': 'entailment',
-        'No': 'not_entailment'
+        r'yes|да': 'entailment',
+        r'no|нет': 'not_entailment'
     })
 
 
@@ -232,20 +236,19 @@ def norm_terra_response(response):
 #  'label': True,
 
 
-DANETQA_PROMPT = '''Given Passage answer the Question.
-Keep answer short, respond Yes or No. Choose most probable.
+DANETQA_PROMPT = '''Прочитай текст и ответь на вопрос. Ответь коротко: да или нет. Если не уверен, выбери наиболее вероятный вариант.
 ---
-Passage: Пётр Моисеевич Миронов  — красноармеец Рабоче-крестьянской Красной Армии, участник Великой Отечественной войны, Герой Советского Союза . Пётр Миронов родился в 1904 году в деревне Утринка . После окончания шести классов школы проживал в Москве, работал в сфере общепита. В июне 1941 года Миронов был призван на службу в Рабоче-крестьянскую Красную Армию. С июля 1942 года — на фронтах Великой Отечественной войны.
-Question: Был ли миронов в армии?
-Answer: Yes
+Текст: Пётр Моисеевич Миронов  — красноармеец Рабоче-крестьянской Красной Армии, участник Великой Отечественной войны, Герой Советского Союза . Пётр Миронов родился в 1904 году в деревне Утринка . После окончания шести классов школы проживал в Москве, работал в сфере общепита. В июне 1941 года Миронов был призван на службу в Рабоче-крестьянскую Красную Армию. С июля 1942 года — на фронтах Великой Отечественной войны.
+Вопрос: Был ли миронов в армии?
+Ответ: Да
 ---
-Passage: Брюс Ли  — гонконгский и американский киноактёр, режиссёр, сценарист, продюсер, популяризатор и реформатор в области китайских боевых искусств, мастер боевых искусств, постановщик боевых сцен и философ, основоположник стиля Джит Кун-До. Брюс Ли начал сниматься в кино с детства. Его детское имя — Ли Сяолун , взрослое имя — Ли Чжэньфань .
-Question: Правда ли что брюс ли не был бойцом?
-Answer: No
+Текст: Брюс Ли  — гонконгский и американский киноактёр, режиссёр, сценарист, продюсер, популяризатор и реформатор в области китайских боевых искусств, мастер боевых искусств, постановщик боевых сцен и философ, основоположник стиля Джит Кун-До. Брюс Ли начал сниматься в кино с детства. Его детское имя — Ли Сяолун , взрослое имя — Ли Чжэньфань .
+Вопрос: Правда ли что брюс ли не был бойцом?
+Ответ: Нет
 ---
-Passage: {passage}
-Question: {question}
-Answer: '''
+Текст: {passage}
+Вопрос: {question}
+Ответ: '''
 
 
 def danetqa_prompt(item, template=DANETQA_PROMPT):
@@ -257,8 +260,8 @@ def danetqa_prompt(item, template=DANETQA_PROMPT):
 
 def norm_danetqa_response(response):
     return norm_response_mapping(response, {
-        'Yes': True,
-        'No': False
+        r'yes|да': True,
+        r'no|нет': False
     })
 
 
@@ -282,26 +285,26 @@ PARUS_PROMPT_QUESTIONS = {
     'cause': 'Что было причиной?',
 }
 
-PARUS_PROMPT = '''Given Premise answer the Question. Choose A or B.
-In case not enough information choose most probable.
+PARUS_PROMPT = '''Прочитай текст и ответь на вопрос про причинно-следственную связь.
+Выбери вариант ответа A или B. Если не уверен, выбери наиболее вероятный вариант.
 ---
-Premise: Я прибралась дома.
-Question: Что было причиной?
+Текст: Я прибралась дома.
+Вопрос: Что было причиной?
 A: Я была завалена работой.
 B: Я ждала друзей.
-Answer: B
+Ответ: B
 ---
-Premise: Политик был признан виновным в мошенничестве.
-Question: Что случилось в результате?
+Текст: Политик был признан виновным в мошенничестве.
+Вопрос: Что случилось в результате?
 A: Он был отстранён от должности.
 B: Он начал кампанию за переизбрание.
-Answer: A
+Ответ: A
 ---
-Premise: {premise}
-Question: {question}
+Текст: {premise}
+Вопрос: {question}
 A: {choice1}
 B: {choice2}
-Answer: '''
+Ответ: '''
 
 def parus_prompt(item, template=PARUS_PROMPT):
     return template.format(
@@ -335,19 +338,19 @@ def norm_parus_response(response):
 #  'label': False}
 
 
-RWSD_PROMPT = '''Keep it short, respond Yes or No
+RWSD_PROMPT = '''Прочитай текст и ответь на вопрос про кореференцию. Ответь да или нет.
 ---
-Text: Уэйнрайты обращались с мистером Кроули, как с принцем, пока он не изменил свое завещание в их пользу; тогда они стали обращаться с ним, как с грязью. Люди говорили, что он умер, только чтобы избавиться от их вечного нытья.
-Question: Does "их вечного нытья" refere to "Уэйнрайты"?
-Answer: Yes
+Текст: Уэйнрайты обращались с мистером Кроули, как с принцем, пока он не изменил свое завещание в их пользу; тогда они стали обращаться с ним, как с грязью. Люди говорили, что он умер, только чтобы избавиться от их вечного нытья.
+Вопрос: Фраза "их вечного нытья" ссылается на "Уэйнрайты"?
+Ответ: Да
 ---
-Text: Кубок не помещается в коричневый чемодан, потому что он слишком большой.
-Question: Does "он слишком большой" refere to "чемодан"?
-Answer: No
+Текст: Кубок не помещается в коричневый чемодан, потому что он слишком большой.
+Вопрос: Фраза "он слишком большой" ссылается на "чемодан"?
+Ответ: Нет
 ---
-Text: {text}
-Question: Does "{b}" refere to "{a}"?
-Answer: '''
+Текст: {text}
+Вопрос: Фраза "{b}" ссылается на "{a}"?
+Ответ: '''
 
 
 def rwsd_prompt(item, template=RWSD_PROMPT):
@@ -360,8 +363,8 @@ def rwsd_prompt(item, template=RWSD_PROMPT):
 
 def norm_rwsd_response(response):
     return norm_response_mapping(response, {
-        'Yes': True,
-        'No': False
+        r'yes|да': True,
+        r'no|нет': False
     })
 
 
@@ -385,22 +388,22 @@ def norm_rwsd_response(response):
 #  'gold_sense2': 2}
 
 
-RUSSE_PROMPT = '''Keep it short, respond Yes or No.
+RUSSE_PROMPT = '''Ответь на вопрос про значение слова в контексте. Ответь коротко: да или нет.
 ---
-Sentence A: Бурые ковровые дорожки заглушали шаги
-Sentence B: Приятели решили выпить на дорожку в местном баре
-Question: Is word "дорожка" used in the same meaning in sentences A and B?
-Answer: No
+A: Бурые ковровые дорожки заглушали шаги
+B: Приятели решили выпить на дорожку в местном баре
+Вопрос: Слово "дорожка" имеет одинаковое значение в A и B?
+Ответ: Нет
 ---
-Sentence A: Как изменится защита Динамо в новом сезоне?
-Sentence B: Обе партии протекали одинаково: в обеих была разыграна французская защита
-Question: Is word "защита" used in the same meaning in sentences A and B?
-Answer: Yes
+A: Как изменится защита Динамо в новом сезоне?
+B: Обе партии протекали одинаково: в обеих была разыграна французская защита
+Вопрос: Слово "защита" имеет одинаковое значение в A и B?
+Ответ: Да
 ---
-Sentence A: {a}
-Sentence B: {b}
-Question: Is word "{word}" used in the same meaning in sentences A and B?
-Answer: '''
+A: {a}
+B: {b}
+Вопрос: Слово "{word}" имеет одинаковое значение в A и B?
+Ответ: '''
 
 
 def russe_prompt(item, template=RUSSE_PROMPT):
@@ -413,8 +416,8 @@ def russe_prompt(item, template=RUSSE_PROMPT):
 
 def norm_russe_response(response):
     return norm_response_mapping(response, {
-        'Yes': True,
-        'No': False
+        r'yes|да': True,
+        r'no|нет': False
     })
 
 
@@ -432,23 +435,23 @@ def norm_russe_response(response):
 #  'detailed_source': 'Seliverstova'}
 
 
-RUCOLA_PROMPT = '''Is Sentence correct? Check syntax, semantics and morphology.
-Keep it short, respond Yes or No.
+RUCOLA_PROMPT = '''Предложение корректное или нет? Проверь синтаксис, семантику и морфологию.
+Ответь коротко: да или нет.
 ---
-Sentence: Ты сидела слишком близко от него.
-Correct: Yes
+Предложение: Ты сидела слишком близко от него.
+Корректное: Да
 ---
-Sentence: Я слышал вой и лай собак и радовался, воображая, что ехать неподалеку.
-Correct: No
+Предложение: Я слышал вой и лай собак и радовался, воображая, что ехать неподалеку.
+Корректное: Нет
 ---
-Sentence: Он мне сказал, что приходи.
-Correct: No
+Предложение: Он мне сказал, что приходи.
+Корректное: Нет
 ---
-Sentence: А ты ехай прямо к директору театров, князю Гагарину.
-Correct: No
+Предложение: А ты ехай прямо к директору театров, князю Гагарину.
+Корректное: Нет
 ---
-Sentence: {sentence}
-Correct: '''
+Предложение: {sentence}
+Корректное: '''
 
 
 def rucola_prompt(item, template=RUCOLA_PROMPT):
@@ -459,8 +462,8 @@ def rucola_prompt(item, template=RUCOLA_PROMPT):
 
 def norm_rucola_response(response):
     return norm_response_mapping(response, {
-        'Yes': '1',
-        'No': '0'
+        r'yes|да': '1',
+        r'no|нет': '0'
     })
 
 
