@@ -52,31 +52,107 @@ GPT_35_TURBO_0301 = 'gpt-3.5-turbo-0301'
 
 COHERE_XLARGE = 'xlarge'
 
-MODEL_LABELS = {
+FB_XGLM_1 = 'facebook/xglm-1.7B'
+FB_XGLM_2 = 'facebook/xglm-2.9B'
+FB_XGLM_4 = 'facebook/xglm-4.5B'
+
+SBER_RUGPT3_SMALL = 'sberbank-ai/rugpt3small_based_on_gpt2'
+SBER_RUGPT3_MEDIUM = 'sberbank-ai/rugpt3medium_based_on_gpt2'
+SBER_RUGPT3_LARGE = 'sberbank-ai/rugpt3large_based_on_gpt2'
+
+SBER_T5_BASE = 'sberbank-ai/ruT5-base'
+SBER_T5_LARGE = 'sberbank-ai/ruT5-large'
+
+WORTEGA_INSTRUCT_SMALL = 'AlexWortega/instruct_rugptSmall'
+WORTEGA_INSTRUCT_MEDIUM = 'AlexWortega/instruct_rugptMedium'
+
+BLOOM_RU = 'bs-la/bloom-1b7_ru_continual-pretrain_100000samples_-1vocab_original'
+
+EVAL_LABEL_MODELS = {
+    'davinci': TEXT_DAVINCI_003,
+    'turbo': GPT_35_TURBO_0301,
+    'cohere': COHERE_XLARGE,
+    'curie': TEXT_CURIE_001,
+
+    'rugpt3_small': SBER_RUGPT3_SMALL,
+    'rugpt3_medium': SBER_RUGPT3_MEDIUM,
+    'rugpt3_large': SBER_RUGPT3_LARGE,
+    
+    'xglm1': FB_XGLM_1,
+    'xglm2': FB_XGLM_2,
+    'xglm4': FB_XGLM_4,
+
+    'instruct_small': WORTEGA_INSTRUCT_SMALL,
+    'instruct_medium': WORTEGA_INSTRUCT_MEDIUM,
+    
+    'bloom_ru': BLOOM_RU,
+}
+
+MODEL_TASK_EVALS = {
+    (TEXT_DAVINCI_003, TERRA): '01_davinci_terra',
+    (TEXT_DAVINCI_003, DANETQA): '02_davinci_danetqa',
+    (TEXT_DAVINCI_003, PARUS): '03_davinci_parus',
+    (GPT_35_TURBO_0301, PARUS): '04_turbo_parus',
+    (GPT_35_TURBO_0301, DANETQA): '05_turbo_danetqa',
+    (GPT_35_TURBO_0301, TERRA): '06_turbo_terra',
+    (COHERE_XLARGE, PARUS): '07_cohere_parus',
+    (COHERE_XLARGE, DANETQA): '08_cohere_danetqa',
+    (COHERE_XLARGE, TERRA): '09_cohere_terra',
+    (GPT_35_TURBO_0301, RWSD): '12_turbo_rwsd',
+    (GPT_35_TURBO_0301, RUSSE): '13_turbo_russe',
+    (GPT_35_TURBO_0301, RUCOLA): '14_turbo_rucola',
+    (TEXT_CURIE_001, PARUS): '15_curie_parus',
+    (TEXT_CURIE_001, TERRA): '16_curie_terra',
+    (TEXT_CURIE_001, DANETQA): '17_curie_danetqa',
+}
+
+
+def find_model_task_evals(dir=Path('evals')):
+    for path in dir.glob('*.jsonl'):
+        name = path.stem
+
+        for label, model in EVAL_LABEL_MODELS.items():
+            if label in name:
+                break
+        else:
+            model = None
+            
+        for task in TASKS:
+            if task in name:
+                break
+        else:
+            task = None
+            
+        yield (model, task), name
+
+
+for key, name in find_model_task_evals():
+    if key not in MODEL_TASK_EVALS:
+        MODEL_TASK_EVALS[key] = name
+
+
+REPORT_MODELS = [
+    GPT_35_TURBO_0301,
+    TEXT_DAVINCI_003,
+    TEXT_CURIE_001,
+    COHERE_XLARGE,
+    SBER_RUGPT3_SMALL,
+    SBER_RUGPT3_MEDIUM,
+    SBER_RUGPT3_LARGE,
+    FB_XGLM_1, 
+    FB_XGLM_2,
+    FB_XGLM_4,
+    WORTEGA_INSTRUCT_SMALL,
+    WORTEGA_INSTRUCT_MEDIUM,
+    BLOOM_RU,
+]
+REPORT_MODEL_LABELS = {
     GPT_35_TURBO_0301: 'openai/turbo',
     TEXT_DAVINCI_003: 'openai/davinci',
     TEXT_CURIE_001: 'openai/curie',
     COHERE_XLARGE: 'cohere/xlarge',
+    BLOOM_RU: 'bs-la/bloom-1b7_ru_...'
 }
-MODELS = list(MODEL_LABELS.keys())
-
-MODEL_TASK_EVALS = [
-    (TEXT_DAVINCI_003, TERRA, '01_davinci_terra'),
-    (TEXT_DAVINCI_003, DANETQA, '02_davinci_danetqa'),
-    (TEXT_DAVINCI_003, PARUS, '03_davinci_parus'),
-    (GPT_35_TURBO_0301, PARUS, '04_turbo_parus'),
-    (GPT_35_TURBO_0301, DANETQA, '05_turbo_danetqa'),
-    (GPT_35_TURBO_0301, TERRA, '06_turbo_terra'),
-    (COHERE_XLARGE, PARUS, '07_cohere_parus'),
-    (COHERE_XLARGE, DANETQA, '08_cohere_danetqa'),
-    (COHERE_XLARGE, TERRA, '09_cohere_terra'),
-    (GPT_35_TURBO_0301, RWSD, '12_turbo_rwsd'),
-    (GPT_35_TURBO_0301, RUSSE, '13_turbo_russe'),
-    (GPT_35_TURBO_0301, RUCOLA, '14_turbo_rucola'),
-    (TEXT_CURIE_001, PARUS, '15_curie_parus'),
-    (TEXT_CURIE_001, TERRA, '16_curie_terra'),
-    (TEXT_CURIE_001, DANETQA, '17_curie_danetqa'),
-]
 
 
 ######
@@ -179,14 +255,14 @@ RUCOLA_LB_SOTA = 0.82
 ######
 
 
-def scores_table(model_task_scores, rsg_lb=RSG_LB, tasks=TASKS, models=MODELS):
+def scores_table(model_task_scores, rsg_lb=RSG_LB, tasks=TASKS, models=REPORT_MODELS):
     data = []
     for model, task, (score, skip) in model_task_scores:
         value = '?'
         if score:
             value = '%.2f' % score
-            if skip:
-                value += ', %d!' % skip
+        if skip:
+            value += ', %d!' % skip
 
         data.append((model, task, value))
 
@@ -206,7 +282,7 @@ def scores_table(model_task_scores, rsg_lb=RSG_LB, tasks=TASKS, models=MODELS):
         columns=tasks,
         index=['human', 'sota'] + models
     )
-    table = table.rename(index=MODEL_LABELS)
+    table = table.rename(index=REPORT_MODEL_LABELS)
 
     return table
 
@@ -291,7 +367,7 @@ def parse_dotenv(lines):
 
 
 TERRA_PROMPT = '''Прочитай текст, проверь верно ли утверждение.
-Ответь коротко: да или нет. Если не уверен, выбери наиболее вероятный.
+Ответь коротко: да или нет. Если не уверен, выбери наиболее вероятный ответ.
 ---
 Текст: Трижды он был привлечён судебным приставом к административной ответственности по ст. 17.15 КоАП РФ за неисполнение содержащихся в исполнительном документе требований неимущественного характера. Так как срок для добровольного исполнения истёк, пристрой снесли принудительно.
 Утверждение: Пристрой был снесен.
@@ -346,7 +422,7 @@ def norm_terra_response(response):
 #  'label': True,
 
 
-DANETQA_PROMPT = '''Прочитай текст и ответь на вопрос. Ответь коротко: да или нет. Если не уверен, выбери наиболее вероятный вариант.
+DANETQA_PROMPT = '''Прочитай текст и ответь на вопрос. Ответь коротко: да или нет. Если не уверен, выбери наиболее вероятный ответ.
 ---
 Текст: Пётр Моисеевич Миронов  — красноармеец Рабоче-крестьянской Красной Армии, участник Великой Отечественной войны, Герой Советского Союза . Пётр Миронов родился в 1904 году в деревне Утринка . После окончания шести классов школы проживал в Москве, работал в сфере общепита. В июне 1941 года Миронов был призван на службу в Рабоче-крестьянскую Красную Армию. С июля 1942 года — на фронтах Великой Отечественной войны.
 Вопрос: Был ли миронов в армии?
@@ -396,7 +472,7 @@ PARUS_PROMPT_QUESTIONS = {
 }
 
 PARUS_PROMPT = '''Прочитай текст и ответь на вопрос про причинно-следственную связь.
-Выбери вариант ответа A или B. Если не уверен, выбери наиболее вероятный вариант.
+Выбери вариант ответа A или B. Если не уверен, выбери наиболее вероятный ответ.
 ---
 Текст: Я прибралась дома.
 Вопрос: Что было причиной?
@@ -844,3 +920,4 @@ def cohere_generate(
         token
     )
     return data['generations'][0]['text']
+    
