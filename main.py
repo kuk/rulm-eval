@@ -24,25 +24,59 @@ from tqdm import tqdm as log_progress
 #####
 
 
-TERRA = 'terra'
 DANETQA = 'danetqa'
+TERRA = 'terra'
 PARUS = 'parus'
 RWSD = 'rwsd'
 RUSSE = 'russe'
 RUCOLA = 'rucola'
+TASKS = [
+    TERRA,
+    DANETQA,
+    PARUS,
+    RWSD,
+    RUSSE,
+    RUCOLA
+]
 
 OPENAI_TOKEN = os.getenv('OPENAI_TOKEN')
 COHERE_TOKEN = os.getenv('COHERE_TOKEN')
 
-TEXT_DAVINCHI_003 = 'text-davinci-003'
+TEXT_DAVINCI_003 = 'text-davinci-003'
 TEXT_CURIE_001 = 'text-curie-001'
 TEXT_BABBAGE_001 =  'text-babbage-001'
 TEXT_ADA_001 = 'text-ada-001'
-CODE_DAVINCHI_002 = 'code-davinci-002'
+CODE_DAVINCI_002 = 'code-davinci-002'
 CODE_CUSHMAN_001 = 'code-cushman-001'
 GPT_35_TURBO_0301 = 'gpt-3.5-turbo-0301'
 
 COHERE_XLARGE = 'xlarge'
+
+MODEL_LABELS = {
+    GPT_35_TURBO_0301: 'openai/turbo',
+    TEXT_DAVINCI_003: 'openai/davinci',
+    TEXT_CURIE_001: 'openai/curie',
+    COHERE_XLARGE: 'cohere/xlarge',
+}
+MODELS = list(MODEL_LABELS.keys())
+
+MODEL_TASK_EVALS = [
+    (TEXT_DAVINCI_003, TERRA, '01_davinci_terra'),
+    (TEXT_DAVINCI_003, DANETQA, '02_davinci_danetqa'),
+    (TEXT_DAVINCI_003, PARUS, '03_davinci_parus'),
+    (GPT_35_TURBO_0301, PARUS, '04_turbo_parus'),
+    (GPT_35_TURBO_0301, DANETQA, '05_turbo_danetqa'),
+    (GPT_35_TURBO_0301, TERRA, '06_turbo_terra'),
+    (COHERE_XLARGE, PARUS, '07_cohere_parus'),
+    (COHERE_XLARGE, DANETQA, '08_cohere_danetqa'),
+    (COHERE_XLARGE, TERRA, '09_cohere_terra'),
+    (GPT_35_TURBO_0301, RWSD, '12_turbo_rwsd'),
+    (GPT_35_TURBO_0301, RUSSE, '13_turbo_russe'),
+    (GPT_35_TURBO_0301, RUCOLA, '14_turbo_rucola'),
+    (TEXT_CURIE_001, PARUS, '15_curie_parus'),
+    (TEXT_CURIE_001, TERRA, '16_curie_terra'),
+    (TEXT_CURIE_001, DANETQA, '17_curie_danetqa'),
+]
 
 
 ######
@@ -65,6 +99,7 @@ def parse_rsg_lb(text):
         for _ in text.strip().splitlines()
     ]
     header, body = rows[0], rows[1:]
+    header = [_.lower() for _ in header]
     for row in body:
         row = [parse_rsg_lb_cell(_) for _ in row]
         yield dict(zip(header, row))
@@ -100,6 +135,81 @@ Rank	Name	Team	Link	Score	LiDiRus	RCB	PARus	MuSeRC	TERRa	RUSSE	RWSD	DaNetQA	RuCo
 26	RuGPT3Small	SberDevices		0.438	-0.013	0.356 / 0.473	0.562	0.653 / 0.221	0.488	0.57	0.669	0.61	0.21 / 0.204
 27	Baseline TF-IDF1.1	AGI NLP		0.434	0.06	0.301 / 0.441	0.486	0.587 / 0.242	0.471	0.57	0.662	0.621	0.26 / 0.252
 '''))
+
+RSG_LB_HUMAN = 'HUMAN BENCHMARK'
+
+
+def rsg_lb_human(items, tasks=TASKS):
+    for item in items:
+        if item['name'] == RSG_LB_HUMAN:
+            for task in tasks:
+                score = item.get(task)
+                if score:
+                    yield task, score
+
+
+def rsg_lb_sota(items, tasks=TASKS):
+    for task in tasks:
+        scores = []
+        for item in items:
+            score = item.get(task)
+            if score and item['name'] != RSG_LB_HUMAN:
+                scores.append(score)
+        if scores:
+            yield task, max(scores)
+
+
+########
+#
+#  RUCOLA LB
+#
+#######
+
+# https://rucola-benchmark.com/leaderboard
+
+
+RUCOLA_LB_HUMAN = 0.84
+RUCOLA_LB_SOTA = 0.82
+
+
+########
+#
+#   SCORES TABLE
+#
+######
+
+
+def scores_table(model_task_scores, rsg_lb=RSG_LB, tasks=TASKS, models=MODELS):
+    data = []
+    for model, task, (score, skip) in model_task_scores:
+        value = '?'
+        if score:
+            value = '%.2f' % score
+            if skip:
+                value += ', %d!' % skip
+
+        data.append((model, task, value))
+
+    for task, score in rsg_lb_human(rsg_lb):
+        data.append(('human', task, score))
+
+    for task, score in rsg_lb_sota(rsg_lb):
+        data.append(('sota', task, score))
+
+    data.append(('human', RUCOLA, RUCOLA_LB_HUMAN))
+    data.append(('sota', RUCOLA, RUCOLA_LB_SOTA))
+
+    table = pd.DataFrame(data, columns=['model', 'task', 'score'])
+    table = table.pivot(index='model', columns='task', values='score')
+    table = table.fillna('-')
+    table = table.reindex(
+        columns=tasks,
+        index=['human', 'sota'] + models
+    )
+    table = table.rename(index=MODEL_LABELS)
+
+    return table
+
 
 
 #######
@@ -203,14 +313,14 @@ def terra_prompt(item, template=TERRA_PROMPT):
     )
 
 
-def norm_response_mapping(response, pattern_labels, stop_sequence=r'---'):
+def norm_response_mapping(response, pattern_labels, stop_sequence=r'---', ignore_case=True):
     match = stop_sequence and re.search(stop_sequence, response)
     if match:
         response = response[:match.start()]
 
     labels = []
     for pattern, label in pattern_labels.items():
-        if re.search(pattern, response, re.I):
+        if re.search(pattern, response, re.I if ignore_case else 0):
             labels.append(label)
 
     if len(labels) == 1:
@@ -316,10 +426,14 @@ def parus_prompt(item, template=PARUS_PROMPT):
 
 
 def norm_parus_response(response):
-    return norm_response_mapping(response, {
-        'A': 0,
-        'B': 1
-    })
+    return norm_response_mapping(
+        response,
+        {
+            'A': 0,
+            'B': 1
+        },
+        ignore_case=False
+    )
 
 
 #####
@@ -511,7 +625,11 @@ def acc_score(id_targets, id_preds):
         total += 1
         correct += id_targets.get(id) == pred
             
-    return correct / total, skip
+    acc = None
+    if total:
+        acc = correct / total
+
+    return acc, skip
 
 
 ########
@@ -541,7 +659,7 @@ def post_openai(url, payload, token):
 
 def openai_completions(
         prompt,
-        model=TEXT_DAVINCHI_003, max_tokens=128,
+        model=TEXT_DAVINCI_003, max_tokens=128,
         temperature=0, top_p=1, stop=None,
         token=OPENAI_TOKEN        
 ):
@@ -613,7 +731,7 @@ def post_openai_stream(url, payload, token):
 
 def openai_completions_stream(
         prompt,
-        model=TEXT_DAVINCHI_003, max_tokens=128,
+        model=TEXT_DAVINCI_003, max_tokens=128,
         temperature=0, top_p=1, stop=None,
         token=OPENAI_TOKEN
 ):
