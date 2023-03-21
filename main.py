@@ -66,14 +66,12 @@ SBER_T5_LARGE = 'sberbank-ai/ruT5-large'
 WORTEGA_INSTRUCT_SMALL = 'AlexWortega/instruct_rugptSmall'
 WORTEGA_INSTRUCT_MEDIUM = 'AlexWortega/instruct_rugptMedium'
 
+GUSEV_MEDIUM_TURBO = 'IlyaGusev/rugpt_medium_turbo_instructed'
+GUSEV_LARGE_TURBO = 'IlyaGusev/rugpt_large_turbo_instructed'
+
 BLOOM_RU = 'bs-la/bloom-1b7_ru_continual-pretrain_100000samples_-1vocab_original'
 
 EVAL_LABEL_MODELS = {
-    'davinci': TEXT_DAVINCI_003,
-    'turbo': GPT_35_TURBO_0301,
-    'cohere': COHERE_XLARGE,
-    'curie': TEXT_CURIE_001,
-
     'rugpt3_small': SBER_RUGPT3_SMALL,
     'rugpt3_medium': SBER_RUGPT3_MEDIUM,
     'rugpt3_large': SBER_RUGPT3_LARGE,
@@ -86,29 +84,19 @@ EVAL_LABEL_MODELS = {
     'instruct_medium': WORTEGA_INSTRUCT_MEDIUM,
     
     'bloom_ru': BLOOM_RU,
-}
 
-MODEL_TASK_EVALS = {
-    (TEXT_DAVINCI_003, TERRA): '01_davinci_terra',
-    (TEXT_DAVINCI_003, DANETQA): '02_davinci_danetqa',
-    (TEXT_DAVINCI_003, PARUS): '03_davinci_parus',
-    (GPT_35_TURBO_0301, PARUS): '04_turbo_parus',
-    (GPT_35_TURBO_0301, DANETQA): '05_turbo_danetqa',
-    (GPT_35_TURBO_0301, TERRA): '06_turbo_terra',
-    (COHERE_XLARGE, PARUS): '07_cohere_parus',
-    (COHERE_XLARGE, DANETQA): '08_cohere_danetqa',
-    (COHERE_XLARGE, TERRA): '09_cohere_terra',
-    (GPT_35_TURBO_0301, RWSD): '12_turbo_rwsd',
-    (GPT_35_TURBO_0301, RUSSE): '13_turbo_russe',
-    (GPT_35_TURBO_0301, RUCOLA): '14_turbo_rucola',
-    (TEXT_CURIE_001, PARUS): '15_curie_parus',
-    (TEXT_CURIE_001, TERRA): '16_curie_terra',
-    (TEXT_CURIE_001, DANETQA): '17_curie_danetqa',
+    'meduim_turbo': GUSEV_MEDIUM_TURBO,
+    'large_turbo': GUSEV_LARGE_TURBO,
+
+    'davinci': TEXT_DAVINCI_003,
+    'turbo': GPT_35_TURBO_0301,
+    'cohere': COHERE_XLARGE,
+    'curie': TEXT_CURIE_001,
 }
 
 
 def find_model_task_evals(dir=Path('evals')):
-    for path in dir.glob('*.jsonl'):
+    for path in sorted(dir.glob('*.jsonl')):
         name = path.stem
 
         for label, model in EVAL_LABEL_MODELS.items():
@@ -126,10 +114,10 @@ def find_model_task_evals(dir=Path('evals')):
         yield (model, task), name
 
 
-for key, name in find_model_task_evals():
-    if key not in MODEL_TASK_EVALS:
-        MODEL_TASK_EVALS[key] = name
-
+MODEL_TASK_EVALS = {
+    key: name
+    for key, name in find_model_task_evals()
+}
 
 REPORT_MODELS = [
     GPT_35_TURBO_0301,
@@ -142,9 +130,11 @@ REPORT_MODELS = [
     FB_XGLM_1, 
     FB_XGLM_2,
     FB_XGLM_4,
+    BLOOM_RU,
     WORTEGA_INSTRUCT_SMALL,
     WORTEGA_INSTRUCT_MEDIUM,
-    BLOOM_RU,
+    GUSEV_MEDIUM_TURBO,
+    GUSEV_LARGE_TURBO,
 ]
 REPORT_MODEL_LABELS = {
     GPT_35_TURBO_0301: 'openai/turbo',
