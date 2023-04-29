@@ -1,100 +1,100 @@
-{"id": "921", "sentence": "Во время быстрой фазы сна нейроны мозга, отвечающего за зрительное восприятие, ведут себя так, как будто мы видим что-то незнакомое.", "error_type": "Syntax", "detailed_source": "USE8", "label": "0"}
-{"id": "129", "sentence": "Он обиделся на мою шутку.", "error_type": "0", "detailed_source": "Paducheva2004", "label": "1"}
-{"id": "871", "sentence": "В результате этого он получил оспу.", "error_type": "Semantics", "detailed_source": "Seliverstova", "label": "0"}
-{"id": "654", "sentence": "Скрою, он мне понравился.", "error_type": "Semantics", "detailed_source": "Paducheva2010", "label": "0"}
-{"id": "36", "sentence": "Все, кто учились в математическом классе, сдали тест на отлично.", "error_type": "Syntax", "detailed_source": "USE8", "label": "0"}
-{"id": "716", "sentence": "Видите, я все средства пускаю, чтобы не быть одинокому.", "error_type": "0", "detailed_source": "Lutikova", "label": "1"}
-{"id": "942", "sentence": "Итак, я прихожу к вам завтра в семь.", "error_type": "0", "detailed_source": "Paducheva2013", "label": "1"}
-{"id": "530", "sentence": "Обнаруживается, что преступник на свободе.", "error_type": "0", "detailed_source": "Paducheva2010", "label": "1"}
-{"id": "85", "sentence": "Она любила Анну, но ей приятно было видеть, что и у нее есть слабости.", "error_type": "0", "detailed_source": "Seliverstova", "label": "1"}
-{"id": "404", "sentence": "Новые наночастицы позволяют быстро и проще очистить среду от загрязняющих веществ.", "error_type": "Syntax", "detailed_source": "USE8", "label": "0"}
-{"id": "376", "sentence": "Что мне делать с шестистами спортсменами, я не могу их всех отправить?", "error_type": "Morphology", "detailed_source": "USE7", "label": "0"}
-{"id": "345", "sentence": "Гора у вершины была безлесной.", "error_type": "Semantics", "detailed_source": "Seliverstova", "label": "0"}
-{"id": "84", "sentence": "Ее изнеженные пальцы не знали игл.", "error_type": "0", "detailed_source": "Paducheva2004", "label": "1"}
-{"id": "224", "sentence": "Есть блины с вареньем вкусное.", "error_type": "Syntax", "detailed_source": "Testelets", "label": "0"}
-{"id": "338", "sentence": "Села розовая птица на песчаный берег и так неторопливо сложила свои волнистые крылья, что как будто кружевной подол платья подобрала.", "error_type": "Syntax", "detailed_source": "USE8", "label": "0"}
-{"id": "446", "sentence": "Нет, я бы не рискнул своим процессором.", "error_type": "0", "detailed_source": "Paducheva2004", "label": "1"}
-{"id": "776", "sentence": "Так думают почти все люди, может, даже и не почти, а все без исключения люди.", "error_type": "0", "detailed_source": "Paducheva2013", "label": "1"}
-{"id": "299", "sentence": "Как широкая река, этот поток заполняет собою книгу от корки до корки, и не всякая птица долетит до середины могучего потока.", "error_type": "0", "detailed_source": "Testelets", "label": "1"}
-{"id": "907", "sentence": "Вопреки распространённого мнения, лучшие рестораны Франции находятся вовсе не в Париже.", "error_type": "Syntax", "detailed_source": "USE8", "label": "0"}
-{"id": "962", "sentence": "Второй роты не приходило.", "error_type": "Semantics", "detailed_source": "Paducheva2013", "label": "0"}
-{"id": "633", "sentence": "Она медленно становится бледной.", "error_type": "Semantics", "detailed_source": "Seliverstova", "label": "0"}
-{"id": "106", "sentence": "Она красива, но я так не считаю.", "error_type": "Semantics", "detailed_source": "Paducheva2013", "label": "0"}
-{"id": "160", "sentence": "Я показал этот текст студентам, обоим специалистам в эскимосском языке.", "error_type": "Syntax", "detailed_source": "Testelets", "label": "0"}
-{"id": "722", "sentence": "Для меня лично, и ты это знаешь, родственные узы не играют никакой роли.", "error_type": "0", "detailed_source": "Rusgram", "label": "1"}
-{"id": "671", "sentence": "Иван, к сожалению, в отпуске.", "error_type": "0", "detailed_source": "Paducheva2010", "label": "1"}
-{"id": "327", "sentence": "В результате раскопок учёные установили то, что ещё в глубокой древности янтарь использовали как украшение.", "error_type": "Syntax", "detailed_source": "USE8", "label": "0"}
-{"id": "443", "sentence": "На дороге показался я.", "error_type": "Semantics", "detailed_source": "Paducheva2013", "label": "0"}
-{"id": "125", "sentence": "Я однажды решал эту задачу.", "error_type": "0", "detailed_source": "Paducheva2010", "label": "1"}
-{"id": "655", "sentence": "Сын выбрал себе жену, какую ему вздумалось ― раз!", "error_type": "0", "detailed_source": "Paducheva2004", "label": "1"}
-{"id": "380", "sentence": "У нас вчера было заседание сектора.", "error_type": "0", "detailed_source": "Seliverstova", "label": "1"}
-{"id": "398", "sentence": "Макар Игнатьевич, будучи человеком добрым, желающим всем помочь, не только помогал нуждающимся хлебом, но и одеждой, лекарствами.", "error_type": "Syntax", "detailed_source": "USE8", "label": "0"}
-{"id": "544", "sentence": "Рука человека в пространстве написала книгу, душа человека выразила долю своей сокровенной жизни.", "error_type": "Semantics", "detailed_source": "Seliverstova", "label": "0"}
-{"id": "788", "sentence": "Я говорю с адвокатом.", "error_type": "0", "detailed_source": "Seliverstova", "label": "1"}
-{"id": "687", "sentence": "Дорога пролегала через лес.", "error_type": "0", "detailed_source": "Paducheva2010", "label": "1"}
-{"id": "269", "sentence": "Согласно приказа директора, победители школьной олимпиады получат дипломы и подарки.", "error_type": "Syntax", "detailed_source": "USE8", "label": "0"}
-{"id": "946", "sentence": "Ты сидишь слишком далеко.", "error_type": "0", "detailed_source": "Seliverstova", "label": "1"}
-{"id": "972", "sentence": "Пришлось кого-нибудь попросить помочь.", "error_type": "Semantics", "detailed_source": "Rusgram", "label": "0"}
-{"id": "798", "sentence": "Возьми со стола свои книги.", "error_type": "0", "detailed_source": "Seliverstova", "label": "1"}
-{"id": "168", "sentence": "Смотрел во всех углах, но ничего не нашел.", "error_type": "0", "detailed_source": "Paducheva2004", "label": "1"}
-{"id": "573", "sentence": "Уже дома измерил 37 градусов в качестве температуры.", "error_type": "Syntax", "detailed_source": "Testelets", "label": "0"}
-{"id": "690", "sentence": "Он промахнулся по зайцу пулей.", "error_type": "Syntax", "detailed_source": "Testelets", "label": "0"}
-{"id": "593", "sentence": "Мало того, что заставили человека 4 часа торчать под проливным дождем, так еще и разрешили работать больной!", "error_type": "Syntax", "detailed_source": "Lutikova", "label": "0"}
-{"id": "318", "sentence": "Я не взяла ключи.", "error_type": "0", "detailed_source": "Paducheva2013", "label": "1"}
-{"id": "832", "sentence": "Стаканы есть в шкафу.", "error_type": "0", "detailed_source": "Testelets", "label": "1"}
-{"id": "416", "sentence": "Много горя ее матери пришлось пережить.", "error_type": "0", "detailed_source": "Testelets", "label": "1"}
-{"id": "923", "sentence": "Он мне сказал, что приходи.", "error_type": "Syntax", "detailed_source": "Rusgram", "label": "0"}
-{"id": "258", "sentence": "Всю жизнь я была толстой.", "error_type": "0", "detailed_source": "Seliverstova", "label": "1"}
-{"id": "322", "sentence": "Я обращаюсь за советом именно к вам.", "error_type": "0", "detailed_source": "Paducheva2010", "label": "1"}
-{"id": "839", "sentence": "Те, кто внимательно прочитает заглавие статьи, может определить и тему, и основную мысль текста.", "error_type": "Syntax", "detailed_source": "USE8", "label": "0"}
-{"id": "399", "sentence": "Я ждал его с двух до трех.", "error_type": "0", "detailed_source": "Paducheva2010", "label": "1"}
-{"id": "231", "sentence": "Доклад написан уже час.", "error_type": "Semantics", "detailed_source": "Seliverstova", "label": "0"}
-{"id": "535", "sentence": "Отец пообещал, что по прибытию из командировки непременно расскажет во всех подробностях, что видел за границей.", "error_type": "Syntax", "detailed_source": "USE8", "label": "0"}
-{"id": "2", "sentence": "Лесные запахи набегали волнами; в них смешалось дыхание можжевельника, вереска, брусники.", "error_type": "0", "detailed_source": "USE5", "label": "1"}
-{"id": "796", "sentence": "Иван не понимает мое желание идти на вечер один.", "error_type": "Syntax", "detailed_source": "Lutikova", "label": "0"}
-{"id": "782", "sentence": "Унас редко есть занятия по истории.", "error_type": "Semantics", "detailed_source": "Seliverstova", "label": "0"}
-{"id": "893", "sentence": "С каждого дерева упала груша.", "error_type": "0", "detailed_source": "Testelets", "label": "1"}
-{"id": "751", "sentence": "Оттуда привезли в последний момент взвод солдат и военный оркестр.", "error_type": "0", "detailed_source": "USE7", "label": "1"}
-{"id": "589", "sentence": "Болотный ил является превосходным удобрением.", "error_type": "0", "detailed_source": "USE5", "label": "1"}
-{"id": "466", "sentence": "Я не принимаю то, как они живут.", "error_type": "Semantics", "detailed_source": "Seliverstova", "label": "0"}
-{"id": "587", "sentence": "Он принял свое решение посвятить покеру все свое время и переехал в Лас Вегас, играя в игры с высокими ставками.", "error_type": "0", "detailed_source": "Lutikova", "label": "1"}
-{"id": "728", "sentence": "По словам его жены, Ростоцкий целый день жалуется на сердце, однако машину повел сам.", "error_type": "Syntax", "detailed_source": "USE8", "label": "0"}
-{"id": "190", "sentence": "Батьку Минная играет очень интересный актер Ю. Горобец (кажется, это пока его лучшая работа в кино).", "error_type": "0", "detailed_source": "Testelets", "label": "1"}
-{"id": "426", "sentence": "Сравнивая ископаемых животных с современными, биологам открылось, почему доисторические существа были такими большими.", "error_type": "Syntax", "detailed_source": "USE8", "label": "0"}
-{"id": "273", "sentence": "В данный момент он ест два яйца.", "error_type": "Semantics", "detailed_source": "Paducheva2010", "label": "0"}
-{"id": "951", "sentence": "От антисемитизма страдать не могла.", "error_type": "0", "detailed_source": "Testelets", "label": "1"}
-{"id": "713", "sentence": "Всем дано за обедом, как и в прошлом году, по пять апельсинов.", "error_type": "0", "detailed_source": "USE7", "label": "1"}
-{"id": "815", "sentence": "Не мешай, у нас есть важный разговор.", "error_type": "Semantics", "detailed_source": "Seliverstova", "label": "0"}
-{"id": "575", "sentence": "Она взяла кувшин на голову.", "error_type": "Semantics", "detailed_source": "Seliverstova", "label": "0"}
-{"id": "72", "sentence": "Зина считает, что очень нужно ему в очереди стоять.", "error_type": "Semantics", "detailed_source": "Paducheva2010", "label": "0"}
-{"id": "112", "sentence": "У вас есть боли?", "error_type": "0", "detailed_source": "Seliverstova", "label": "1"}
-{"id": "888", "sentence": "Ибрагим не будет не улыбаться.", "error_type": "Syntax", "detailed_source": "Rusgram", "label": "0"}
-{"id": "960", "sentence": "Мусин без причины не отказался приходить в суд на обжалование ареста.", "error_type": "Semantics", "detailed_source": "Paducheva2013", "label": "0"}
-{"id": "968", "sentence": "Павел Алексеевич уже перестал ждать всякого ответа.", "error_type": "Semantics", "detailed_source": "Paducheva2013", "label": "0"}
-{"id": "153", "sentence": "Иван войдя, он поздоровался.", "error_type": "Syntax", "detailed_source": "Testelets", "label": "0"}
-{"id": "300", "sentence": "Меня отвели и крышку к гробу стали прибивать молотком гвоздями, но когда услыхал, что земля уже застучала о крышку гроба, ― я вздрогнул.", "error_type": "Syntax", "detailed_source": "Testelets", "label": "0"}
-{"id": "513", "sentence": "С полки упал чайник.", "error_type": "0", "detailed_source": "Testelets", "label": "1"}
-{"id": "619", "sentence": "Детей на полу не прыгало.", "error_type": "Semantics", "detailed_source": "Rusgram", "label": "0"}
-{"id": "99", "sentence": "Этот будь был очень тяжелым.", "error_type": "Syntax", "detailed_source": "Testelets", "label": "0"}
-{"id": "723", "sentence": "Озеро у берегов заросло водорослями.", "error_type": "0", "detailed_source": "Seliverstova", "label": "1"}
-{"id": "699", "sentence": "Потому что его убило, другой головы не поднимает.", "error_type": "Syntax", "detailed_source": "Rusgram", "label": "0"}
-{"id": "347", "sentence": "Весь день Маша была с ним.", "error_type": "0", "detailed_source": "Seliverstova", "label": "1"}
-{"id": "649", "sentence": "Я не считаю уместным давать какие-либо указания.", "error_type": "0", "detailed_source": "Paducheva2013", "label": "1"}
-{"id": "326", "sentence": "Однако та стеснительность, которая разве что молодым к лицу, не разъединяла их, а рождала ощущение слитности, в былые годы неведомой.", "error_type": "0", "detailed_source": "Paducheva2010", "label": "1"}
-{"id": "146", "sentence": "Поселок расположен далеко от реки.", "error_type": "0", "detailed_source": "Seliverstova", "label": "1"}
-{"id": "19", "sentence": "Удивительно милый, честный, добрый человек, всегда готовый откликнуться на чужое горе, на слово которого можно положиться.", "error_type": "0", "detailed_source": "Testelets", "label": "1"}
-{"id": "277", "sentence": "Так он тебе и скажет!", "error_type": "0", "detailed_source": "Paducheva2013", "label": "1"}
-{"id": "384", "sentence": "Я смотрю на детей, бросающих друг другу мяч.", "error_type": "0", "detailed_source": "Testelets", "label": "1"}
-{"id": "454", "sentence": "Благодаря различных стилевых вкраплений в художественной речи создаётся иронический или юмористический характер повествования.", "error_type": "Syntax", "detailed_source": "USE8", "label": "0"}
-{"id": "706", "sentence": "На сгибе ручки ковша Большой Медведицы есть вторая звёздочка под названием Алькор, которую разглядят лишь те, кто не имеют проблем со зрением.", "error_type": "Syntax", "detailed_source": "USE8", "label": "0"}
-{"id": "810", "sentence": "Том и Гек разговаривают.", "error_type": "0", "detailed_source": "Testelets", "label": "1"}
-{"id": "876", "sentence": "Сейчас как раз есть одно из занятий по английскому языку.", "error_type": "Semantics", "detailed_source": "Seliverstova", "label": "0"}
-{"id": "425", "sentence": "На меже, около дороги, стоял трактор.", "error_type": "0", "detailed_source": "Seliverstova", "label": "1"}
-{"id": "432", "sentence": "Следов высокоорганизованной материи не обнаружено.", "error_type": "0", "detailed_source": "Paducheva2013", "label": "1"}
-{"id": "595", "sentence": "Министр обороны заявил, что французские подразделения будут выведены из Берлина.", "error_type": "0", "detailed_source": "Paducheva2010", "label": "1"}
-{"id": "727", "sentence": "Формы единственного числа не существует.", "error_type": "0", "detailed_source": "Paducheva2004", "label": "1"}
-{"id": "762", "sentence": "Сами себе осложняем жизнь.", "error_type": "0", "detailed_source": "Paducheva2010", "label": "1"}
-{"id": "445", "sentence": "Наша дивизия была довольно глухая, стоявшая вдали и от Петербурга и от Москвы.", "error_type": "0", "detailed_source": "Seliverstova", "label": "1"}
-{"id": "841", "sentence": "Я показал гостям автограф писателя, который мне очень дорог.", "error_type": "Syntax", "detailed_source": "USE8", "label": "0"}
-{"id": "518", "sentence": "Обнаружив неполадки в работе прибора, он должен быть немедленно отключён от электросети.", "error_type": "Syntax", "detailed_source": "USE8", "label": "0"}
-{"id": "961", "sentence": "Рыбы не пахло.", "error_type": "Semantics", "detailed_source": "Rusgram", "label": "0"}
+{"id": "614", "sentence": "Сайт национальной сборной Турции подтвердил участие в товарищеском матче между Сеулом и Пхеньяном .", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
+{"id": "1669", "sentence": "Каждый граф семейства Петрсен образует минимальную запрещенную границу для графов семьи ΔY.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "1399", "sentence": "Автомобиль ударился над светлым полюсом и светлом дорожного движения.", "error_type": "Hallucination", "detailed_source": "Tatoeba", "label": "0"}
+{"id": "1138", "sentence": "Онъ стреляет изъ лука, по обычаю древнего учёба.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "1524", "sentence": "Каждая гонка длится менее 30 секунд.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
+{"id": "1402", "sentence": "К 1905 году численность населения возросла до 100 человек.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
+{"id": "493", "sentence": "Грол считает, что диск является самостоятельным произведением, однако без док-фильма в нем слишком много остается непонятным и непонятным.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "1419", "sentence": "Внешний аудитор постоянно смотрит на финансовую отчетность организации.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
+{"id": "1211", "sentence": "Сотрудники Суда Европейского союза не обсуждают вопрос, что страны в одностороннем порядке покинуть Еврозону без выходя из Европы, заявил суд.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "1307", "sentence": "Я не знаю, насколько стар этот мост.", "error_type": "0", "detailed_source": "Tatoeba", "label": "1"}
+{"id": "1326", "sentence": "Прямое хранение отношений позволяет перемещаться по постоянному времени.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "1584", "sentence": "Можно куда-нибудь поехать и поговорить?", "error_type": "0", "detailed_source": "Tatoeba", "label": "1"}
+{"id": "440", "sentence": "В 1970 году Джаго присоединился к «Куинс Парк Рейнджерс» в качестве тренера и стал тренером в январе 1971 года.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "489", "sentence": "Есть ли у вас разговорные проблемы в вашем общежитии?", "error_type": "0", "detailed_source": "YandexCorpus", "label": "1"}
+{"id": "958", "sentence": "Ученые провели в ноябре второй этап испытаний.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
+{"id": "190", "sentence": "У меня есть фото из одного места в Кентукки.", "error_type": "0", "detailed_source": "TED", "label": "1"}
+{"id": "720", "sentence": "Какой персонаж в брачных играх должен стоять возле своей соперницы, преследуя неудачников.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
+{"id": "1733", "sentence": "Невозможно, пишет Линке, «не восхищаться его плохим эланом, его мужеством и упорностью».", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
+{"id": "1581", "sentence": "Компании повышают ценообразование за счет целевого ценообразования на основе созданных профилей.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "875", "sentence": "В законе о сносе хрущевок нет правил по поводу цвета букв \"с\" или же их оттенков (пикселей).", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "1221", "sentence": "Автомобили, используемые в этой трансферной категории, включают в себя разнообразные автобусы для катера для любых потребностей, которые у вас могут быть.", "error_type": "Hallucination", "detailed_source": "YandexCorpus", "label": "0"}
+{"id": "962", "sentence": "В садах, где обитают огурцы, обитают огурцы, в которых обитают огурцы.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "996", "sentence": "Это были мечты моего отца.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
+{"id": "27", "sentence": "Некоторые шифротексты могут быть взломаны, хотя некоторых шифрования с большим количеством символов на практике, но есть нестандартные структуры.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "1183", "sentence": "Хабенский в третий раз стал участником международного форума экономистов.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
+{"id": "1292", "sentence": "С 1772 года он колесил по стране, посещая памятники старины зарисовывая свою память.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "1046", "sentence": "Мой первый эксперимент был с небольшим количеством белой волны ткани.", "error_type": "Hallucination", "detailed_source": "YandexCorpus", "label": "0"}
+{"id": "505", "sentence": "Ученые рассказали, почему люди стали сильнее после Войн Стихий.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
+{"id": "1", "sentence": "Так что изменения климата будут ужасными для них.", "error_type": "0", "detailed_source": "TED", "label": "1"}
+{"id": "121", "sentence": "Я знаю, что Том храбрый человек.", "error_type": "0", "detailed_source": "Tatoeba", "label": "1"}
+{"id": "345", "sentence": "В ноябре 1930 года открыли железную дорогу до Рапла после заезда на поезда.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "1508", "sentence": "Я потерял ваш номер телефона.", "error_type": "0", "detailed_source": "Tatoeba", "label": "1"}
+{"id": "827", "sentence": "И это ведет к второй жизни.", "error_type": "0", "detailed_source": "TED", "label": "1"}
+{"id": "1319", "sentence": "Сообщение с ним просто пешком.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "239", "sentence": "Все наши стены наклейки подходят для обоев woodchip!", "error_type": "Hallucination", "detailed_source": "YandexCorpus", "label": "0"}
+{"id": "1355", "sentence": "Он представлял Индию в ООН.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
+{"id": "1418", "sentence": "Он прыгнул с одного предмета на другой.", "error_type": "0", "detailed_source": "Tatoeba", "label": "1"}
+{"id": "1328", "sentence": "Также будут использованы два дневника транзакций, чтобы восстановить базу данных к текущему времени.", "error_type": "0", "detailed_source": "YandexCorpus", "label": "1"}
+{"id": "426", "sentence": "Англия во многих отношениях похожа на Японию.", "error_type": "0", "detailed_source": "Tatoeba", "label": "1"}
+{"id": "1406", "sentence": "Стоимость отопительного сбора вблизи заднее крыло, алюминиевые splitters может быть повышенной на уровне 1,5 тыс. рублей за сутки с целью переохлаждения автомобиля.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "1087", "sentence": "Украинская флотилия начала громить ледовые заторы в Белом море.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
+{"id": "1112", "sentence": "Когда он заходит на пол американского обмена в 9:30 утра, время для него останавливается. и это прекратится до закрытия колокола.", "error_type": "Hallucination", "detailed_source": "TED", "label": "0"}
+{"id": "1426", "sentence": "Это должен быть новый подход к реализации прокрутки в Lion.", "error_type": "0", "detailed_source": "YandexCorpus", "label": "1"}
+{"id": "267", "sentence": "Президент распорядился отчитаться с визитом в Москву 14.02.2012.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
+{"id": "631", "sentence": "Истоками музыкальных суставов могут быть общественные комнаты, которые иногда строились на плантациях, чтобы темнокожие люди могли общаться во время рабства.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "965", "sentence": "В ходе охотничьей войны в Кангерлуссуак не были поселений, но этого было.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "1530", "sentence": "Если у людей есть способ удалять или использовать инструменты, тогда какие некачественные продукты используют вместо продажи.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "526", "sentence": "И я, вероятно, как, «ноги получают работать».", "error_type": "Hallucination", "detailed_source": "TED", "label": "0"}
+{"id": "418", "sentence": "Вы должны быть дома в 9 часов.", "error_type": "0", "detailed_source": "Tatoeba", "label": "1"}
+{"id": "901", "sentence": "Голдман утверждал, что участвовал в более чем 400 ботах, но большинство из них были незамеченными.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "1751", "sentence": "Думаю, что я могу это урегулировать.", "error_type": "0", "detailed_source": "Tatoeba", "label": "1"}
+{"id": "463", "sentence": "Уэйн подтвердил подписку с YoungMoney последним артистом, который заключил контракт на свою сцену.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "210", "sentence": "В: Как вы относитесь к битве в середине поля, так как это действительно большая битва со всеми?", "error_type": "Hallucination", "detailed_source": "YandexCorpus", "label": "0"}
+{"id": "494", "sentence": "Неужели мы не можем ее сжечь?", "error_type": "0", "detailed_source": "Tatoeba", "label": "1"}
+{"id": "174", "sentence": "Как и у большинства буглосс, его предпочитают пчеловоды за его высокое содержание нектара.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "1334", "sentence": "Это не займет много времени.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
+{"id": "357", "sentence": "Грядки в первой части были пригодны к сбору живого материала летом.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
+{"id": "1427", "sentence": "Ее мать была мягкой, доброжелательной, хотя и нерешительной, любившей искусство и ценящей образование.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
+{"id": "1068", "sentence": "Ученые нашли остров Нунавута, который был учрежден в школе с ᓄᓇᕗ癯ᐊ髭剃ить莪?", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "902", "sentence": "Том и Мэри раньше были друзьями.", "error_type": "0", "detailed_source": "Tatoeba", "label": "1"}
+{"id": "90", "sentence": "Он ушел в отставку из футбола в 33 года.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
+{"id": "702", "sentence": "Таким образом, нет дебатов: эта задача призывает к непрерывному преданию и духу непрерывного саможертвования его и его людей.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "1404", "sentence": "Последнее может достигать расстояния в 1 AU от звезды и является сильно плоским и наблюдается на крае.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "588", "sentence": "Человек, который родился 19 февраля 1970 года.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
+{"id": "1744", "sentence": "Я начал свое путешествие 30 лет назад.", "error_type": "0", "detailed_source": "TED", "label": "1"}
+{"id": "1384", "sentence": "Netflix выпустил \"Антимайдановскую полицию\" вместе со снайперским оружием.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "1263", "sentence": "Заключенных оставили в изоляции на три месяца, заставляли трудиться.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
+{"id": "1223", "sentence": "Министр иностранных дел Михаэль Шпинделеггер призвал провести подготовку внешних переговоров с лидером \"Исламского государства\" в Вашингтоне.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
+{"id": "1616", "sentence": "Я буду работать с тобой.", "error_type": "0", "detailed_source": "Tatoeba", "label": "1"}
+{"id": "730", "sentence": "Он поступил в гимназию в Загребе, изучал философию в Грацце и теологию в Trnava.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "1159", "sentence": "Местные подрядчики должны быть вовлечены, когда это возможно.", "error_type": "0", "detailed_source": "YandexCorpus", "label": "1"}
+{"id": "482", "sentence": "Как печатные, так и электронные средства массовой информации уделяли основное внимание кандидатуре г-на Саакашвили и деятельности государственных должностных лиц.", "error_type": "0", "detailed_source": "YandexCorpus", "label": "1"}
+{"id": "1667", "sentence": "Но вчера Москва подтвердила свою репутацию как самый дорогостоящий в мире город, открыв роскошный отель, предназначенный для мега-богатых.", "error_type": "0", "detailed_source": "YandexCorpus", "label": "1"}
+{"id": "1781", "sentence": "Американский телесериал, посвященный Хэллоуину эпизоду фильма \"Рыцарь дорог\" персонаж Билли Моргана переодевается в капитана Джека с названием бисексуального мужчины.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "893", "sentence": "Это бывший трейн SM Entertainment и изначально собирался выступать с EXO.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "680", "sentence": "Одного языка никогда не бывает достаточно.", "error_type": "0", "detailed_source": "Tatoeba", "label": "1"}
+{"id": "1600", "sentence": "Время спустя у меня была дата хирургического вмешательства всего несколько недель назад, и большой жирный рецепт для перкоцета.", "error_type": "Hallucination", "detailed_source": "TED", "label": "0"}
+{"id": "253", "sentence": "Другие заметные общины живут в горах Харим, пригороде Дамаска Джарамана, и на юго-восточных склонах горы Гермон.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
+{"id": "1057", "sentence": "Достижимость этих прогнозов зависит от способности развитых стран координировать свою политику и подчинять свои текущие цели задаче построения предсказуемого и безопасного мира.", "error_type": "0", "detailed_source": "YandexCorpus", "label": "1"}
+{"id": "1680", "sentence": "Toyota подготовила путеводители по безопасности в стране (Time).", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
+{"id": "107", "sentence": "Том пока не знает, что сделала Мэри.", "error_type": "0", "detailed_source": "Tatoeba", "label": "1"}
+{"id": "238", "sentence": "Для этой программы были проведены два программ.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "471", "sentence": "Этот процессор требовал всего 1 Вт мощности (более поздние версии требовали гораздо больше).", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
+{"id": "737", "sentence": "Можете ли вы увидеть панель инструментов внизу экрана?", "error_type": "0", "detailed_source": "Tatoeba", "label": "1"}
+{"id": "810", "sentence": "Под руководством Bhagavan, преданные Харе Кришна в Великобритании отправились на годовой марафон, чтобы собрать средства для спасения имущества британского ISKCON.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "448", "sentence": "Она была приостановлена на небольшой весной, которая должна была нажать ее против бумаги.", "error_type": "Hallucination", "detailed_source": "YandexCorpus", "label": "0"}
+{"id": "245", "sentence": "Я так рада сказать о себе песни, как со посланием.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "1378", "sentence": "Сэнгоку Огасавара вновь атаковали силы Тоётоми Хидеёси в течение периода.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "1049", "sentence": "Шотландия получила титул графа Каррика, который был первым в истории.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "1449", "sentence": "Но для того, чтобы действительно личность движения, они хотели назвать ее.", "error_type": "Hallucination", "detailed_source": "TED", "label": "0"}
+{"id": "1586", "sentence": "В партии \"Слуга народа\" каждый блок состоит из слов и предложений.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "771", "sentence": "Вместе с другой 25-этажной башней будет 821 апартамент.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "525", "sentence": "Сдавшегося полиции дортмундского террориста заключили под стражу на пять лет.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
+{"id": "214", "sentence": "В Москве нашли несколько домовладений без указания улицы.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
+{"id": "201", "sentence": "Ответственность за продукцию: Рекреационное и спортивное оборудование.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
+{"id": "1252", "sentence": "Но с этого момента мы рассчитываем на одного человека.", "error_type": "0", "detailed_source": "TED", "label": "1"}
+{"id": "751", "sentence": "Через пример семьи следователей я узнал, что обещания Господа уверены, когда мы прислушаемся к закону пасты с верой и целью.", "error_type": "Hallucination", "detailed_source": "YandexCorpus", "label": "0"}
+{"id": "130", "sentence": "Если охранник не экспортируется, то контроль не может его назвать.", "error_type": "Hallucination", "detailed_source": "YandexCorpus", "label": "0"}
+{"id": "912", "sentence": "Группа бывших первоначально определённо не монахами фк \"Монако\" стала членом европейской школы футбола под названием Монте Кристо (Барселона).", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "151", "sentence": "Том пообещал поехать с нами в Бостон.", "error_type": "0", "detailed_source": "Tatoeba", "label": "1"}
