@@ -52,6 +52,9 @@ GPT_35_TURBO_0301 = 'gpt-3.5-turbo-0301'
 
 COHERE_XLARGE = 'xlarge'
 
+RU_ALPACA_7B = 'ru-alpaca-7b-f16'
+SAIGA_7B = 'saiga-7b-f16'
+
 FB_XGLM_1 = 'facebook/xglm-1.7B'
 FB_XGLM_2 = 'facebook/xglm-2.9B'
 FB_XGLM_4 = 'facebook/xglm-4.5B'
@@ -911,3 +914,36 @@ def cohere_generate(
     )
     return data['generations'][0]['text']
     
+
+#######
+#
+#   RULM
+#
+######
+
+
+def parse_rulm_stream(lines):
+    for line in lines:
+        yield json.loads(line)
+
+
+def rulm_complete_stream(
+        prompt, model=SAIGA_7B,
+        max_tokens=128, temperature=0.2
+):
+    response = requests.post(
+        'https://api.rulm.alexkuk.ru/complete',
+        json={
+            'prompt': prompt,
+            'model': model,
+            'max_tokens': max_tokens,
+            'temperature': temperature,
+        }
+    )
+    response.raise_for_status()
+    lines = response.iter_lines()
+    items = parse_rulm_stream(lines)
+    for item in items:
+        if item['type'] == 'generate':
+            yield item['text']
+
