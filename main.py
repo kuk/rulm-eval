@@ -140,46 +140,6 @@ RUCOLA_LB_HUMAN = 0.84
 RUCOLA_LB_SOTA = 0.82
 
 
-########
-#
-#   SCORES TABLE
-#
-######
-
-
-def scores_table(model_task_scores, rsg_lb=RSG_LB, tasks=TASKS, models=REPORT_MODELS):
-    data = []
-    for model, task, (score, skip) in model_task_scores:
-        value = '?'
-        if score:
-            value = '%.2f' % score
-        if skip:
-            value += ', %d!' % skip
-
-        data.append((model, task, value))
-
-    for task, score in rsg_lb_human(rsg_lb):
-        data.append(('human', task, score))
-
-    for task, score in rsg_lb_sota(rsg_lb):
-        data.append(('sota', task, score))
-
-    data.append(('human', RUCOLA, RUCOLA_LB_HUMAN))
-    data.append(('sota', RUCOLA, RUCOLA_LB_SOTA))
-
-    table = pd.DataFrame(data, columns=['model', 'task', 'score'])
-    table = table.pivot(index='model', columns='task', values='score')
-    table = table.fillna('-')
-    table = table.reindex(
-        columns=tasks,
-        index=['human', 'sota'] + models
-    )
-    table = table.rename(index=REPORT_MODEL_LABELS)
-
-    return table
-
-
-
 #######
 #
 #   LINES
@@ -627,7 +587,7 @@ def post_openai(url, payload, token):
 
 def openai_completions(
         prompt,
-        model=TEXT_DAVINCI_003, max_tokens=128,
+        model='text-davinci-003', max_tokens=128,
         temperature=0, top_p=1, stop=None,
         token=OPENAI_TOKEN        
 ):
@@ -648,7 +608,7 @@ def openai_completions(
 
 def openai_chat_completions(
         prompt,
-        model=GPT_35_TURBO_0301, max_tokens=128,
+        model='gpt-35-turbo', max_tokens=128,
         temperature=0, top_p=1, stop=None,
         token=OPENAI_TOKEN
 ):
