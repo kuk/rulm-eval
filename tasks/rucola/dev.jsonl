@@ -1,100 +1,100 @@
-{"id": "1021", "sentence": "Однако своевременная диагностика имеет решающее значение, так как состояние может быть признаком серьезных сердечно-сосудистых и ишемических заболеваний.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
-{"id": "1717", "sentence": "Ташкент принимал ряд визитов высших американских генералов и дипломатов, которые, как полагают, направлены на обеспечение более тесного сотрудничества в Афганистане.", "error_type": "0", "detailed_source": "YandexCorpus", "label": "1"}
-{"id": "164", "sentence": "В результате инцидента на той же улице в городе прогремел больший список популярных мест.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
-{"id": "971", "sentence": "И сведен был как мозамбик.", "error_type": "Hallucination", "detailed_source": "TED", "label": "0"}
-{"id": "13", "sentence": "Многим людям может понадобиться помощь в вычислении.", "error_type": "0", "detailed_source": "TED", "label": "1"}
-{"id": "1075", "sentence": "Характеристики и преимущества, описанные ниже, являются лишь небольшой частью очень большой системы.", "error_type": "0", "detailed_source": "YandexCorpus", "label": "1"}
-{"id": "1505", "sentence": "Сотрудница Utair впервые самостоятельно провела поиск сотрудника на предприятии и получила премию EUR10 тыс за это.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
-{"id": "150", "sentence": "Учительница предупреждала, что тест будет тяжелым.", "error_type": "0", "detailed_source": "Tatoeba", "label": "1"}
-{"id": "1479", "sentence": "Ученые создали органическое соединение из 1-го и второго родственных организмов.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
-{"id": "670", "sentence": "В Евросоюзе принят закон об идентификации сотрудников по отпечатку пальца (паспортам Евросоюза).", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
-{"id": "1754", "sentence": "Стебли и пистиллы расположены спирально вокруг центрального пика или гинеция; стебли выпадают, а пистиллы становятся самарами.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
-{"id": "1431", "sentence": "Директор пророка в мечети Пророка долгое время преподавал, но почему не остался дома.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
-{"id": "1657", "sentence": "В кинопрокате прошел документальный фильм о жизни Элвиса Пресли.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
-{"id": "515", "sentence": "В корне легенды «Дикая охота» - свора собак Дьявола Денди.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
-{"id": "7", "sentence": "Оперения у совы с тёмными глазами и белым оперением практически идентичны параду курантов на родине автора.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
-{"id": "1802", "sentence": "Novell также создает новую команду исполнительной продажи партнера, которая будет посвящена и компенсирована успеху партнера.", "error_type": "Hallucination", "detailed_source": "YandexCorpus", "label": "0"}
-{"id": "648", "sentence": "В 2003 г. благодарные родственники установили памятную доску на стенах школы.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
-{"id": "1484", "sentence": "Источниками супермягкого рентгеновского излучения состоят белые карлики больших масс с высокой температурой поверхности (0,5—1 млн K) это.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
-{"id": "1150", "sentence": "С тех пор к резерву были добавлены еще небольшие земельные участки.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
-{"id": "1432", "sentence": "Между тем, поездки Литвиненко в Италию стали чаще.", "error_type": "0", "detailed_source": "YandexCorpus", "label": "1"}
-{"id": "1687", "sentence": "В Астане много иностранных туристов.", "error_type": "0", "detailed_source": "Tatoeba", "label": "1"}
-{"id": "1607", "sentence": "В игре есть различные враги, которые пытаются остановить персонажа или собрать камни.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
-{"id": "510", "sentence": "Для покупателей, продаваемый вместо сортов ламбик сможет побрать различные сорты.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
-{"id": "1040", "sentence": "Развиватели лошадей в большинстве стран в первую очередь интересуются развитием пуребрадов (производством высококачественных лошадей для размножения) и лошадей для спорта.", "error_type": "Hallucination", "detailed_source": "YandexCorpus", "label": "0"}
-{"id": "280", "sentence": "Реформу ОбОГ можно считать первой частью.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
-{"id": "1182", "sentence": "Винсент Уильямс и его коллеги (2009) опубликовали дополнительную работу по гадрозавридному зубному микрооборудованию.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
-{"id": "987", "sentence": "Это первый раз за последние четыре месяца, когда в этом центре заключения нет заключенных совести.", "error_type": "Hallucination", "detailed_source": "YandexCorpus", "label": "0"}
-{"id": "1590", "sentence": "Осужденный по \"московскому делу\" мексиканец взял в заложников сотрудницу американской тюрьмы и ее семью.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
-{"id": "411", "sentence": "Джоуи обещает не влиять на Слейда, но это займёт неделю после появления.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
-{"id": "705", "sentence": "Соответствующий закон провёл несколько лет в министерствах, несмотря на стремление Владимира Путина принять его как можно быстрее.", "error_type": "0", "detailed_source": "YandexCorpus", "label": "1"}
-{"id": "1595", "sentence": "Сегодня только США могут позволить себе такие дорогие программы.", "error_type": "0", "detailed_source": "YandexCorpus", "label": "1"}
-{"id": "677", "sentence": "Она показала время 13.16.6, долгое время лучшее.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
-{"id": "1510", "sentence": "Сотрудники миссии \"Спирит\" сообщили о счастливой встрече с пыльным дьяволом, которая очистила батареи солнечных батарей от пыли 12 Марта 2005 года.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
-{"id": "479", "sentence": "Телли отказывается отрицать существование ее сына.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
-{"id": "1128", "sentence": "Фильм впервые составил первый звуковой фильм актрисы Этель Берримор по голосу.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
-{"id": "1644", "sentence": "Это лучшее злое, но я даю ему ноль в качестве цели.", "error_type": "Hallucination", "detailed_source": "TED", "label": "0"}
-{"id": "704", "sentence": "Большая часть аниме-адаптации связана с использованием блестящих красных или розовых лент, которые вылетают из ее броши и формируют ее форму.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
-{"id": "1693", "sentence": "Эй, слезь с моего велосипеда.", "error_type": "0", "detailed_source": "Tatoeba", "label": "1"}
-{"id": "55", "sentence": "Она по прежнему увлекается аниме и думает, что Томоко с ней все равно не смогла быть своей собственностью.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
-{"id": "1791", "sentence": "Выявить факторы (объективные и субъективные, внутренние и внутренние), которые влияют на несоответствие фактического результата инвестирования от планируемых ранее результатов.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
-{"id": "857", "sentence": "Эдвардссон пришел почти первым к заключению после годичного перерыва (результаты повторных анализов).", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
-{"id": "642", "sentence": "Маршрут и маршрут \"Старухи\" на 7 Июня.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
-{"id": "1322", "sentence": "Есть неловкие смены со второго на третьего, и длинные отрывки относятся к доктору Садлеру в третьем лице.", "error_type": "Hallucination", "detailed_source": "YandexCorpus", "label": "0"}
-{"id": "5", "sentence": "Перед боем в финале чемпионата России по футболу будет проведен технический запуск всех параметров игры \"джокера\".", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
-{"id": "1090", "sentence": "Что вы думаете о Томе?", "error_type": "0", "detailed_source": "Tatoeba", "label": "1"}
-{"id": "477", "sentence": "Нам нужны рыночные стимулы - налог на CO2, каприз и торговля - что-то, что получает этот ценный сигнал там.", "error_type": "Hallucination", "detailed_source": "TED", "label": "0"}
-{"id": "406", "sentence": "Я exhausted после этого долгого путешествия.", "error_type": "Hallucination", "detailed_source": "Tatoeba", "label": "0"}
-{"id": "1788", "sentence": "У Путина почти полмиллиона стихотворений забыли.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
-{"id": "1748", "sentence": "Могу ли я взять напрокат ваш карандаш?", "error_type": "0", "detailed_source": "Tatoeba", "label": "1"}
-{"id": "76", "sentence": "В 1929 году Ньюкомб переехал на Мальту в качестве главного инженера, а в 1932 году ушел в отставку.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
-{"id": "445", "sentence": "Однако для тех, кто с этим согласен, давайте перейдем к «большому вопросу» номер дваówhy мы здесь?", "error_type": "Hallucination", "detailed_source": "YandexCorpus", "label": "0"}
-{"id": "914", "sentence": "Поэтому мы сделали вторую параболу.", "error_type": "0", "detailed_source": "TED", "label": "1"}
-{"id": "781", "sentence": "Это случилось через 2 дня после того, как начались переговоры.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
-{"id": "258", "sentence": "Это был 16-миллиметровый безопасный фильм.", "error_type": "Hallucination", "detailed_source": "TED", "label": "0"}
-{"id": "459", "sentence": "Odense - третий город Дании и главный город Фюнского острова.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
-{"id": "1670", "sentence": "Запись нового альбома Кинга продлена до 19 июля и включена как часть тура по США для промоутеров Remix LLP.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
-{"id": "1638", "sentence": "Персонаж был популярен, и в результате Риверо начал получать след.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
-{"id": "69", "sentence": "Эти идеи об алхимии возникли в XVIII веке или позже.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
-{"id": "659", "sentence": "Канал поставки электричества через эти канаты может устанавливаться сверху основных опорных стоунеров или под ними.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
-{"id": "48", "sentence": "Барли – традиционный напиток, употребляемый в разных частях мира.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
-{"id": "1683", "sentence": "Буддизм, члены королевской семьи и знать совершали в монастырь соревнований на борту, несколько раз уходили в Монастир.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
-{"id": "466", "sentence": "Автор и соавтор учебника по гражданскому праву зарубежных стран и правовому регулированию внешнеэкономических связей.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
-{"id": "1140", "sentence": "Клуб \"Волшебный круг\" (1964—1967 годы) \"Детское шоу\" (1964 год)!", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
-{"id": "176", "sentence": "Зиму пришлось выдавать себя за ребенка с редким кожным заболеванием, в том числе у девочки.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
-{"id": "1674", "sentence": "Книга была адаптирована в сценарий дважды.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
-{"id": "637", "sentence": "Кокпит с бока на бок поместился слегка в ведущий угол крыла, а место для багажа или третье сидение поместилось в угол пересечения.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
-{"id": "1686", "sentence": "Шарлотта, живущая в изолированном доме, попросила у себя двухлетнего сына.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
-{"id": "1189", "sentence": "В 1649 году из жизни Токугавой был привезен архитектор по архитектуре \"гонгэн-дзукури\" Иэмацу Тоугина.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
-{"id": "1258", "sentence": "Система консультаций часто включает в себя формальные группы, и было предложено, что обычные граждане могут быть оставлены вне цепи.", "error_type": "Hallucination", "detailed_source": "YandexCorpus", "label": "0"}
-{"id": "1197", "sentence": "На металлургическом заводе в Брисбене начинается забастовка грузчиков и упаковщиков вагонов.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
-{"id": "671", "sentence": "В 2008 году в общей сложности $96,4 млн были выделены 122 странам и территориям в рамках программы.", "error_type": "0", "detailed_source": "YandexCorpus", "label": "1"}
-{"id": "1096", "sentence": "Концепция потребления энергии (пассивные дома технологии) для группы полезных последовательных верхних этажей (3-4 этажей), см. п.", "error_type": "Hallucination", "detailed_source": "YandexCorpus", "label": "0"}
-{"id": "979", "sentence": "Он также использовался в последней сцене фильма \"Penelope\" и в трейлере фильма \"Дети мужчин\".", "error_type": "Hallucination", "detailed_source": "YandexCorpus", "label": "0"}
-{"id": "769", "sentence": "В одной из стран в попытке построить \"светлое будущее\" ученые потерпели поражение и устроили военный переворот.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
-{"id": "1676", "sentence": "Эта история - из категории тех мамочек-золотоскатлиц, которые рассказывают моей дочери перед сном-золотоскатлицам.", "error_type": "Hallucination", "detailed_source": "YandexCorpus", "label": "0"}
-{"id": "386", "sentence": "Был президентом Международной ассоциации эмпирической эстетики и председателем Общества поведения и когнитивной неврологии.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
-{"id": "598", "sentence": "Победитель \"Уотфорда\" в первом полуфинальном раунде стал чемпионом американского супертурнира.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
-{"id": "1608", "sentence": "Она была основана в 660 г. до нашей эры легендарным императором Дзиммом.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
-{"id": "1692", "sentence": "После неудачного смягчения санкций против Ирана после приговора Каддафи прекратить программу производства оружия массового поражения.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
-{"id": "1254", "sentence": "В музее капитолия Аризоны представлены пятнадцать символов.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
-{"id": "142", "sentence": "В 1959 году в память об этом на фасаде была установена доска с текстом.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
-{"id": "342", "sentence": "Ты потратишь его на отдых и на работу.", "error_type": "0", "detailed_source": "TED", "label": "1"}
-{"id": "217", "sentence": "Когда вы в последний раз были в зоопарке?", "error_type": "0", "detailed_source": "Tatoeba", "label": "1"}
-{"id": "630", "sentence": "Это так новое, чтобы увидеть это, что кто-то на самом деле взял аналоговый аппарат и написал мне.", "error_type": "Hallucination", "detailed_source": "TED", "label": "0"}
-{"id": "977", "sentence": "Осетинцы и осетин Юго-Осетинской автономной области вернули кириллица в 1954 году.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
-{"id": "94", "sentence": "Уже после взаимоотношений с поставщиком или вступать в долгосрочные отношения - отпишит на наших форумах о Компании или корректирует рейтинг компании.", "error_type": "Hallucination", "detailed_source": "YandexCorpus", "label": "0"}
-{"id": "421", "sentence": "Звезду \"Смугения\" стал бывшим трейни впервые назвали.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
-{"id": "850", "sentence": "Statoil переходит в операторский дивизион при освоении месторождения.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
-{"id": "1513", "sentence": "Его путешествия значительно расширили знания о стране, ныне известной как Зимбабве.", "error_type": "0", "detailed_source": "WikiMatrix", "label": "1"}
-{"id": "765", "sentence": "На африканские врачи выходят за весь список зубцов, скапус усиков короткий или не выходит за пределы заднего края головы.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
-{"id": "738", "sentence": "Если это возможно, включите в рацион молоко, гей и мясо.", "error_type": "Hallucination", "detailed_source": "YandexCorpus", "label": "0"}
-{"id": "576", "sentence": "Пожалуйста, скажите мне, что это не так.", "error_type": "0", "detailed_source": "Tatoeba", "label": "1"}
-{"id": "1009", "sentence": "Вечером у нас будут гости.", "error_type": "0", "detailed_source": "Tatoeba", "label": "1"}
-{"id": "1284", "sentence": "Среди популярных достопримечательностей, доступных пешком отсюда, - Augustusplatz, Opera House и Museum изящного искусства.", "error_type": "Hallucination", "detailed_source": "YandexCorpus", "label": "0"}
-{"id": "903", "sentence": "Он будет играть в теннис завтра odpoledne.", "error_type": "Hallucination", "detailed_source": "Tatoeba", "label": "0"}
-{"id": "615", "sentence": "Я рад, что вы признаете Маргарет Thatcher.", "error_type": "Hallucination", "detailed_source": "TED", "label": "0"}
-{"id": "1000", "sentence": "Макманус сыграет в роли Джозефа Сuttonа.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
-{"id": "1102", "sentence": "Я видел, как машина взорвалась.", "error_type": "0", "detailed_source": "Tatoeba", "label": "1"}
-{"id": "1374", "sentence": "Мне взять с собой Тома?", "error_type": "0", "detailed_source": "Tatoeba", "label": "1"}
-{"id": "32", "sentence": "Мечтает, и игра очень отличается от последних трёх входов серии.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "label": "0"}
+{"id": "1021", "sentence": "Однако своевременная диагностика имеет решающее значение, так как состояние может быть признаком серьезных сердечно-сосудистых и ишемических заболеваний.", "error_type": "0", "detailed_source": "WikiMatrix", "target": "1"}
+{"id": "1717", "sentence": "Ташкент принимал ряд визитов высших американских генералов и дипломатов, которые, как полагают, направлены на обеспечение более тесного сотрудничества в Афганистане.", "error_type": "0", "detailed_source": "YandexCorpus", "target": "1"}
+{"id": "164", "sentence": "В результате инцидента на той же улице в городе прогремел больший список популярных мест.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "target": "0"}
+{"id": "971", "sentence": "И сведен был как мозамбик.", "error_type": "Hallucination", "detailed_source": "TED", "target": "0"}
+{"id": "13", "sentence": "Многим людям может понадобиться помощь в вычислении.", "error_type": "0", "detailed_source": "TED", "target": "1"}
+{"id": "1075", "sentence": "Характеристики и преимущества, описанные ниже, являются лишь небольшой частью очень большой системы.", "error_type": "0", "detailed_source": "YandexCorpus", "target": "1"}
+{"id": "1505", "sentence": "Сотрудница Utair впервые самостоятельно провела поиск сотрудника на предприятии и получила премию EUR10 тыс за это.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "target": "0"}
+{"id": "150", "sentence": "Учительница предупреждала, что тест будет тяжелым.", "error_type": "0", "detailed_source": "Tatoeba", "target": "1"}
+{"id": "1479", "sentence": "Ученые создали органическое соединение из 1-го и второго родственных организмов.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "target": "0"}
+{"id": "670", "sentence": "В Евросоюзе принят закон об идентификации сотрудников по отпечатку пальца (паспортам Евросоюза).", "error_type": "0", "detailed_source": "WikiMatrix", "target": "1"}
+{"id": "1754", "sentence": "Стебли и пистиллы расположены спирально вокруг центрального пика или гинеция; стебли выпадают, а пистиллы становятся самарами.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "target": "0"}
+{"id": "1431", "sentence": "Директор пророка в мечети Пророка долгое время преподавал, но почему не остался дома.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "target": "0"}
+{"id": "1657", "sentence": "В кинопрокате прошел документальный фильм о жизни Элвиса Пресли.", "error_type": "0", "detailed_source": "WikiMatrix", "target": "1"}
+{"id": "515", "sentence": "В корне легенды «Дикая охота» - свора собак Дьявола Денди.", "error_type": "0", "detailed_source": "WikiMatrix", "target": "1"}
+{"id": "7", "sentence": "Оперения у совы с тёмными глазами и белым оперением практически идентичны параду курантов на родине автора.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "target": "0"}
+{"id": "1802", "sentence": "Novell также создает новую команду исполнительной продажи партнера, которая будет посвящена и компенсирована успеху партнера.", "error_type": "Hallucination", "detailed_source": "YandexCorpus", "target": "0"}
+{"id": "648", "sentence": "В 2003 г. благодарные родственники установили памятную доску на стенах школы.", "error_type": "0", "detailed_source": "WikiMatrix", "target": "1"}
+{"id": "1484", "sentence": "Источниками супермягкого рентгеновского излучения состоят белые карлики больших масс с высокой температурой поверхности (0,5—1 млн K) это.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "target": "0"}
+{"id": "1150", "sentence": "С тех пор к резерву были добавлены еще небольшие земельные участки.", "error_type": "0", "detailed_source": "WikiMatrix", "target": "1"}
+{"id": "1432", "sentence": "Между тем, поездки Литвиненко в Италию стали чаще.", "error_type": "0", "detailed_source": "YandexCorpus", "target": "1"}
+{"id": "1687", "sentence": "В Астане много иностранных туристов.", "error_type": "0", "detailed_source": "Tatoeba", "target": "1"}
+{"id": "1607", "sentence": "В игре есть различные враги, которые пытаются остановить персонажа или собрать камни.", "error_type": "0", "detailed_source": "WikiMatrix", "target": "1"}
+{"id": "510", "sentence": "Для покупателей, продаваемый вместо сортов ламбик сможет побрать различные сорты.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "target": "0"}
+{"id": "1040", "sentence": "Развиватели лошадей в большинстве стран в первую очередь интересуются развитием пуребрадов (производством высококачественных лошадей для размножения) и лошадей для спорта.", "error_type": "Hallucination", "detailed_source": "YandexCorpus", "target": "0"}
+{"id": "280", "sentence": "Реформу ОбОГ можно считать первой частью.", "error_type": "0", "detailed_source": "WikiMatrix", "target": "1"}
+{"id": "1182", "sentence": "Винсент Уильямс и его коллеги (2009) опубликовали дополнительную работу по гадрозавридному зубному микрооборудованию.", "error_type": "0", "detailed_source": "WikiMatrix", "target": "1"}
+{"id": "987", "sentence": "Это первый раз за последние четыре месяца, когда в этом центре заключения нет заключенных совести.", "error_type": "Hallucination", "detailed_source": "YandexCorpus", "target": "0"}
+{"id": "1590", "sentence": "Осужденный по \"московскому делу\" мексиканец взял в заложников сотрудницу американской тюрьмы и ее семью.", "error_type": "0", "detailed_source": "WikiMatrix", "target": "1"}
+{"id": "411", "sentence": "Джоуи обещает не влиять на Слейда, но это займёт неделю после появления.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "target": "0"}
+{"id": "705", "sentence": "Соответствующий закон провёл несколько лет в министерствах, несмотря на стремление Владимира Путина принять его как можно быстрее.", "error_type": "0", "detailed_source": "YandexCorpus", "target": "1"}
+{"id": "1595", "sentence": "Сегодня только США могут позволить себе такие дорогие программы.", "error_type": "0", "detailed_source": "YandexCorpus", "target": "1"}
+{"id": "677", "sentence": "Она показала время 13.16.6, долгое время лучшее.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "target": "0"}
+{"id": "1510", "sentence": "Сотрудники миссии \"Спирит\" сообщили о счастливой встрече с пыльным дьяволом, которая очистила батареи солнечных батарей от пыли 12 Марта 2005 года.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "target": "0"}
+{"id": "479", "sentence": "Телли отказывается отрицать существование ее сына.", "error_type": "0", "detailed_source": "WikiMatrix", "target": "1"}
+{"id": "1128", "sentence": "Фильм впервые составил первый звуковой фильм актрисы Этель Берримор по голосу.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "target": "0"}
+{"id": "1644", "sentence": "Это лучшее злое, но я даю ему ноль в качестве цели.", "error_type": "Hallucination", "detailed_source": "TED", "target": "0"}
+{"id": "704", "sentence": "Большая часть аниме-адаптации связана с использованием блестящих красных или розовых лент, которые вылетают из ее броши и формируют ее форму.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "target": "0"}
+{"id": "1693", "sentence": "Эй, слезь с моего велосипеда.", "error_type": "0", "detailed_source": "Tatoeba", "target": "1"}
+{"id": "55", "sentence": "Она по прежнему увлекается аниме и думает, что Томоко с ней все равно не смогла быть своей собственностью.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "target": "0"}
+{"id": "1791", "sentence": "Выявить факторы (объективные и субъективные, внутренние и внутренние), которые влияют на несоответствие фактического результата инвестирования от планируемых ранее результатов.", "error_type": "0", "detailed_source": "WikiMatrix", "target": "1"}
+{"id": "857", "sentence": "Эдвардссон пришел почти первым к заключению после годичного перерыва (результаты повторных анализов).", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "target": "0"}
+{"id": "642", "sentence": "Маршрут и маршрут \"Старухи\" на 7 Июня.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "target": "0"}
+{"id": "1322", "sentence": "Есть неловкие смены со второго на третьего, и длинные отрывки относятся к доктору Садлеру в третьем лице.", "error_type": "Hallucination", "detailed_source": "YandexCorpus", "target": "0"}
+{"id": "5", "sentence": "Перед боем в финале чемпионата России по футболу будет проведен технический запуск всех параметров игры \"джокера\".", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "target": "0"}
+{"id": "1090", "sentence": "Что вы думаете о Томе?", "error_type": "0", "detailed_source": "Tatoeba", "target": "1"}
+{"id": "477", "sentence": "Нам нужны рыночные стимулы - налог на CO2, каприз и торговля - что-то, что получает этот ценный сигнал там.", "error_type": "Hallucination", "detailed_source": "TED", "target": "0"}
+{"id": "406", "sentence": "Я exhausted после этого долгого путешествия.", "error_type": "Hallucination", "detailed_source": "Tatoeba", "target": "0"}
+{"id": "1788", "sentence": "У Путина почти полмиллиона стихотворений забыли.", "error_type": "0", "detailed_source": "WikiMatrix", "target": "1"}
+{"id": "1748", "sentence": "Могу ли я взять напрокат ваш карандаш?", "error_type": "0", "detailed_source": "Tatoeba", "target": "1"}
+{"id": "76", "sentence": "В 1929 году Ньюкомб переехал на Мальту в качестве главного инженера, а в 1932 году ушел в отставку.", "error_type": "0", "detailed_source": "WikiMatrix", "target": "1"}
+{"id": "445", "sentence": "Однако для тех, кто с этим согласен, давайте перейдем к «большому вопросу» номер дваówhy мы здесь?", "error_type": "Hallucination", "detailed_source": "YandexCorpus", "target": "0"}
+{"id": "914", "sentence": "Поэтому мы сделали вторую параболу.", "error_type": "0", "detailed_source": "TED", "target": "1"}
+{"id": "781", "sentence": "Это случилось через 2 дня после того, как начались переговоры.", "error_type": "0", "detailed_source": "WikiMatrix", "target": "1"}
+{"id": "258", "sentence": "Это был 16-миллиметровый безопасный фильм.", "error_type": "Hallucination", "detailed_source": "TED", "target": "0"}
+{"id": "459", "sentence": "Odense - третий город Дании и главный город Фюнского острова.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "target": "0"}
+{"id": "1670", "sentence": "Запись нового альбома Кинга продлена до 19 июля и включена как часть тура по США для промоутеров Remix LLP.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "target": "0"}
+{"id": "1638", "sentence": "Персонаж был популярен, и в результате Риверо начал получать след.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "target": "0"}
+{"id": "69", "sentence": "Эти идеи об алхимии возникли в XVIII веке или позже.", "error_type": "0", "detailed_source": "WikiMatrix", "target": "1"}
+{"id": "659", "sentence": "Канал поставки электричества через эти канаты может устанавливаться сверху основных опорных стоунеров или под ними.", "error_type": "0", "detailed_source": "WikiMatrix", "target": "1"}
+{"id": "48", "sentence": "Барли – традиционный напиток, употребляемый в разных частях мира.", "error_type": "0", "detailed_source": "WikiMatrix", "target": "1"}
+{"id": "1683", "sentence": "Буддизм, члены королевской семьи и знать совершали в монастырь соревнований на борту, несколько раз уходили в Монастир.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "target": "0"}
+{"id": "466", "sentence": "Автор и соавтор учебника по гражданскому праву зарубежных стран и правовому регулированию внешнеэкономических связей.", "error_type": "0", "detailed_source": "WikiMatrix", "target": "1"}
+{"id": "1140", "sentence": "Клуб \"Волшебный круг\" (1964—1967 годы) \"Детское шоу\" (1964 год)!", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "target": "0"}
+{"id": "176", "sentence": "Зиму пришлось выдавать себя за ребенка с редким кожным заболеванием, в том числе у девочки.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "target": "0"}
+{"id": "1674", "sentence": "Книга была адаптирована в сценарий дважды.", "error_type": "0", "detailed_source": "WikiMatrix", "target": "1"}
+{"id": "637", "sentence": "Кокпит с бока на бок поместился слегка в ведущий угол крыла, а место для багажа или третье сидение поместилось в угол пересечения.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "target": "0"}
+{"id": "1686", "sentence": "Шарлотта, живущая в изолированном доме, попросила у себя двухлетнего сына.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "target": "0"}
+{"id": "1189", "sentence": "В 1649 году из жизни Токугавой был привезен архитектор по архитектуре \"гонгэн-дзукури\" Иэмацу Тоугина.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "target": "0"}
+{"id": "1258", "sentence": "Система консультаций часто включает в себя формальные группы, и было предложено, что обычные граждане могут быть оставлены вне цепи.", "error_type": "Hallucination", "detailed_source": "YandexCorpus", "target": "0"}
+{"id": "1197", "sentence": "На металлургическом заводе в Брисбене начинается забастовка грузчиков и упаковщиков вагонов.", "error_type": "0", "detailed_source": "WikiMatrix", "target": "1"}
+{"id": "671", "sentence": "В 2008 году в общей сложности $96,4 млн были выделены 122 странам и территориям в рамках программы.", "error_type": "0", "detailed_source": "YandexCorpus", "target": "1"}
+{"id": "1096", "sentence": "Концепция потребления энергии (пассивные дома технологии) для группы полезных последовательных верхних этажей (3-4 этажей), см. п.", "error_type": "Hallucination", "detailed_source": "YandexCorpus", "target": "0"}
+{"id": "979", "sentence": "Он также использовался в последней сцене фильма \"Penelope\" и в трейлере фильма \"Дети мужчин\".", "error_type": "Hallucination", "detailed_source": "YandexCorpus", "target": "0"}
+{"id": "769", "sentence": "В одной из стран в попытке построить \"светлое будущее\" ученые потерпели поражение и устроили военный переворот.", "error_type": "0", "detailed_source": "WikiMatrix", "target": "1"}
+{"id": "1676", "sentence": "Эта история - из категории тех мамочек-золотоскатлиц, которые рассказывают моей дочери перед сном-золотоскатлицам.", "error_type": "Hallucination", "detailed_source": "YandexCorpus", "target": "0"}
+{"id": "386", "sentence": "Был президентом Международной ассоциации эмпирической эстетики и председателем Общества поведения и когнитивной неврологии.", "error_type": "0", "detailed_source": "WikiMatrix", "target": "1"}
+{"id": "598", "sentence": "Победитель \"Уотфорда\" в первом полуфинальном раунде стал чемпионом американского супертурнира.", "error_type": "0", "detailed_source": "WikiMatrix", "target": "1"}
+{"id": "1608", "sentence": "Она была основана в 660 г. до нашей эры легендарным императором Дзиммом.", "error_type": "0", "detailed_source": "WikiMatrix", "target": "1"}
+{"id": "1692", "sentence": "После неудачного смягчения санкций против Ирана после приговора Каддафи прекратить программу производства оружия массового поражения.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "target": "0"}
+{"id": "1254", "sentence": "В музее капитолия Аризоны представлены пятнадцать символов.", "error_type": "0", "detailed_source": "WikiMatrix", "target": "1"}
+{"id": "142", "sentence": "В 1959 году в память об этом на фасаде была установена доска с текстом.", "error_type": "0", "detailed_source": "WikiMatrix", "target": "1"}
+{"id": "342", "sentence": "Ты потратишь его на отдых и на работу.", "error_type": "0", "detailed_source": "TED", "target": "1"}
+{"id": "217", "sentence": "Когда вы в последний раз были в зоопарке?", "error_type": "0", "detailed_source": "Tatoeba", "target": "1"}
+{"id": "630", "sentence": "Это так новое, чтобы увидеть это, что кто-то на самом деле взял аналоговый аппарат и написал мне.", "error_type": "Hallucination", "detailed_source": "TED", "target": "0"}
+{"id": "977", "sentence": "Осетинцы и осетин Юго-Осетинской автономной области вернули кириллица в 1954 году.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "target": "0"}
+{"id": "94", "sentence": "Уже после взаимоотношений с поставщиком или вступать в долгосрочные отношения - отпишит на наших форумах о Компании или корректирует рейтинг компании.", "error_type": "Hallucination", "detailed_source": "YandexCorpus", "target": "0"}
+{"id": "421", "sentence": "Звезду \"Смугения\" стал бывшим трейни впервые назвали.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "target": "0"}
+{"id": "850", "sentence": "Statoil переходит в операторский дивизион при освоении месторождения.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "target": "0"}
+{"id": "1513", "sentence": "Его путешествия значительно расширили знания о стране, ныне известной как Зимбабве.", "error_type": "0", "detailed_source": "WikiMatrix", "target": "1"}
+{"id": "765", "sentence": "На африканские врачи выходят за весь список зубцов, скапус усиков короткий или не выходит за пределы заднего края головы.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "target": "0"}
+{"id": "738", "sentence": "Если это возможно, включите в рацион молоко, гей и мясо.", "error_type": "Hallucination", "detailed_source": "YandexCorpus", "target": "0"}
+{"id": "576", "sentence": "Пожалуйста, скажите мне, что это не так.", "error_type": "0", "detailed_source": "Tatoeba", "target": "1"}
+{"id": "1009", "sentence": "Вечером у нас будут гости.", "error_type": "0", "detailed_source": "Tatoeba", "target": "1"}
+{"id": "1284", "sentence": "Среди популярных достопримечательностей, доступных пешком отсюда, - Augustusplatz, Opera House и Museum изящного искусства.", "error_type": "Hallucination", "detailed_source": "YandexCorpus", "target": "0"}
+{"id": "903", "sentence": "Он будет играть в теннис завтра odpoledne.", "error_type": "Hallucination", "detailed_source": "Tatoeba", "target": "0"}
+{"id": "615", "sentence": "Я рад, что вы признаете Маргарет Thatcher.", "error_type": "Hallucination", "detailed_source": "TED", "target": "0"}
+{"id": "1000", "sentence": "Макманус сыграет в роли Джозефа Сuttonа.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "target": "0"}
+{"id": "1102", "sentence": "Я видел, как машина взорвалась.", "error_type": "0", "detailed_source": "Tatoeba", "target": "1"}
+{"id": "1374", "sentence": "Мне взять с собой Тома?", "error_type": "0", "detailed_source": "Tatoeba", "target": "1"}
+{"id": "32", "sentence": "Мечтает, и игра очень отличается от последних трёх входов серии.", "error_type": "Hallucination", "detailed_source": "WikiMatrix", "target": "0"}
