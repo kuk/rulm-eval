@@ -54,6 +54,14 @@ OPENAI_DAVINCI_003 = 'openai_davinci_003'
 OPENAI_TURBO = 'openai_turbo'
 
 SAIGA_7B = 'saiga_7b'
+SAIGA_13B = 'saiga_13b'
+SAIGA_30B = 'saiga_30b'
+
+MODELS = [
+    SAIGA_7B,
+    SAIGA_13B,
+    SAIGA_30B,
+]
 
 
 ######
