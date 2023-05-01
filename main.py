@@ -290,7 +290,7 @@ def match_output_pred(output, mapping):
             return value
 
 
-TERRA_INSTRUCTION = 'Прочитай текст, проверь верно ли утверждение. Ответь коротко: да или нет. Если не уверен, выбери наиболее вероятный ответ.'
+TERRA_INSTRUCTION = 'Прочитай текст, проверь верно ли утверждение. Ответь "да" или "нет", потом объясни свой ответ.'
 
 
 def terra_item_text(item, split=FEW_SHOT):
@@ -316,8 +316,10 @@ def terra_prompt(test_item, few_shot_items=()):
 
 def terra_output_pred(output):
     return match_output_pred(output, {
-        r'Да': 'entailment',
-        r'Нет': 'not_entailment'
+        'Утверждения верны': 'entailment',
+        'Утверждения неверны': 'not_entailment',
+        'Да': 'entailment',
+        'Нет': 'not_entailment'
     })
 
 
