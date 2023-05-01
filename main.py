@@ -336,7 +336,7 @@ def terra_output_pred(output):
 #  'target': True,
 
 
-DANETQA_INSTRUCTION = 'Прочитай текст и ответь на вопрос. Ответь коротко: да или нет. Если не уверен, выбери наиболее вероятный ответ.'
+DANETQA_INSTRUCTION = 'Прочитай текст и ответь на вопрос. Ответь коротко "да" или "нет".'
 
 
 def danetqa_item_text(item, split=FEW_SHOT):
@@ -362,8 +362,8 @@ def danetqa_prompt(test_item, few_shot_items=()):
 
 def danetqa_output_pred(output):
     return match_output_pred(output, {
-        r'Да': True,
-        r'Нет': False
+        'Да': True,
+        'Нет': False
     })
 
 
