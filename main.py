@@ -516,7 +516,7 @@ def rwsd_output_pred(output):
 #  'gold_sense2': 2}
 
 
-RUSSE_INSTRUCTION = 'Ответь на вопрос про значение слова в контексте. Ответь коротко: да или нет.'
+RUSSE_INSTRUCTION = 'Ответь на вопрос про значение слова в контексте. Ответь коротко: "да" или "нет".'
 
 
 def russe_item_text(item, split=FEW_SHOT):
@@ -544,8 +544,8 @@ def russe_prompt(test_item, few_shot_items=()):
 
 def russe_output_pred(output):
     return match_output_pred(output, {
-        r'Да': True,
-        r'Нет': False
+        'Да': True,
+        'Нет': False
     })
 
 
