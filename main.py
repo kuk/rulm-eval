@@ -7,7 +7,12 @@ import json
 import random
 from time import sleep
 from pathlib import Path
-from collections import Counter
+from collections import (
+    Counter,
+    defaultdict
+)
+from dataclasses import dataclass
+from concurrent.futures import ThreadPoolExecutor
 
 import requests
 
@@ -23,6 +28,9 @@ from tqdm import tqdm as log_progress
 #
 #####
 
+
+TEST = 'test'
+FEW_SHOT = 'few_shot'
 
 DANETQA = 'danetqa'
 TERRA = 'terra'
@@ -205,6 +213,57 @@ def parse_dotenv(lines):
             yield key, value
 
 
+#####
+#
+#   TASK
+#
+######
+
+
+def load_task(name, dir=Path('tasks')):
+    path = dir / name / 'test.jsonl'
+    lines = read_lines(path)
+    test_items = list(parse_jsonl(lines))
+
+    path = dir / name / 'dev.jsonl'
+    lines = read_lines(path)
+    dev_items = list(parse_jsonl(lines))
+
+    return test_items, dev_items
+
+
+########
+#
+#   FEW SHOT
+#
+#####
+
+
+def sample_stratify_target(dev_items, k=1):
+    target_items = defaultdict(list)
+    for item in dev_items:
+        target_items[item['target']].append(item)
+
+    for target, items in target_items.items():
+        yield from random.sample(items, k)
+
+
+#######
+#
+#  PROMPT
+#
+#######
+
+
+def task_prompt(task_item_text, instruction, test_item, few_shot_items=(), sep='---'):
+    test_item_text = task_item_text(test_item, TEST)
+    few_shot_item_texts = [task_item_text(_, FEW_SHOT) for _ in few_shot_items]
+    items_text = f'\n{sep}\n'.join(few_shot_item_texts + [test_item_text])
+    return f'''{instruction}
+
+{items_text}'''
+
+
 #######
 #
 #  TERRA
@@ -214,51 +273,51 @@ def parse_dotenv(lines):
 
 # {'premise': '"По словам россиянина, перед ним стояла задача - финишировать впереди ""Форс Индии"". ""Мы начали гонку на покрышках средней жесткости. И я старался отстоять свою позицию на старте, так как все в основном были на мягких шинах""."',
 #  'hypothesis': 'Соперники выступали преимущественно на мягких шинах.',
-#  'label': 'entailment',
+#  'target': 'entailment',
 #  'idx': 104}
 
 
-TERRA_PROMPT = '''Прочитай текст, проверь верно ли утверждение.
-Ответь коротко: да или нет. Если не уверен, выбери наиболее вероятный ответ.
----
-Текст: Трижды он был привлечён судебным приставом к административной ответственности по ст. 17.15 КоАП РФ за неисполнение содержащихся в исполнительном документе требований неимущественного характера. Так как срок для добровольного исполнения истёк, пристрой снесли принудительно.
-Утверждение: Пристрой был снесен.
-Верно: Да
----
-Текст: Для молодого организма это не прошло бесследно. Резкое токсическое воздействие этанола привело к смерти парня. Его тело обнаружила бабушка, которая вернулась на следующий день.
-Утверждение: Молодой организм стал сильнее от этанола.
-Верно: Нет
----
-Текст: {premise}
+def target_text(target, split, mapping):
+    if split == TEST:
+        return ''
+    elif split == FEW_SHOT:
+        return mapping[target]
+
+
+def match_output_pred(output, mapping):
+    for pattern, value in mapping.items():
+        if re.search(pattern, output):
+            return value
+
+
+TERRA_INSTRUCTION = 'Прочитай текст, проверь верно ли утверждение. Ответь коротко: да или нет. Если не уверен, выбери наиболее вероятный ответ.'
+
+
+def terra_item_text(item, split=FEW_SHOT):
+    target = item['target']
+    answer = target_text(target, split, {
+        'entailment': 'Да',
+        'not_entailment': 'Нет',
+    })
+    premise = item['premise']
+    hypothesis = item['hypothesis']
+    return f'''Текст: {premise}
 Утверждение: {hypothesis}
-Верно: '''
+Верно: {answer}'''
 
 
-def terra_prompt(item, template=TERRA_PROMPT):
-    return template.format(
-        premise=item['premise'],
-        hypothesis=item['hypothesis']
+def terra_prompt(test_item, few_shot_items=()):
+    return task_prompt(
+        terra_item_text,
+        TERRA_INSTRUCTION,
+        test_item, few_shot_items
     )
 
 
-def norm_response_mapping(response, pattern_labels, stop_sequence=r'---', ignore_case=True):
-    match = stop_sequence and re.search(stop_sequence, response)
-    if match:
-        response = response[:match.start()]
-
-    labels = []
-    for pattern, label in pattern_labels.items():
-        if re.search(pattern, response, re.I if ignore_case else 0):
-            labels.append(label)
-
-    if len(labels) == 1:
-        return labels[0]
-
-
-def norm_terra_response(response):
-    return norm_response_mapping(response, {
-        r'yes|да': 'entailment',
-        r'no|нет': 'not_entailment'
+def terra_output_pred(output):
+    return match_output_pred(output, {
+        r'Да': 'entailment',
+        r'Нет': 'not_entailment'
     })
 
 
@@ -271,35 +330,37 @@ def norm_terra_response(response):
 
 # {'question': 'Есть ли вода на марсе?',
 #  'passage': 'Гидросфера Марса — это совокупность водных запасов планеты Марс, представленная водным льдом в полярных шапках Марса, льдом над поверхностью, сезонными ручьями из жидкой воды и возможными резервуарами жидкой воды и водных растворов солей в верхних слоях литосферы Марса. Гидросфера ... е шапки Марса, так как предполагалось, что они могут состоять из водного льда по аналогии с Антарктидой или Гренландией на Земле, однако высказывалась и гипотеза, что это твёрдый диоксид углерода.',
-#  'label': True,
+#  'target': True,
 
 
-DANETQA_PROMPT = '''Прочитай текст и ответь на вопрос. Ответь коротко: да или нет. Если не уверен, выбери наиболее вероятный ответ.
----
-Текст: Пётр Моисеевич Миронов  — красноармеец Рабоче-крестьянской Красной Армии, участник Великой Отечественной войны, Герой Советского Союза . Пётр Миронов родился в 1904 году в деревне Утринка . После окончания шести классов школы проживал в Москве, работал в сфере общепита. В июне 1941 года Миронов был призван на службу в Рабоче-крестьянскую Красную Армию. С июля 1942 года — на фронтах Великой Отечественной войны.
-Вопрос: Был ли миронов в армии?
-Ответ: Да
----
-Текст: Брюс Ли  — гонконгский и американский киноактёр, режиссёр, сценарист, продюсер, популяризатор и реформатор в области китайских боевых искусств, мастер боевых искусств, постановщик боевых сцен и философ, основоположник стиля Джит Кун-До. Брюс Ли начал сниматься в кино с детства. Его детское имя — Ли Сяолун , взрослое имя — Ли Чжэньфань .
-Вопрос: Правда ли что брюс ли не был бойцом?
-Ответ: Нет
----
-Текст: {passage}
+DANETQA_INSTRUCTION = 'Прочитай текст и ответь на вопрос. Ответь коротко: да или нет. Если не уверен, выбери наиболее вероятный ответ.'
+
+
+def danetqa_item_text(item, split=FEW_SHOT):
+    target = item['target']
+    answer = target_text(target, split, {
+        True: 'Да',
+        False: 'Нет'
+    })
+    passage = item['passage']
+    question = item['question']
+    return f'''Текст: {passage}
 Вопрос: {question}
-Ответ: '''
+Ответ: {answer}'''
 
 
-def danetqa_prompt(item, template=DANETQA_PROMPT):
-    return template.format(
-        passage=item['passage'],
-        question=item['question']
+def danetqa_prompt(test_item, few_shot_items=()):
+    return task_prompt(
+        danetqa_item_text,
+        DANETQA_INSTRUCTION,
+        test_item, few_shot_items
     )
 
 
-def norm_danetqa_response(response):
-    return norm_response_mapping(response, {
-        r'yes|да': True,
-        r'no|нет': False
+def danetqa_output_pred(output):
+    return match_output_pred(output, {
+        r'Да': True,
+        r'Нет': False
     })
 
 
@@ -314,7 +375,7 @@ def norm_danetqa_response(response):
 #  'choice1': 'Я была завалена работой.',
 #  'choice2': 'Я ждала друзей.',
 #  'question': 'cause',
-#  'label': 1,
+#  'target': 1,
 #  'id': 96}
 
 
@@ -323,45 +384,39 @@ PARUS_PROMPT_QUESTIONS = {
     'cause': 'Что было причиной?',
 }
 
-PARUS_PROMPT = '''Прочитай текст и ответь на вопрос про причинно-следственную связь.
-Выбери вариант ответа A или B. Если не уверен, выбери наиболее вероятный ответ.
----
-Текст: Я прибралась дома.
-Вопрос: Что было причиной?
-A: Я была завалена работой.
-B: Я ждала друзей.
-Ответ: B
----
-Текст: Политик был признан виновным в мошенничестве.
-Вопрос: Что случилось в результате?
-A: Он был отстранён от должности.
-B: Он начал кампанию за переизбрание.
-Ответ: A
----
-Текст: {premise}
+PARUS_INSTRUCTION = 'Прочитай текст и ответь на вопрос про причинно-следственную связь. Выбери вариант ответа A или B. Если не уверен, выбери наиболее вероятный ответ.'
+
+
+def parus_item_text(item, split=FEW_SHOT):
+    target = item['target']
+    answer = target_text(target, split, {
+        0: 'A',
+        1: 'B'
+    })
+    premise = item['premise']
+    question = PARUS_PROMPT_QUESTIONS[item['question']]
+    choice1 = item['choice1']
+    choice2 = item['choice2']
+    return f'''Текст: {premise}
 Вопрос: {question}
 A: {choice1}
 B: {choice2}
-Ответ: '''
+Ответ: {answer}'''
 
-def parus_prompt(item, template=PARUS_PROMPT):
-    return template.format(
-        premise=item['premise'],
-        question=PARUS_PROMPT_QUESTIONS[item['question']],
-        choice1=item['choice1'],
-        choice2=item['choice2'],
+
+def parus_prompt(test_item, few_shot_items=()):
+    return task_prompt(
+        parus_item_text,
+        PARUS_INSTRUCTION,
+        test_item, few_shot_items
     )
 
 
-def norm_parus_response(response):
-    return norm_response_mapping(
-        response,
-        {
-            'A': 0,
-            'B': 1
-        },
-        ignore_case=False
-    )
+def parus_output_pred(output):
+    return match_output_pred(output, {
+        'A': 0,
+        'B': 1
+    })
 
 
 #####
@@ -377,36 +432,38 @@ def norm_parus_response(response):
 #   'span1_text': 'Матери',
 #   'span2_text': 'забрать их'},
 #  'idx': 190,
-#  'label': False}
+#  'target': False}
 
 
-RWSD_PROMPT = '''Прочитай текст и ответь на вопрос про кореференцию. Ответь да или нет.
----
-Текст: Уэйнрайты обращались с мистером Кроули, как с принцем, пока он не изменил свое завещание в их пользу; тогда они стали обращаться с ним, как с грязью. Люди говорили, что он умер, только чтобы избавиться от их вечного нытья.
-Вопрос: Фраза "их вечного нытья" ссылается на "Уэйнрайты"?
-Ответ: Да
----
-Текст: Кубок не помещается в коричневый чемодан, потому что он слишком большой.
-Вопрос: Фраза "он слишком большой" ссылается на "чемодан"?
-Ответ: Нет
----
-Текст: {text}
+RWSD_INSTRUCTION = 'Прочитай текст и ответь на вопрос про кореференцию. Ответь да или нет.'
+
+
+def rwsd_item_text(item, split=FEW_SHOT):
+    target = item['target']
+    answer = target_text(target, split, {
+        True: 'Да',
+        False: 'Нет'
+    })
+    text = item['text']
+    a = item['target_']['span1_text']
+    b = item['target_']['span2_text']
+    return f'''Текст: {text}
 Вопрос: Фраза "{b}" ссылается на "{a}"?
-Ответ: '''
+Ответ: {answer}'''
 
 
-def rwsd_prompt(item, template=RWSD_PROMPT):
-    return template.format(
-        text=item['text'],
-        a=item['target']['span1_text'],
-        b=item['target']['span2_text'],
+def rwsd_prompt(test_item, few_shot_items=()):
+    return task_prompt(
+        rwsd_item_text,
+        RWSD_INSTRUCTION,
+        test_item, few_shot_items
     )
 
 
-def norm_rwsd_response(response):
-    return norm_response_mapping(response, {
-        r'yes|да': True,
-        r'no|нет': False
+def rwsd_output_pred(output):
+    return match_output_pred(output, {
+        r'Да': True,
+        r'Нет': False
     })
 
 
@@ -425,41 +482,41 @@ def norm_rwsd_response(response):
 #  'end1': 21,
 #  'start2': 80,
 #  'end2': 87,
-#  'label': True,
+#  'target': True,
 #  'gold_sense1': 2,
 #  'gold_sense2': 2}
 
 
-RUSSE_PROMPT = '''Ответь на вопрос про значение слова в контексте. Ответь коротко: да или нет.
----
-A: Бурые ковровые дорожки заглушали шаги
-B: Приятели решили выпить на дорожку в местном баре
-Вопрос: Слово "дорожка" имеет одинаковое значение в A и B?
-Ответ: Нет
----
-A: Как изменится защита Динамо в новом сезоне?
-B: Обе партии протекали одинаково: в обеих была разыграна французская защита
-Вопрос: Слово "защита" имеет одинаковое значение в A и B?
-Ответ: Да
----
-A: {a}
+RUSSE_INSTRUCTION = 'Ответь на вопрос про значение слова в контексте. Ответь коротко: да или нет.'
+
+
+def russe_item_text(item, split=FEW_SHOT):
+    target = item['target']
+    answer = target_text(target, split, {
+        True: 'Да',
+        False: 'Нет'
+    })
+    word = item['word']
+    a = item['sentence1']
+    b = item['sentence2']
+    return f'''A: {a}
 B: {b}
 Вопрос: Слово "{word}" имеет одинаковое значение в A и B?
-Ответ: '''
+Ответ: {answer}'''
 
 
-def russe_prompt(item, template=RUSSE_PROMPT):
-    return template.format(
-        word=item['word'],
-        a=item['sentence1'],
-        b=item['sentence2'],
+def russe_prompt(test_item, few_shot_items=()):
+    return task_prompt(
+        russe_item_text,
+        RUSSE_INSTRUCTION,
+        test_item, few_shot_items
     )
 
 
-def norm_russe_response(response):
-    return norm_response_mapping(response, {
-        r'yes|да': True,
-        r'no|нет': False
+def russe_output_pred(output):
+    return match_output_pred(output, {
+        r'Да': True,
+        r'Нет': False
     })
 
 
@@ -477,62 +534,34 @@ def norm_russe_response(response):
 #  'detailed_source': 'Seliverstova'}
 
 
-RUCOLA_PROMPT = '''Предложение корректное или нет? Проверь синтаксис, семантику и морфологию.
-Ответь коротко: да или нет.
----
-Предложение: Ты сидела слишком близко от него.
-Корректное: Да
----
-Предложение: Я слышал вой и лай собак и радовался, воображая, что ехать неподалеку.
-Корректное: Нет
----
-Предложение: Он мне сказал, что приходи.
-Корректное: Нет
----
-Предложение: А ты ехай прямо к директору театров, князю Гагарину.
-Корректное: Нет
----
-Предложение: {sentence}
-Корректное: '''
+RUCOLA_INSTRUCTION = 'Предложение корректное или нет? Проверь синтаксис, семантику и морфологию. Ответь коротко: да или нет.'
 
 
-def rucola_prompt(item, template=RUCOLA_PROMPT):
-    return template.format(
-        sentence=item['sentence']
+def rucola_item_text(item, split=FEW_SHOT):
+    target = item['target']
+    answer = target_text(target, split, {
+        '1': 'Да',
+        '0': 'Нет'
+    })
+    sentence = item['sentence']
+    return f'''Предложение: {sentence}
+Корректное: {answer}'''
+
+
+def rucola_prompt(test_item, few_shot_items=()):
+    return task_prompt(
+        rucola_item_text,
+        RUCOLA_INSTRUCTION,
+        test_item, few_shot_items
     )
 
 
-def norm_rucola_response(response):
-    return norm_response_mapping(response, {
-        r'yes|да': '1',
-        r'no|нет': '0'
+def rucola_output_pred(output):
+    return match_output_pred(output, {
+        'Да': '1',
+        'Нет': '0',
+        'Некорректное предложение': '0',
     })
-
-
-#####
-#
-#   PROMPTS, NORM RESP
-#
-###
-
-
-TASK_PROMPTS = {
-    TERRA: terra_prompt,
-    DANETQA: danetqa_prompt,
-    PARUS: parus_prompt,
-    RWSD: rwsd_prompt,
-    RUSSE: russe_prompt,
-    RUCOLA: rucola_prompt,
-}
-
-NORM_RESPONSES = {
-    TERRA: norm_terra_response,
-    DANETQA: norm_danetqa_response,
-    PARUS: norm_parus_response,
-    RWSD: norm_rwsd_response,
-    RUSSE: norm_russe_response,
-    RUCOLA: norm_rucola_response,
-}
 
 
 ######
@@ -543,21 +572,15 @@ NORM_RESPONSES = {
 
 
 def acc_score(id_targets, id_preds):
-    total, correct, skip = 0, 0, 0
+    total, correct = 0, 0
     for id in id_targets.keys() & id_preds.keys():
-        pred = id_preds.get(id)
-        if pred is None:
-            skip += 1
-            continue
-
-        total += 1
-        correct += id_targets.get(id) == pred
+        pred = id_preds[id]
+        target = id_targets[id]
+        if pred is not None:
+            total += 1
+            correct += (pred == target)
             
-    acc = None
-    if total:
-        acc = correct / total
-
-    return acc, skip
+    return correct, total
 
 
 ########
@@ -625,3 +648,101 @@ def openai_chat_completions(
         token
     )
     return data['choices'][0]['message']['content']
+
+
+######
+#
+#  RULM
+#
+####
+
+
+RULM_URL = 'https://api.rulm.alexkuk.ru/v1'
+
+
+class RulmError(Exception):
+    pass
+
+
+def rulm_models():
+    return requests.get(f'{RULM_URL}/models').json()
+
+
+def rulm_tokenize(text, model='saiga-7b-q4'):
+    response = requests.post(
+        f'{RULM_URL}/tokenize',
+        json={
+            'text': text,
+            'model': model
+        }
+    )
+    if response.status_code != 200:
+        raise RulmError(response.text)
+        
+    return response.json()
+
+
+def rulm_complete_stream(prompt, model='saiga-7b-q4', max_tokens=128, temperature=0.2):
+    response = requests.post(
+        f'{RULM_URL}/complete',
+        json={
+            'prompt': prompt,
+            'model': model,
+            'max_tokens': max_tokens,
+            'temperature': temperature
+        },
+        stream=True
+    )
+    if response.status_code != 200:
+        raise RulmError(response.text)
+
+    for line in response.iter_lines():
+        item = json.loads(line)
+        error = item.get('error')
+        if error:
+            raise RulmError(error)
+        yield item
+
+
+def show_rulm_stream(items):
+    buffer = []
+    for item in items:
+        text = item.get('text')
+        prompt_progress = item.get('prompt_progress')
+        if text:
+            buffer.append(text)
+            print(text, flush=True, end='')
+        else:
+            print(f'{prompt_progress * 100:.0f}%', flush=True, end=' ')
+            if prompt_progress == 1:
+                print('\n', flush=True)
+    return ''.join(buffer)
+
+
+def rulm_complete(prompt, **kwargs):
+    items = rulm_complete_stream(prompt, **kwargs)
+    buffer = []
+    for item in items:
+        if item.get('text'):
+            buffer.append(item.get('text'))
+    return ''.join(buffer)
+
+
+#######
+#
+#   MAP
+#
+######
+
+
+def rulm_complete_eval_item(item, **kwargs):
+    try:
+        item['output'] = rulm_complete(item['prompt'], **kwargs)
+    except RulmError as error:
+        item['error'] = str(error)
+    return item
+    
+
+def rulm_map_complete_eval_items(items, max_workers=6, **kwargs):
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        yield from executor.map(rulm_complete_eval_item, items)
