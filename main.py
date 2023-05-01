@@ -306,9 +306,13 @@ def target_text(target, split, mapping):
 
 
 def match_output_pred(output, mapping):
+    values = set()
     for pattern, value in mapping.items():
         if re.search(pattern, output):
-            return value
+            values.add(value)
+
+    if len(values) == 1:
+        return values.pop()
 
 
 TERRA_INSTRUCTION = 'Прочитай текст, проверь верно ли утверждение. Ответь "да" или "нет", потом объясни свой ответ.'
