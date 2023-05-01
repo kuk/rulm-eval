@@ -563,7 +563,7 @@ def russe_output_pred(output):
 #  'detailed_source': 'Seliverstova'}
 
 
-RUCOLA_INSTRUCTION = 'Предложение корректное или нет? Проверь синтаксис, семантику и морфологию. Ответь коротко: да или нет.'
+RUCOLA_INSTRUCTION = 'Предложение корректное или нет? Проверь синтаксис, семантику и морфологию. Ответь коротко: "да" или "нет".'
 
 
 def rucola_item_text(item, split=FEW_SHOT):
