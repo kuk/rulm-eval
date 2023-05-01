@@ -464,7 +464,7 @@ def parus_output_pred(output):
 #  'target': False}
 
 
-RWSD_INSTRUCTION = 'Прочитай текст и ответь на вопрос про кореференцию. Ответь да или нет.'
+RWSD_INSTRUCTION = 'Прочитай текст и ответь на вопрос про кореференцию. Ответь "да" или "нет".'
 
 
 def rwsd_item_text(item, split=FEW_SHOT):
@@ -491,8 +491,8 @@ def rwsd_prompt(test_item, few_shot_items=()):
 
 def rwsd_output_pred(output):
     return match_output_pred(output, {
-        r'Да': True,
-        r'Нет': False
+        'Да': True,
+        'Нет': False
     })
 
 
