@@ -13,6 +13,7 @@ from collections import (
 )
 from dataclasses import dataclass
 from concurrent.futures import ThreadPoolExecutor
+from functools import partial
 
 import requests
 
@@ -747,4 +748,4 @@ def rulm_complete_eval_item(item, **kwargs):
 
 def rulm_map_complete_eval_items(items, max_workers=6, **kwargs):
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
-        yield from executor.map(rulm_complete_eval_item, items)
+        yield from executor.map(partial(rulm_complete_eval_item, **kwargs), items)
