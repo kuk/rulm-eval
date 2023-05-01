@@ -265,6 +265,26 @@ def task_prompt(task_item_text, instruction, test_item, few_shot_items=(), sep='
 {items_text}'''
 
 
+#####
+#
+#   EVAL ITEM
+#
+#####
+
+
+def init_eval_item(test_item):
+    return {
+        'id': test_item['id'],
+        'prompt': None,
+        'output': None,
+        'pred': None
+    }
+
+
+def init_eval_items(test_items):
+    return [init_eval_item(_) for _ in test_items]
+
+
 #######
 #
 #  TERRA
