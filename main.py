@@ -604,6 +604,32 @@ def rucola_output_pred(output):
     })
 
 
+#####
+#
+#   TASK DISPATCH
+#
+####
+
+
+TASK_PROMPT = {
+    TERRA: terra_prompt,
+    PARUS: parus_prompt,
+    DANETQA: danetqa_prompt,
+    RWSD: rwsd_prompt,
+    RUSSE: russe_prompt,
+    RUCOLA: rucola_prompt,
+}
+
+TASK_OUTPUT_PRED = {
+    TERRA: terra_output_pred,
+    PARUS: parus_output_pred,
+    DANETQA: danetqa_output_pred,
+    RWSD: rwsd_output_pred,
+    RUSSE: russe_output_pred,
+    RUCOLA: rucola_output_pred
+}
+
+
 ######
 #
 #   SCORE
