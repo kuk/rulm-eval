@@ -387,7 +387,7 @@ PARUS_PROMPT_QUESTIONS = {
     'cause': 'Что было причиной?',
 }
 
-PARUS_INSTRUCTION = 'Прочитай текст и ответь на вопрос про причинно-следственную связь. Выбери вариант ответа A или B. Если не уверен, выбери наиболее вероятный ответ.'
+PARUS_INSTRUCTION = 'Ответь на вопрос про причинно-следственную связь. Выбери вариант ответа A или B'
 
 
 def parus_item_text(item, split=FEW_SHOT):
@@ -402,8 +402,8 @@ def parus_item_text(item, split=FEW_SHOT):
     choice2 = item['choice2']
     return f'''Текст: {premise}
 Вопрос: {question}
-A: {choice1}
-B: {choice2}
+A. {choice1}
+B. {choice2}
 Ответ: {answer}'''
 
 
@@ -417,8 +417,10 @@ def parus_prompt(test_item, few_shot_items=()):
 
 def parus_output_pred(output):
     return match_output_pred(output, {
-        'A': 0,
-        'B': 1
+        'Выбор A или B зависит': None,
+        'Выбор A': 0,
+        'Выбор: A': 0,
+        'Выбор: B': 1
     })
 
 
