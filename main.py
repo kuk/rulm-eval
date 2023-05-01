@@ -315,7 +315,7 @@ def match_output_pred(output, mapping):
         return values.pop()
 
 
-TERRA_INSTRUCTION = 'Прочитай текст, проверь верно ли утверждение. Ответь "да" или "нет", потом объясни свой ответ.'
+TERRA_INSTRUCTION = 'Прочитай текст, проверь верно ли утверждение. Ответь "да" или "нет.'
 
 
 def terra_item_text(item, split=FEW_SHOT):
