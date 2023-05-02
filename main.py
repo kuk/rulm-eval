@@ -663,15 +663,16 @@ TASK_OUTPUT_PRED = {
 
 
 def acc_score(id_targets, id_preds):
-    total, correct = 0, 0
+    correct, support, total = 0, 0, 0
     for id in id_targets.keys() & id_preds.keys():
         pred = id_preds[id]
         target = id_targets[id]
+        total += 1
         if pred is not None:
-            total += 1
+            support += 1
             correct += (pred == target)
             
-    return correct, total
+    return correct, support, total
 
 
 ########
