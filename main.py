@@ -821,3 +821,19 @@ def rulm_complete_eval_item(item, **kwargs):
 def rulm_map_complete_eval_items(items, max_workers=6, **kwargs):
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         yield from executor.map(partial(rulm_complete_eval_item, **kwargs), items)
+
+
+######
+#
+#   SHOW HTML
+#
+#####
+
+
+def show_html(html):
+    from IPython.display import (
+        display,
+        HTML
+    )
+
+    display(HTML(html))
