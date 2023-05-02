@@ -353,7 +353,9 @@ def terra_output_pred(output):
         'Утверждения верны': 'entailment',
         'Утверждения неверны': 'not_entailment',
         'Да': 'entailment',
-        'Нет': 'not_entailment'
+        'Нет': 'not_entailment',
+        'да': 'entailment',
+        'нет': 'not_entailment',
     })
 
 
@@ -396,7 +398,9 @@ def danetqa_prompt(test_item, few_shot_items=()):
 def danetqa_output_pred(output):
     return match_output_pred(output, {
         'Да': True,
-        'Нет': False
+        'Нет': False,
+        'да': True,
+        'нет': False,
     })
 
 
@@ -465,6 +469,13 @@ def parus_output_pred(output):
         'Выходные данные: B': 1,
         'Ответ: A': 0,
         'Ответ: B': 1,
+
+        'A.': 0,
+        'B.': 1,
+
+        'Ответ неоднозначен': None,
+        'Ответ не может быть дан': None,
+        'Ответ на вопрос не дан': None,
     })
 
 
@@ -512,7 +523,9 @@ def rwsd_prompt(test_item, few_shot_items=()):
 def rwsd_output_pred(output):
     return match_output_pred(output, {
         'Да': True,
-        'Нет': False
+        'Нет': False,
+        'да': True,
+        'нет': False,
     })
 
 
@@ -609,6 +622,8 @@ def rucola_output_pred(output):
     return match_output_pred(output, {
         'Да': '1',
         'Нет': '0',
+        'да': '1',
+        'нет': '0',
         'Некорректное предложение': '0',
     })
 
@@ -669,6 +684,10 @@ def acc_score(id_targets, id_preds):
 # https://platform.openai.com/docs/api-reference/chat/create
 
 
+class OpenaiError(Exception):
+    pass
+
+
 def post_openai(url, payload, token):
     headers = {
         'Content-Type': 'application/json',
@@ -679,7 +698,9 @@ def post_openai(url, payload, token):
         json=payload,
         headers=headers,
     )
-    response.raise_for_status()
+    if response.status_code != 200:
+        raise OpenaiError(response.text)
+
     return response.json()
 
 
@@ -706,7 +727,7 @@ def openai_completions(
 
 def openai_chat_completions(
         prompt,
-        model='gpt-35-turbo', max_tokens=128,
+        model='gpt-3.5-turbo', max_tokens=128,
         temperature=0, top_p=1, stop=None,
         token=OPENAI_TOKEN
 ):
@@ -813,7 +834,17 @@ def rulm_complete(prompt, **kwargs):
 def rulm_complete_eval_item(item, **kwargs):
     try:
         item['output'] = rulm_complete(item['prompt'], **kwargs)
+        item.pop('error', None)
     except RulmError as error:
+        item['error'] = str(error)
+    return item
+    
+
+def openai_complete_eval_item(item, **kwargs):
+    try:
+        item['output'] = openai_chat_completions(item['prompt'], **kwargs)
+        item.pop('error', None)
+    except OpenaiError as error:
         item['error'] = str(error)
     return item
     
@@ -821,6 +852,11 @@ def rulm_complete_eval_item(item, **kwargs):
 def rulm_map_complete_eval_items(items, max_workers=6, **kwargs):
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         yield from executor.map(partial(rulm_complete_eval_item, **kwargs), items)
+
+
+def openai_map_complete_eval_items(items, max_workers=3, **kwargs):
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        yield from executor.map(partial(openai_complete_eval_item, **kwargs), items)
 
 
 ######
