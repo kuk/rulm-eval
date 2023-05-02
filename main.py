@@ -349,6 +349,7 @@ def terra_prompt(test_item, few_shot_items=()):
 
 def terra_output_pred(output):
     return match_output_pred(output, {
+        'Верно': 'entailment',
         'Утверждения верны': 'entailment',
         'Утверждения неверны': 'not_entailment',
         'Да': 'entailment',
