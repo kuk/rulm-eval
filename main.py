@@ -58,6 +58,7 @@ SAIGA_13B = 'saiga_13b'
 SAIGA_30B = 'saiga_30b'
 
 MODELS = [
+    OPENAI_TURBO,
     SAIGA_7B,
     SAIGA_13B,
     SAIGA_30B,
