@@ -30,9 +30,6 @@ from tqdm import tqdm as log_progress
 #####
 
 
-TEST = 'test'
-FEW_SHOT = 'few_shot'
-
 DANETQA = 'danetqa'
 TERRA = 'terra'
 PARUS = 'parus'
@@ -225,57 +222,6 @@ def parse_dotenv(lines):
 
 #####
 #
-#   TASK
-#
-######
-
-
-def load_task(name, dir=Path('tasks')):
-    path = dir / name / 'test.jsonl'
-    lines = read_lines(path)
-    test_items = list(parse_jsonl(lines))
-
-    path = dir / name / 'dev.jsonl'
-    lines = read_lines(path)
-    dev_items = list(parse_jsonl(lines))
-
-    return test_items, dev_items
-
-
-########
-#
-#   FEW SHOT
-#
-#####
-
-
-def sample_stratify_target(dev_items, k=1):
-    target_items = defaultdict(list)
-    for item in dev_items:
-        target_items[item['target']].append(item)
-
-    for target, items in target_items.items():
-        yield from random.sample(items, k)
-
-
-#######
-#
-#  PROMPT
-#
-#######
-
-
-def task_prompt(task_item_text, instruction, test_item, few_shot_items=(), sep='---'):
-    test_item_text = task_item_text(test_item, TEST)
-    few_shot_item_texts = [task_item_text(_, FEW_SHOT) for _ in few_shot_items]
-    items_text = f'\n{sep}\n'.join(few_shot_item_texts + [test_item_text])
-    return f'''{instruction}
-
-{items_text}'''
-
-
-#####
-#
 #   EVAL ITEM
 #
 #####
@@ -307,14 +253,9 @@ def init_eval_items(test_items):
 #  'idx': 104}
 
 
-def target_text(target, split, mapping):
-    if split == TEST:
-        return ''
-    elif split == FEW_SHOT:
-        return mapping[target]
-
-
 def match_output_pred(output, mapping):
+    output = output.strip()
+
     values = set()
     for pattern, value in mapping.items():
         if re.search(pattern, output):
@@ -324,28 +265,14 @@ def match_output_pred(output, mapping):
         return values.pop()
 
 
-TERRA_INSTRUCTION = 'Прочитай текст, проверь верно ли утверждение. Ответь "да" или "нет.'
-
-
-def terra_item_text(item, split=FEW_SHOT):
-    target = item['target']
-    answer = target_text(target, split, {
-        'entailment': 'Да',
-        'not_entailment': 'Нет',
-    })
+def terra_prompt(item):
     premise = item['premise']
     hypothesis = item['hypothesis']
-    return f'''Текст: {premise}
+    return f'''Прочитай текст, проверь верно ли утверждение. Ответь "да" или "нет.
+
+Текст: {premise}
 Утверждение: {hypothesis}
-Верно: {answer}'''
-
-
-def terra_prompt(test_item, few_shot_items=()):
-    return task_prompt(
-        terra_item_text,
-        TERRA_INSTRUCTION,
-        test_item, few_shot_items
-    )
+Верно: '''
 
 
 def terra_output_pred(output):
@@ -355,8 +282,8 @@ def terra_output_pred(output):
         'Утверждения неверны': 'not_entailment',
         'Да': 'entailment',
         'Нет': 'not_entailment',
-        'да': 'entailment',
-        'нет': 'not_entailment',
+        '^да': 'entailment',
+        '^нет': 'not_entailment',
     })
 
 
@@ -372,28 +299,14 @@ def terra_output_pred(output):
 #  'target': True,
 
 
-DANETQA_INSTRUCTION = 'Прочитай текст и ответь на вопрос. Ответь коротко "да" или "нет".'
-
-
-def danetqa_item_text(item, split=FEW_SHOT):
-    target = item['target']
-    answer = target_text(target, split, {
-        True: 'Да',
-        False: 'Нет'
-    })
+def danetqa_prompt(item):
     passage = item['passage']
     question = item['question']
-    return f'''Текст: {passage}
+    return f'''Прочитай текст и ответь на вопрос. Ответь коротко "да" или "нет".
+
+Текст: {passage}
 Вопрос: {question}
-Ответ: {answer}'''
-
-
-def danetqa_prompt(test_item, few_shot_items=()):
-    return task_prompt(
-        danetqa_item_text,
-        DANETQA_INSTRUCTION,
-        test_item, few_shot_items
-    )
+Ответ: '''
 
 
 def danetqa_output_pred(output):
@@ -420,37 +333,23 @@ def danetqa_output_pred(output):
 #  'id': 96}
 
 
-PARUS_PROMPT_QUESTIONS = {
-    'effect': 'Что случилось в результате?',
-    'cause': 'Что было причиной?',
-}
+def parus_prompt(item):
+    if item['question'] == 'effect':
+        question = 'Что случилось в результате?'
+    else:
+        question = 'Что было причиной?'
 
-PARUS_INSTRUCTION = 'Ответь на вопрос про причинно-следственную связь. Выбери вариант ответа A или B'
-
-
-def parus_item_text(item, split=FEW_SHOT):
-    target = item['target']
-    answer = target_text(target, split, {
-        0: 'A',
-        1: 'B'
-    })
     premise = item['premise']
-    question = PARUS_PROMPT_QUESTIONS[item['question']]
     choice1 = item['choice1']
     choice2 = item['choice2']
-    return f'''Текст: {premise}
+
+    return f'''Ответь на вопрос про причинно-следственную связь. Выбери вариант ответа A или B
+
+Текст: {premise}
 Вопрос: {question}
 A. {choice1}
 B. {choice2}
-Ответ: {answer}'''
-
-
-def parus_prompt(test_item, few_shot_items=()):
-    return task_prompt(
-        parus_item_text,
-        PARUS_INSTRUCTION,
-        test_item, few_shot_items
-    )
+Ответ: '''
 
 
 def parus_output_pred(output):
@@ -496,29 +395,15 @@ def parus_output_pred(output):
 #  'target': False}
 
 
-RWSD_INSTRUCTION = 'Прочитай текст и ответь на вопрос про кореференцию. Ответь "да" или "нет".'
-
-
-def rwsd_item_text(item, split=FEW_SHOT):
-    target = item['target']
-    answer = target_text(target, split, {
-        True: 'Да',
-        False: 'Нет'
-    })
+def rwsd_prompt(item):
     text = item['text']
     a = item['target_']['span1_text']
     b = item['target_']['span2_text']
-    return f'''Текст: {text}
+    return f'''Прочитай текст и ответь на вопрос про кореференцию. Ответь "да" или "нет".
+
+Текст: {text}
 Вопрос: Фраза "{b}" ссылается на "{a}"?
-Ответ: {answer}'''
-
-
-def rwsd_prompt(test_item, few_shot_items=()):
-    return task_prompt(
-        rwsd_item_text,
-        RWSD_INSTRUCTION,
-        test_item, few_shot_items
-    )
+Ответ: '''
 
 
 def rwsd_output_pred(output):
@@ -550,30 +435,16 @@ def rwsd_output_pred(output):
 #  'gold_sense2': 2}
 
 
-RUSSE_INSTRUCTION = 'Ответь на вопрос про значение слова в контексте. Ответь коротко: "да" или "нет".'
-
-
-def russe_item_text(item, split=FEW_SHOT):
-    target = item['target']
-    answer = target_text(target, split, {
-        True: 'Да',
-        False: 'Нет'
-    })
+def russe_prompt(item):
     word = item['word']
     a = item['sentence1']
     b = item['sentence2']
-    return f'''A: {a}
+    return f'''Ответь на вопрос про значение слова в контексте. Ответь коротко: "да" или "нет".
+
+A: {a}
 B: {b}
 Вопрос: Слово "{word}" имеет одинаковое значение в A и B?
-Ответ: {answer}'''
-
-
-def russe_prompt(test_item, few_shot_items=()):
-    return task_prompt(
-        russe_item_text,
-        RUSSE_INSTRUCTION,
-        test_item, few_shot_items
-    )
+Ответ: '''
 
 
 def russe_output_pred(output):
@@ -597,26 +468,12 @@ def russe_output_pred(output):
 #  'detailed_source': 'Seliverstova'}
 
 
-RUCOLA_INSTRUCTION = 'Предложение корректное или нет? Проверь синтаксис, семантику и морфологию. Ответь коротко: "да" или "нет".'
-
-
-def rucola_item_text(item, split=FEW_SHOT):
-    target = item['target']
-    answer = target_text(target, split, {
-        '1': 'Да',
-        '0': 'Нет'
-    })
+def rucola_prompt(item):
     sentence = item['sentence']
-    return f'''Предложение: {sentence}
-Корректное: {answer}'''
+    return f'''Предложение корректное или нет? Проверь синтаксис, семантику и морфологию. Ответь коротко: "да" или "нет".
 
-
-def rucola_prompt(test_item, few_shot_items=()):
-    return task_prompt(
-        rucola_item_text,
-        RUCOLA_INSTRUCTION,
-        test_item, few_shot_items
-    )
+Предложение: {sentence}
+Корректное: '''
 
 
 def rucola_output_pred(output):
