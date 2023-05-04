@@ -29,6 +29,7 @@ from tqdm import tqdm as log_progress
 #
 #####
 
+AMBIG = 'ambig'
 
 DANETQA = 'danetqa'
 TERRA = 'terra'
@@ -261,6 +262,9 @@ def match_output_pred(output, mapping):
         if re.search(pattern, output):
             values.add(value)
 
+    if AMBIG in values:
+        return AMBIG
+
     if len(values) == 1:
         return values.pop()
 
@@ -313,8 +317,8 @@ def danetqa_output_pred(output):
     return match_output_pred(output, {
         'Да': True,
         'Нет': False,
-        'да': True,
-        'нет': False,
+        '^да': True,
+        '^нет': False,
     })
 
 
@@ -356,12 +360,10 @@ def parus_output_pred(output):
     return match_output_pred(output, {
         'Вариант A': 0,
         'Выберите вариант ответа A': 0,
-        'Выбор A или B зависит': None,
         'Выбор A': 0,
         'Выбор варианта ответа A': 0,
         'Выбор варианта ответа: A': 0,
         'Выбор варианта ответа: B': 1,
-        'Выбор ответа зависит': None,
         'Выбор ответа: A': 0,
         'Выбор: A': 0,
         'Выбор: B': 1,
@@ -373,9 +375,15 @@ def parus_output_pred(output):
         'A.': 0,
         'B.': 1,
 
-        'Ответ неоднозначен': None,
-        'Ответ не может быть дан': None,
-        'Ответ на вопрос не дан': None,
+        'Выбор ответа зависит': AMBIG,
+        'Выбор A или B зависит': AMBIG,
+        'Ответ неоднозначен': AMBIG,
+        'Ответ не может быть дан': AMBIG,
+        'Ответ на вопрос не дан': AMBIG,
+        'Ответ на вопрос не может быть дан': AMBIG,
+        'Ответ не может быть определен': AMBIG,
+        'Недостаточно информации': AMBIG,
+        'Невозможно определить причину': AMBIG,
     })
 
 
@@ -410,8 +418,8 @@ def rwsd_output_pred(output):
     return match_output_pred(output, {
         'Да': True,
         'Нет': False,
-        'да': True,
-        'нет': False,
+        '^да': True,
+        '^нет': False,
     })
 
 
@@ -450,7 +458,9 @@ B: {b}
 def russe_output_pred(output):
     return match_output_pred(output, {
         'Да': True,
-        'Нет': False
+        'Нет': False,
+        '^да': True,
+        '^нет': False,
     })
 
 
@@ -480,8 +490,8 @@ def rucola_output_pred(output):
     return match_output_pred(output, {
         'Да': '1',
         'Нет': '0',
-        'да': '1',
-        'нет': '0',
+        '^да': '1',
+        '^нет': '0',
         'Некорректное предложение': '0',
     })
 
@@ -525,7 +535,7 @@ def acc_score(id_targets, id_preds):
         pred = id_preds[id]
         target = id_targets[id]
         total += 1
-        if pred is not None:
+        if pred not in (None, AMBIG):
             support += 1
             correct += (pred == target)
             
