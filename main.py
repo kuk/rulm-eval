@@ -36,6 +36,9 @@ TERRA = 'terra'
 PARUS = 'parus'
 RWSD = 'rwsd'
 RUSSE = 'russe'
+MUSERC = 'muserc'
+RCB = 'rcb'
+RUCOS = 'rucos'
 RUCOLA = 'rucola'
 TASKS = [
     TERRA,
@@ -271,23 +274,24 @@ def match_output_pred(output, mapping):
 
 def terra_prompt(item):
     premise = item['premise']
-    hypothesis = item['hypothesis']
-    return f'''Прочитай текст, проверь верно ли утверждение. Ответь "да" или "нет.
-
-Текст: {premise}
-Утверждение: {hypothesis}
-Верно: '''
+    hypothesis = item['hypothesis'].rstrip('.')
+    return f'''Дан текст: ```{premise}``` Следует ли из текста что {hypothesis}?'''
 
 
 def terra_output_pred(output):
     return match_output_pred(output, {
-        'Верно': 'entailment',
+        '^Верно': 'entailment',
         'Утверждения верны': 'entailment',
         'Утверждения неверны': 'not_entailment',
-        'Да': 'entailment',
-        'Нет': 'not_entailment',
+        '^Да': 'entailment',
+        '^Нет': 'not_entailment',
         '^да': 'entailment',
         '^нет': 'not_entailment',
+
+        'В данном тексте нет никаких указаний': 'not_entailment',
+        'В тексте нет никаких указаний': 'not_entailment',
+        'В данном тексте нет никаких доказательств': 'not_entailment',
+        'В данном тексте нет прямого указания': 'not_entailment',
     })
 
 
@@ -306,17 +310,13 @@ def terra_output_pred(output):
 def danetqa_prompt(item):
     passage = item['passage']
     question = item['question']
-    return f'''Прочитай текст и ответь на вопрос. Ответь коротко "да" или "нет".
-
-Текст: {passage}
-Вопрос: {question}
-Ответ: '''
+    return f'''Дан текст: ```{passage}``` Ответь на вопрос по тексту: {question}'''
 
 
 def danetqa_output_pred(output):
     return match_output_pred(output, {
-        'Да': True,
-        'Нет': False,
+        '^Да': True,
+        '^Нет': False,
         '^да': True,
         '^нет': False,
     })
@@ -338,22 +338,16 @@ def danetqa_output_pred(output):
 
 
 def parus_prompt(item):
-    if item['question'] == 'effect':
-        question = 'Что случилось в результате?'
-    else:
-        question = 'Что было причиной?'
-
     premise = item['premise']
-    choice1 = item['choice1']
-    choice2 = item['choice2']
+    choice1 = item['choice1'].rstrip('.')
+    choice2 = item['choice2'].rstrip('.')
 
-    return f'''Ответь на вопрос про причинно-следственную связь. Выбери вариант ответа A или B
+    if item['question'] == 'effect':
+        question = 'Что вероятно произошло после этого'
+    else:
+        question = 'Что вероятно было причиной'
 
-Текст: {premise}
-Вопрос: {question}
-A. {choice1}
-B. {choice2}
-Ответ: '''
+    return f'''{premise} {question} "{choice1}" или "{choice2}"? Подробно рассуждай, потом дай ответ'''
 
 
 def parus_output_pred(output):
@@ -407,17 +401,15 @@ def rwsd_prompt(item):
     text = item['text']
     a = item['target_']['span1_text']
     b = item['target_']['span2_text']
-    return f'''Прочитай текст и ответь на вопрос про кореференцию. Ответь "да" или "нет".
+    return f'''Дан текст ```{text}```
 
-Текст: {text}
-Вопрос: Фраза "{b}" ссылается на "{a}"?
-Ответ: '''
+На кого или на что ссылается местоимение "{b}" в тексте?'''
 
 
 def rwsd_output_pred(output):
     return match_output_pred(output, {
-        'Да': True,
-        'Нет': False,
+        '^Да': True,
+        '^Нет': False,
         '^да': True,
         '^нет': False,
     })
@@ -447,12 +439,7 @@ def russe_prompt(item):
     word = item['word']
     a = item['sentence1']
     b = item['sentence2']
-    return f'''Ответь на вопрос про значение слова в контексте. Ответь коротко: "да" или "нет".
-
-A: {a}
-B: {b}
-Вопрос: Слово "{word}" имеет одинаковое значение в A и B?
-Ответ: '''
+    return f'Слово "{word}" употребляется в одинаковом или в разном значении в предложении "{a}" и предложении "{b}"? Рассуждай, потом дай ответ'
 
 
 def russe_output_pred(output):
@@ -480,10 +467,7 @@ def russe_output_pred(output):
 
 def rucola_prompt(item):
     sentence = item['sentence']
-    return f'''Предложение корректное или нет? Проверь синтаксис, семантику и морфологию. Ответь коротко: "да" или "нет".
-
-Предложение: {sentence}
-Корректное: '''
+    return f'Перепиши предложение "{sentence}" на грамотном русском языке сохраняясмысл'
 
 
 def rucola_output_pred(output):
@@ -494,6 +478,81 @@ def rucola_output_pred(output):
         '^нет': '0',
         'Некорректное предложение': '0',
     })
+
+
+######
+#
+#  MUSERC
+#
+#####
+
+
+# {
+#   "id": 494,
+#   "passage": "(1) Пожаловавшийся президенту России Владимиру Путину на отсутствие доходов фермер Джон Кописки решил продать свое хозяйство. (2) Об этом сообщает ТАСС со ссылкой на заявление самого фермера. (3) По его словам, он готов продать ферму во Владимирской области за три миллиарда рублей. (4) Впрочем, если найдется хороший и работящий покупатель, то Джон обещает уступить ему хозяйство по лучшей цене.«Продавать будет сложно. (5) Банку я
+#   "question": "Каким было решение Джона Кописки по поводу фермы?",
+#   "answer": "Подать ферму Владимиру Путину.",
+#   "target": 0
+# }
+
+
+def muserc_prompt(item):
+    passage = item['passage']
+    question = item['question']
+    return f'''Дан текст: ```{passage}``` Ответь на вопрос по тексту: {question}'''
+
+
+######
+#
+#  RCB
+#
+#####
+
+
+# {
+#   "premise": "Я добиваюсь того, чтобы мои голоса не крали. Я добиваюсь того, чтобы люди поняли, что их много, и они вместе.",
+#   "hypothesis": "Людей много, и они вместе.",
+#   "verb": "понять",
+#   "negation": "no_negation",
+#   "genre": "interfax",
+#   "id": 316,
+#   "target": "entailment"
+# }
+
+
+def rcb_prompt(item):
+    premise = item['premise']
+    hypothesis = item['hypothesis']
+    return f'Дан текст: "{premise}" Следует ли из текста что "{hypothesis}"?'
+
+
+def rcb_output_pred(output):
+    return match_output_pred(output, {
+        '^Да': 'entailment',
+        '^Нет': 'contradiction',
+    })
+
+
+######
+#
+#  RUCOS
+#
+#####
+
+
+# {
+#   "id": 63988,
+#   "text": "Молдавский телеканал TV7 с 1 мая прекратит трансляцию информационных и аналитических программ российского канала НТВ, на базе которых он строит свою сетку вещания, передает «Интерфакс» со ссылкой на сообщение молдавской телекомпании. Решение отказаться от контента российского телеканала продиктовано желанием TV7 перейти на собственное информационное вещание. На настоящий момент информационные и аналитические передачи НТВ составляют основу сетки молдавского канала. Российские каналы вещают в Молдавии посредством каналов-партнеров. Местные каналы включают в сетку свои передачи, информационные выпуски и рекламу. Каналы из России получают оплату от трансляции или часть доходов от рекламы.\n- В Молдавии запретили трансляцию «России 24»\n- В Молдавии оштрафовали ретрансляторов российского ТВ\n- Молдавия осталась без Первого канала из-за фальшивки",
+#   "query": "Размещением рекламы на @placeholder занимается подразделение собственного селлера НТВ — «Алькасар».",
+#   "entity": "России 24",
+#   "target": false
+# }
+
+
+def rucos_prompt(item):
+    text = item['text']
+    query = item['query']
+    return f'Дан текст: ```{text}``` Перепеши предложение "{query}" без @placeholder'
 
 
 #####
@@ -509,6 +568,9 @@ TASK_PROMPT = {
     DANETQA: danetqa_prompt,
     RWSD: rwsd_prompt,
     RUSSE: russe_prompt,
+    MUSERC: muserc_prompt,
+    RCB: rcb_prompt,
+    RUCOS: rucos_prompt,
     RUCOLA: rucola_prompt,
 }
 
@@ -518,6 +580,7 @@ TASK_OUTPUT_PRED = {
     DANETQA: danetqa_output_pred,
     RWSD: rwsd_output_pred,
     RUSSE: russe_output_pred,
+    RCB: rcb_output_pred,
     RUCOLA: rucola_output_pred
 }
 
