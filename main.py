@@ -575,7 +575,7 @@ def post_openai(url, payload, token):
 
 def openai_completions(
         prompt,
-        model='text-davinci-003', max_tokens=128,
+        model='text-davinci-003', max_tokens=256,
         temperature=0, top_p=1, stop=None,
         token=OPENAI_TOKEN        
 ):
@@ -596,7 +596,7 @@ def openai_completions(
 
 def openai_chat_completions(
         prompt,
-        model='gpt-3.5-turbo', max_tokens=128,
+        model='gpt-3.5-turbo', max_tokens=256,
         temperature=0, top_p=1, stop=None,
         token=OPENAI_TOKEN
 ):
