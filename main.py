@@ -224,26 +224,6 @@ def parse_dotenv(lines):
             yield key, value
 
 
-#####
-#
-#   EVAL ITEM
-#
-#####
-
-
-def init_eval_item(test_item):
-    return {
-        'id': test_item['id'],
-        'prompt': None,
-        'output': None,
-        'pred': None
-    }
-
-
-def init_eval_items(test_items):
-    return [init_eval_item(_) for _ in test_items]
-
-
 #######
 #
 #  TERRA
@@ -257,19 +237,19 @@ def init_eval_items(test_items):
 #  'idx': 104}
 
 
-def match_output_pred(output, mapping):
-    output = output.strip()
+def match_pred(text, mapping):
+    text = text.strip()
 
-    values = set()
-    for pattern, value in mapping.items():
-        if re.search(pattern, output):
-            values.add(value)
+    preds = set()
+    for pattern, pred in mapping.items():
+        if re.search(pattern, text):
+            preds.add(pred)
 
-    if AMBIG in values:
+    if AMBIG in preds:
         return AMBIG
 
-    if len(values) == 1:
-        return values.pop()
+    if len(preds) == 1:
+        return preds.pop()
 
 
 def terra_prompt(item):
@@ -307,14 +287,23 @@ def terra_output_pred(output):
 #  'target': True,
 
 
-def danetqa_prompt(item):
+def danetqa_agent(item, ctx):
     passage = item['passage']
     question = item['question']
-    return f'''Дан текст: ```{passage}``` Ответь на вопрос по тексту: {question}'''
+    prompt = f'''Дан текст: ```{passage}``` Ответь на вопрос по тексту: {question}'''
+
+    response = ctx.send(prompt)
+    pred = danetqa_pred(response)
+
+    if pred is None:
+        response = ctx.send('Финальный ответ (только "да" или "нет"):')
+        pred = danetqa_pred(response)
+
+    return pred
 
 
-def danetqa_output_pred(output):
-    return match_output_pred(output, {
+def danetqa_pred(message):
+    return match_pred(message, {
         '^Да': True,
         '^Нет': False,
         '^да': True,
@@ -562,26 +551,8 @@ def rucos_prompt(item):
 ####
 
 
-TASK_PROMPT = {
-    TERRA: terra_prompt,
-    PARUS: parus_prompt,
-    DANETQA: danetqa_prompt,
-    RWSD: rwsd_prompt,
-    RUSSE: russe_prompt,
-    MUSERC: muserc_prompt,
-    RCB: rcb_prompt,
-    RUCOS: rucos_prompt,
-    RUCOLA: rucola_prompt,
-}
-
-TASK_OUTPUT_PRED = {
-    TERRA: terra_output_pred,
-    PARUS: parus_output_pred,
-    DANETQA: danetqa_output_pred,
-    RWSD: rwsd_output_pred,
-    RUSSE: russe_output_pred,
-    RCB: rcb_output_pred,
-    RUCOLA: rucola_output_pred
+TASK_AGENTS = {
+    DANETQA: danetqa_agent
 }
 
 
@@ -732,7 +703,7 @@ def rulm_chat_complete_stream(messages, model='saiga-7b-q4', max_tokens=256, tem
         yield item
 
 
-def show_rulm_stream(items):
+def rulm_show_stream(items):
     buffer = []
     for item in items:
         text = item.get('text')
@@ -747,8 +718,8 @@ def show_rulm_stream(items):
     return ''.join(buffer)
 
 
-def rulm_complete(prompt, **kwargs):
-    items = rulm_complete_stream(prompt, **kwargs)
+def rulm_chat_complete(messages, **kwargs):
+    items = rulm_chat_complete_stream(messages, **kwargs)
     buffer = []
     for item in items:
         if item.get('text'):
@@ -758,37 +729,54 @@ def rulm_complete(prompt, **kwargs):
 
 #######
 #
-#   MAP
+#   RUN AGENT
 #
 ######
 
 
-def rulm_complete_eval_item(item, **kwargs):
+class RulmAgentContext:
+    Error = RulmError
+
+    def __init__(self):
+        self.messages = []
+
+    def send(self, user_message, **kwargs):
+        self.messages.append(user_message)
+        bot_message = rulm_chat_complete(self.messages, **kwargs)
+        self.messages.append(bot_message)
+        return bot_message
+
+
+class RulmAgentContextVerbose(RulmAgentContext):
+    def send(self, user_message, **kwargs):
+        print(user_message)
+        self.messages.append(user_message)
+
+        stream = rulm_chat_complete_stream(self.messages, **kwargs)
+        bot_message = rulm_show_stream(stream)
+        self.messages.append(bot_message)
+        return bot_message
+
+
+def run_agent(agent, test_item, ctx):
     try:
-        item['output'] = rulm_complete(item['prompt'], **kwargs)
-        item.pop('error', None)
-    except RulmError as error:
-        item['error'] = str(error)
-    return item
-    
+        pred = agent(test_item, ctx)
+    except ctx.Error:
+        pred = None
 
-def openai_complete_eval_item(item, **kwargs):
-    try:
-        item['output'] = openai_chat_completions(item['prompt'], **kwargs)
-        item.pop('error', None)
-    except OpenaiError as error:
-        item['error'] = str(error)
-    return item
-    
+    return {
+        'id': test_item['id'],
+        'messages': ctx.messages,
+        'pred': pred
+    }
 
-def rulm_map_complete_eval_items(items, max_workers=6, **kwargs):
+
+def map_agents(agent, test_items, Context, max_workers=6):
+    def worker(test_item):
+        return run_agent(agent, test_item, ctx=Context())
+
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
-        yield from executor.map(partial(rulm_complete_eval_item, **kwargs), items)
-
-
-def openai_map_complete_eval_items(items, max_workers=3, **kwargs):
-    with ThreadPoolExecutor(max_workers=max_workers) as executor:
-        yield from executor.map(partial(openai_complete_eval_item, **kwargs), items)
+        yield from executor.map(worker, test_items)
 
 
 ######
