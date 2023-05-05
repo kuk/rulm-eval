@@ -647,11 +647,11 @@ def rulm_tokenize(text, model='saiga-7b-q4'):
     return response.json()
 
 
-def rulm_complete_stream(prompt, model='saiga-7b-q4', max_tokens=128, temperature=0.2):
+def rulm_chat_complete_stream(messages, model='saiga-7b-q4', max_tokens=256, temperature=0.2):
     response = requests.post(
-        f'{RULM_URL}/complete',
+        f'{RULM_URL}/chat_complete',
         json={
-            'prompt': prompt,
+            'messages': messages,
             'model': model,
             'max_tokens': max_tokens,
             'temperature': temperature
