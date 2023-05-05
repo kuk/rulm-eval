@@ -252,26 +252,25 @@ def match_pred(text, mapping):
         return preds.pop()
 
 
-def terra_prompt(item):
+def terra_agent(item, ctx):
     premise = item['premise']
     hypothesis = item['hypothesis'].rstrip('.')
-    return f'''Дан текст: ```{premise}``` Следует ли из текста что {hypothesis}?'''
+    prompt = f'''Дан текст: ```{premise}``` Следует ли из текста что {hypothesis}?'''
+    
+    response = ctx.send(prompt)
+    pred = terra_pred(response)
+
+    if pred is None:
+        response = ctx.send('Финальный ответ (только "да" или "нет"):')
+        pred = terra_pred(response)
+
+    return pred
 
 
-def terra_output_pred(output):
-    return match_output_pred(output, {
-        '^Верно': 'entailment',
-        'Утверждения верны': 'entailment',
-        'Утверждения неверны': 'not_entailment',
-        '^Да': 'entailment',
-        '^Нет': 'not_entailment',
-        '^да': 'entailment',
-        '^нет': 'not_entailment',
-
-        'В данном тексте нет никаких указаний': 'not_entailment',
-        'В тексте нет никаких указаний': 'not_entailment',
-        'В данном тексте нет никаких доказательств': 'not_entailment',
-        'В данном тексте нет прямого указания': 'not_entailment',
+def terra_pred(text):
+    return match_pred(text, {
+        r'^Да\b': 'entailment',
+        r'^Нет\b': 'not_entailment',
     })
 
 
@@ -302,12 +301,10 @@ def danetqa_agent(item, ctx):
     return pred
 
 
-def danetqa_pred(message):
-    return match_pred(message, {
-        '^Да': True,
-        '^Нет': False,
-        '^да': True,
-        '^нет': False,
+def danetqa_pred(text):
+    return match_pred(text, {
+        r'^Да\b': True,
+        r'^Нет\b': False,
     })
 
 
@@ -552,7 +549,8 @@ def rucos_prompt(item):
 
 
 TASK_AGENTS = {
-    DANETQA: danetqa_agent
+    TERRA: terra_agent,
+    DANETQA: danetqa_agent,
 }
 
 
@@ -749,12 +747,14 @@ class RulmAgentContext:
 
 class RulmAgentContextVerbose(RulmAgentContext):
     def send(self, user_message, **kwargs):
-        print(user_message)
         self.messages.append(user_message)
+        print(user_message)
 
         stream = rulm_chat_complete_stream(self.messages, **kwargs)
         bot_message = rulm_show_stream(stream)
         self.messages.append(bot_message)
+        print()
+
         return bot_message
 
 
