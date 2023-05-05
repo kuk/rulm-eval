@@ -178,6 +178,12 @@ def write_lines(path, lines):
             file.write(line + '\n')
 
 
+def append_lines(path, lines):
+    with open(path, 'a') as file:
+        for line in lines:
+            file.write(line + '\n')
+
+
 #######
 #
 #   JSONL
