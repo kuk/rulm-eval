@@ -74,7 +74,7 @@ MODELS = [
     OPENAI_TURBO,
     SAIGA_7B,
     SAIGA_13B,
-    SAIGA_30B,
+    # SAIGA_30B,
 ]
 
 ######
