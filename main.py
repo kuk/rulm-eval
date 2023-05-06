@@ -41,14 +41,23 @@ RCB = 'rcb'
 RUCOS = 'rucos'
 RUCOLA = 'rucola'
 TASKS = [
-    TERRA,
+    # QA over text
     DANETQA,
-    PARUS,
-    RWSD,
-    RUSSE,
     MUSERC,
-    RCB,
+
+    # Reading compr
     RUCOS,
+
+    # NLI
+    TERRA,
+    RCB,
+
+    # Common sense
+    PARUS,
+    RUSSE,
+
+    # Lingvo
+    RWSD,
     RUCOLA,
 ]
 
@@ -67,7 +76,6 @@ MODELS = [
     SAIGA_13B,
     SAIGA_30B,
 ]
-
 
 ######
 #
@@ -628,37 +636,27 @@ def post_openai(url, payload, token):
     return response.json()
 
 
-def openai_completions(
-        prompt,
-        model='text-davinci-003', max_tokens=256,
-        temperature=0, top_p=1, stop=None,
-        token=OPENAI_TOKEN        
-):
-    data = post_openai(
-        'https://api.openai.com/v1/completions',
-        {
-            'prompt': prompt,
-            'model': model,
-            'max_tokens': max_tokens,
-            'temperature': temperature,
-            'top_p': top_p,
-            'stop': stop,
-        },
-        token
-    )
-    return data['choices'][0]['text']
-
-
-def openai_chat_completions(
-        prompt,
+def openai_chat_complete(
+        messages,
         model='gpt-3.5-turbo', max_tokens=256,
         temperature=0, top_p=1, stop=None,
         token=OPENAI_TOKEN
 ):
+    def assign_roles(messages):
+        for index, message in enumerate(messages):
+            role = (
+                'user' if index % 2 == 0
+                else 'assistant'
+            )
+            yield {
+                'role': role,
+                'content': message
+            }
+
     data = post_openai(
         'https://api.openai.com/v1/chat/completions',
         {
-            'messages': [{'role': 'user', 'content': prompt}],
+            'messages': list(assign_roles(messages)),
             'model': model,
             'max_tokens': max_tokens,
             'temperature': temperature,
@@ -702,7 +700,11 @@ def rulm_tokenize(text, model='saiga-7b-q4'):
     return response.json()
 
 
-def rulm_chat_complete_stream(messages, model='saiga-7b-q4', max_tokens=256, temperature=0):
+def rulm_chat_complete_stream(
+        messages,
+        model='saiga-7b-q4',
+        max_tokens=256, temperature=0
+):
     response = requests.post(
         f'{RULM_URL}/chat_complete',
         json={
@@ -755,15 +757,32 @@ def rulm_chat_complete(messages, **kwargs):
 ######
 
 
-class RulmAgentContext:
-    Error = RulmError
+class AgentContext:
+    Error = None
+    MODELS = None
 
-    def __init__(self):
+    def __init__(self, model):
+        self.model = model
         self.messages = []
+
+
+MODEL_API_NAMES = {
+    SAIGA_7B: 'saiga-7b-q4',
+    SAIGA_13B: 'saiga-13b-q4',
+    OPENAI_TURBO: 'gpt-3.5-turbo'
+}
+
+
+class RulmAgentContext(AgentContext):
+    Error = RulmError
 
     def send(self, user_message, **kwargs):
         self.messages.append(user_message)
-        bot_message = rulm_chat_complete(self.messages, **kwargs)
+        bot_message = rulm_chat_complete(
+            self.messages,
+            model=MODEL_API_NAMES[self.model],
+            **kwargs
+        )
         self.messages.append(bot_message)
         return bot_message
 
@@ -773,9 +792,45 @@ class RulmAgentContextVerbose(RulmAgentContext):
         self.messages.append(user_message)
         print(user_message)
 
-        stream = rulm_chat_complete_stream(self.messages, **kwargs)
+        stream = rulm_chat_complete_stream(
+            self.messages,
+            model=MODEL_API_NAMES[self.model],
+            **kwargs
+        )
         bot_message = rulm_show_stream(stream)
         self.messages.append(bot_message)
+        print()
+
+        return bot_message
+
+
+class OpenaiAgentContext(AgentContext):
+    Error = OpenaiError
+
+    def send(self, user_message, **kwargs):
+        self.messages.append(user_message)
+        bot_message = openai_chat_complete(
+            self.messages,
+            model=MODEL_API_NAMES[self.model],
+            **kwargs
+        )
+        self.messages.append(bot_message)
+        return bot_message
+
+
+class OpenaiAgentContextVerbose(OpenaiAgentContext):
+    def send(self, user_message, **kwargs):
+        self.messages.append(user_message)
+        print(user_message)
+        print()
+
+        bot_message = openai_chat_complete(
+            self.messages,
+            model=MODEL_API_NAMES[self.model],
+            **kwargs
+        )
+        self.messages.append(bot_message)
+        print(bot_message)
         print()
 
         return bot_message
@@ -784,7 +839,8 @@ class RulmAgentContextVerbose(RulmAgentContext):
 def run_agent(agent, test_item, ctx):
     try:
         pred = agent(test_item, ctx)
-    except ctx.Error:
+    except ctx.Error as error:
+        print(error, file=sys.stderr)
         pred = None
 
     return {
