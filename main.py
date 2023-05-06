@@ -507,16 +507,20 @@ def muserc_pred(text):
 def rcb_agent(item, ctx):
     premise = item['premise']
     hypothesis = item['hypothesis']
-    response = ctx.send(f'Дан текст: ```{premise}``` Предложение "{hypothesis}" противоречит тому что сказано в тексте? Подробно рассуждай')
+    response = ctx.send(f'Дан текст: ```{premise}``` Из текста следует что "{hypothesis}"?')
+    pred = rcb_pred(response)
 
-    response = ctx.send(f'Скажи коротко, "да" или "нет", предложение "{hypothesis}" противоречит тому что сказано в тексте?')
-    return rcb_pred(response)
+    if pred is None:
+        response = ctx.send(f'Финальный ответ (только "да" или "нет"):')
+        pred = rcb_pred(response)
+
+    return pred
 
 
 def rcb_pred(text):
     return match_pred(text, {
-        r'^Нет\b': 'entailment',
-        r'^Да\b': 'contradiction',
+        r'^Да\b': 'entailment',
+        r'^Нет\b': 'contradiction',
     })
 
 
