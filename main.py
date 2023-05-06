@@ -848,17 +848,16 @@ class OpenaiAgentContextVerbose(OpenaiAgentContext):
 
 
 def run_agent(agent, test_item, ctx):
-    try:
-        pred = agent(test_item, ctx)
-    except ctx.Error as error:
-        print(error, file=sys.stderr)
-        pred = None
-
-    return {
-        'id': test_item['id'],
-        'messages': ctx.messages,
-        'pred': pred
+    eval_item = {
+        'id': test_item['id']
     }
+    try:
+        eval_item['pred'] = agent(test_item, ctx)
+    except ctx.Error as error:
+        eval_item['error'] = str(error)
+
+    eval_item['messages'] = ctx.messages
+    return eval_item
 
 
 def map_agents(agent, test_items, Context, max_workers=6):
