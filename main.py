@@ -685,7 +685,7 @@ def rulm_tokenize(text, model='saiga-7b-q4'):
     return response.json()
 
 
-def rulm_chat_complete_stream(messages, model='saiga-7b-q4', max_tokens=256, temperature=0.2):
+def rulm_chat_complete_stream(messages, model='saiga-7b-q4', max_tokens=256, temperature=0):
     response = requests.post(
         f'{RULM_URL}/chat_complete',
         json={
