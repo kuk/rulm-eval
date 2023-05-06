@@ -46,7 +46,10 @@ TASKS = [
     PARUS,
     RWSD,
     RUSSE,
-    RUCOLA
+    MUSERC,
+    RCB,
+    RUCOS,
+    RUCOLA,
 ]
 
 OPENAI_TOKEN = os.getenv('OPENAI_TOKEN')
@@ -261,7 +264,7 @@ def match_pred(text, mapping):
 def terra_agent(item, ctx):
     premise = item['premise']
     hypothesis = item['hypothesis'].rstrip('.')
-    prompt = f'''Дан текст: ```{premise}``` Следует ли из текста что {hypothesis}?'''
+    prompt = f'Дан текст: ```{premise}``` Следует ли из текста что {hypothesis}?'
     
     response = ctx.send(prompt)
     pred = terra_pred(response)
@@ -329,7 +332,7 @@ def danetqa_pred(text):
 #  'id': 96}
 
 
-def parus_prompt(item):
+def parus_agent(item, ctx):
     premise = item['premise']
     choice1 = item['choice1'].rstrip('.')
     choice2 = item['choice2'].rstrip('.')
@@ -339,37 +342,16 @@ def parus_prompt(item):
     else:
         question = 'Что вероятно было причиной'
 
-    return f'''{premise} {question} "{choice1}" или "{choice2}"? Подробно рассуждай, потом дай ответ'''
+    ctx.send(f'''{premise} {question} 1. "{choice1}" или 2. "{choice2}"? Подробно рассуждай''')
+    response = ctx.send('Финальный ответ, наиболее вероятно (только "1." или "2."):')
+
+    return parus_pred(response)
 
 
-def parus_output_pred(output):
-    return match_output_pred(output, {
-        'Вариант A': 0,
-        'Выберите вариант ответа A': 0,
-        'Выбор A': 0,
-        'Выбор варианта ответа A': 0,
-        'Выбор варианта ответа: A': 0,
-        'Выбор варианта ответа: B': 1,
-        'Выбор ответа: A': 0,
-        'Выбор: A': 0,
-        'Выбор: B': 1,
-        'Выходные данные: A': 0,
-        'Выходные данные: B': 1,
-        'Ответ: A': 0,
-        'Ответ: B': 1,
-
-        'A.': 0,
-        'B.': 1,
-
-        'Выбор ответа зависит': AMBIG,
-        'Выбор A или B зависит': AMBIG,
-        'Ответ неоднозначен': AMBIG,
-        'Ответ не может быть дан': AMBIG,
-        'Ответ на вопрос не дан': AMBIG,
-        'Ответ на вопрос не может быть дан': AMBIG,
-        'Ответ не может быть определен': AMBIG,
-        'Недостаточно информации': AMBIG,
-        'Невозможно определить причину': AMBIG,
+def parus_pred(text):
+    return match_pred(text, {
+        r'1\.': 0,
+        r'2\.': 1,
     })
 
 
@@ -389,21 +371,19 @@ def parus_output_pred(output):
 #  'target': False}
 
 
-def rwsd_prompt(item):
+def rwsd_agent(item, ctx):
     text = item['text']
     a = item['target_']['span1_text']
     b = item['target_']['span2_text']
-    return f'''Дан текст ```{text}```
+    ctx.send(f'''Дан текст ```{text}``` На кого или на что ссылается местоимение "{b}" в тексте?''')
+    response = ctx.send(f'Местоимение "{b}" ссылается на "{a}"?')
+    return rwsd_pred(response)
 
-На кого или на что ссылается местоимение "{b}" в тексте?'''
 
-
-def rwsd_output_pred(output):
-    return match_output_pred(output, {
-        '^Да': True,
-        '^Нет': False,
-        '^да': True,
-        '^нет': False,
+def rwsd_pred(text):
+    return match_pred(text, {
+        r'^Да\b': True,
+        r'^Нет\b': False,
     })
 
 
@@ -427,19 +407,21 @@ def rwsd_output_pred(output):
 #  'gold_sense2': 2}
 
 
-def russe_prompt(item):
+def russe_agent(item, ctx):
     word = item['word']
     a = item['sentence1']
     b = item['sentence2']
-    return f'Слово "{word}" употребляется в одинаковом или в разном значении в предложении "{a}" и предложении "{b}"? Рассуждай, потом дай ответ'
+    prompt = f'В предложениях "{a}" и "{b}" слово "{word}" употребляется в одинаковом значении или в разном? Рассуждай подробно'
+    ctx.send(prompt)
+
+    response = ctx.send(f'В этих предложениях слово "{word}" употребляется в одном и том же значении?')
+    return russe_pred(response)
 
 
-def russe_output_pred(output):
-    return match_output_pred(output, {
-        'Да': True,
-        'Нет': False,
-        '^да': True,
-        '^нет': False,
+def russe_pred(text):
+    return match_pred(text, {
+        r'^Да\b': True,
+        r'^Нет\b': False,
     })
 
 
@@ -457,19 +439,18 @@ def russe_output_pred(output):
 #  'detailed_source': 'Seliverstova'}
 
 
-def rucola_prompt(item):
-    sentence = item['sentence']
-    return f'Перепиши предложение "{sentence}" на грамотном русском языке сохраняясмысл'
+def rucola_agent(item, ctx):
+    before = item['sentence']
+    after = ctx.send(f'Перепиши предложение "{before}" на грамотном русском языке сохраняя смысл')
+    return rucola_pred(before, after)
 
 
-def rucola_output_pred(output):
-    return match_output_pred(output, {
-        'Да': '1',
-        'Нет': '0',
-        '^да': '1',
-        '^нет': '0',
-        'Некорректное предложение': '0',
-    })
+def rucola_pred(before, after):
+    after = after.strip('" \n')
+    if before == after:
+        return '1'
+    else:
+        return '0'
 
 
 ######
@@ -488,10 +469,21 @@ def rucola_output_pred(output):
 # }
 
 
-def muserc_prompt(item):
+def muserc_agent(item, ctx):
     passage = item['passage']
     question = item['question']
-    return f'''Дан текст: ```{passage}``` Ответь на вопрос по тексту: {question}'''
+    answer = item['answer']
+    ctx.send(f'''Дан текст: ```{passage}``` Ответь на вопрос по тексту: {question}''')
+
+    response = ctx.send(f'Ответ "{answer}" это правильный ответ на вопрос?')
+    return muserc_pred(response)
+    
+
+def muserc_pred(text):
+    return match_pred(text, {
+        r'^Да\b': 1,
+        r'^Нет\b': 0,
+    })
 
 
 ######
@@ -512,16 +504,19 @@ def muserc_prompt(item):
 # }
 
 
-def rcb_prompt(item):
+def rcb_agent(item, ctx):
     premise = item['premise']
     hypothesis = item['hypothesis']
-    return f'Дан текст: "{premise}" Следует ли из текста что "{hypothesis}"?'
+    response = ctx.send(f'Дан текст: ```{premise}``` Предложение "{hypothesis}" противоречит тому что сказано в тексте? Подробно рассуждай')
+
+    response = ctx.send(f'Скажи коротко, "да" или "нет", предложение "{hypothesis}" противоречит тому что сказано в тексте?')
+    return rcb_pred(response)
 
 
-def rcb_output_pred(output):
-    return match_output_pred(output, {
-        '^Да': 'entailment',
-        '^Нет': 'contradiction',
+def rcb_pred(text):
+    return match_pred(text, {
+        r'^Нет\b': 'entailment',
+        r'^Да\b': 'contradiction',
     })
 
 
@@ -541,10 +536,21 @@ def rcb_output_pred(output):
 # }
 
 
-def rucos_prompt(item):
+def rucos_agent(item, ctx):
     text = item['text']
     query = item['query']
-    return f'Дан текст: ```{text}``` Перепеши предложение "{query}" без @placeholder'
+    entity = item['entity']
+    response = ctx.send(f'Дан текст: ```{text}``` Какое слово заменено на @placeholder в предложении "{query}"?')
+
+    response = ctx.send(f'Это слово "{entity}"?')
+    return rucos_pred(response)
+
+
+def rucos_pred(text):
+    return match_pred(text, {
+        r'^Да\b': True,
+        r'^Нет\b': False,
+    })
 
 
 #####
@@ -557,6 +563,13 @@ def rucos_prompt(item):
 TASK_AGENTS = {
     TERRA: terra_agent,
     DANETQA: danetqa_agent,
+    PARUS: parus_agent,
+    RWSD: rwsd_agent,
+    RUSSE: russe_agent,
+    RUCOLA: rucola_agent,
+    MUSERC: muserc_agent,
+    RCB: rcb_agent,
+    RUCOS: rucos_agent
 }
 
 
