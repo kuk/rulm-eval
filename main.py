@@ -58,7 +58,7 @@ TASKS = [
 
     # Lingvo
     RWSD,
-    RUCOLA,
+    # RUCOLA,
 ]
 
 OPENAI_TOKEN = os.getenv('OPENAI_TOKEN')
@@ -419,11 +419,16 @@ def russe_agent(item, ctx):
     word = item['word']
     a = item['sentence1']
     b = item['sentence2']
-    prompt = f'В предложениях "{a}" и "{b}" слово "{word}" употребляется в одинаковом значении или в разном? Рассуждай подробно'
-    ctx.send(prompt)
+    prompt = f'В предложениях "{a}" и "{b}" слово "{word}" употребляется в одинаковом значении?'
 
-    response = ctx.send(f'В этих предложениях слово "{word}" употребляется в одном и том же значении?')
-    return russe_pred(response)
+    response = ctx.send(prompt)
+    pred = russe_pred(response)
+
+    if pred is None:
+        response = ctx.send('Финальный ответ (только "да" или "нет"):')
+        pred = russe_pred(response)
+
+    return pred
 
 
 def russe_pred(text):
@@ -550,12 +555,18 @@ def rcb_pred(text):
 
 def rucos_agent(item, ctx):
     text = item['text']
-    query = item['query']
+    query = item['query'].replace('@placeholder', '__________')
     entity = item['entity']
-    response = ctx.send(f'Дан текст: ```{text}``` Какое слово заменено на @placeholder в предложении "{query}"?')
 
-    response = ctx.send(f'Это слово "{entity}"?')
-    return rucos_pred(response)
+    prompt = f'Дан текст: ```{text}``` В вопросе "{query}" пропущено слово "{entity}"?'
+    response = ctx.send(prompt)
+    pred = rucos_pred(response)
+
+    if pred is None:
+        response = ctx.send('Финальный ответ (только "да" или "нет"):')
+        pred = rucos_pred(response)
+
+    return pred
 
 
 def rucos_pred(text):
